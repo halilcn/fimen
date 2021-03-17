@@ -1,0 +1,32 @@
+<template>
+  <div class="page_container">
+    <router-view/>
+  </div>
+</template>
+
+<style>
+/* GLOBAL STYLE */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap');
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body, html {
+  margin: 0px;
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
+.page_container {
+  height: 100%;
+}
+</style>
