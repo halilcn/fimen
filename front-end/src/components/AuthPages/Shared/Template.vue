@@ -94,6 +94,17 @@ export default {
   width: 70%;
 }
 
+.login > .content > .form_container .inputs {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.login > .content > .form_container .inputs .input_container {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .login > .content > .auth_actions {
   margin-top: 40px;
   font-size: 14px;

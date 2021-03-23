@@ -4,7 +4,7 @@
         :placeholder="placeholder"
         :type="type"
         :name="name"
-        :value="value">
+        v-model="value">
   </div>
 </template>
 

@@ -4,19 +4,33 @@
       :backgroundImage="'login.jpg'"
       :backgroundText="'Mentor BUl BLa BAL BLA BAL'">
     <template v-slot:form>
-      {{ $v.users }}
       <form @submit.prevent="postLogin">
-        <auth-input
-            :placeholder="'E-posta'"
-            :type="'text'"
-            :name="'phone_number'"/>
-        <auth-input
-            :placeholder="'Şifre'"
-            :type="'password'"
-            :name="'password'"
-            @keyup.enter="postLogin"/>
+        {{ user.email }} --
+        <div class="inputs">
+          <auth-input
+              :placeholder="'E-posta'"
+              :type="'text'"
+              :name="'phone_number'"
+              :value="user.email"/>
+          <input-status
+              v-if="$v.user.email.$error && $v.user.email.$dirty"
+              :status="false"
+              :errors="returnErrors('asd')"/>
+          {{ !$v.user.email.required }}
+        </div>
+        {{ returnErrors }}
+        <div class="inputs">
+          <auth-input
+              :placeholder="'Şifre'"
+              :type="'password'"
+              :name="'password'"
+              @keyup.enter="postLogin"/>
+        </div>
         <auth-button :text="'Giriş Yap'"/>
       </form>
+      <input type="text" v-model.trim="$v.user.email.$model">
+      <input type="text" v-model="user.password">
+      {{ $v.user.email.$error }}
     </template>
   </auth-template>
 </template>
@@ -24,31 +38,47 @@
 import AuthInput from "@/components/authPages/Shared/Input";
 import AuthButton from "@/components/authPages/Shared/Button";
 import AuthTemplate from "@/components/authPages/Shared/Template";
+import InputStatus from "@/components/authPages/Shared/InputStatus";
 
-import {required} from 'vuelidate/lib/validators'
+import {email, required} from 'vuelidate/lib/validators'
 
 export default {
   name: "Login",
   data() {
     return {
-      users: ''
+      user: {
+        email: 'email',
+        password: ''
+      }
     }
   },
   methods: {
     postLogin(event) {
       console.log(event);
       alert();
+    },
+    returnErrors(type) {
+      return [
+          type,
+        'asdad asd asd',
+        'asdksadjsada'
+      ];
     }
   },
   components: {
     AuthInput,
     AuthButton,
-    AuthTemplate
+    AuthTemplate,
+    InputStatus
   },
   validations: {
-    users: {
-      required
-    }
+    user: {
+      email: {
+        required,
+        email
+      }
+    },
+    password: {}
   }
 
 }

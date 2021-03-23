@@ -87,16 +87,4 @@ export default {
   width: 55%;
 }
 
-.inputs {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.inputs .input_container {
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
-
 </style>

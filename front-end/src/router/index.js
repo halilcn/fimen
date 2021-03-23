@@ -4,36 +4,47 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const checkAuth = () => {
-    return true;
+    return false;
+    // return store.getters.checkToken;
 };
+
+const auth = (to, from, next) => {
+    return checkAuth() === true ? next() : next('/giris');
+}
+
+const guest = function (to, from, next) {
+    return checkAuth() === false ? next() : next('/');
+}
 
 const routes = [
     {
-        path: '/',
-        component: () => {
-            if (checkAuth) {
-                import('@/components/others/HomePage')
-                return 0;
-            }
-            console.log('ok2');
-        },
+        path: '/anasayfa',
+        component: () => import('@/components/others/HomePage'),
+        beforeEnter: guest
     },
     {
         path: '/giris',
         name: 'Login',
-        component: () => import('@/components/authPages/Login')
+        component: () => import('@/components/authPages/Login'),
+        beforeEnter: guest
     },
     {
         path: '/kayit',
         name: 'Register',
-        component: () => import('@/components/authPages/Register')
+        component: () => import('@/components/authPages/Register'),
+        beforeEnter: guest
     },
-    /*
-    * {
+    {
         path: '/',
-        name: '',
-        children: []
-    }*/
+        component: () => import('@/components/mainPage/Home'),
+        beforeEnter: auth,
+        children: [
+            {
+                path: '/',
+                component: () => import('@/components/mainPage/MainPage'),
+            },
+        ]
+    },
 ]
 
 const router = new VueRouter({

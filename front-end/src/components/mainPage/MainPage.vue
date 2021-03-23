@@ -1,6 +1,6 @@
 <template>
   <div>
-    ana sayfa
+    main page user
   </div>
 </template>
 
