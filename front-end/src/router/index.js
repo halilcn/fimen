@@ -1,5 +1,7 @@
-import {createRouter, createWebHashHistory} from 'vue-router'
-//import store from '@/store/index';
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
 
 const checkAuth = () => {
     return true;
@@ -10,7 +12,6 @@ const routes = [
         path: '/',
         component: () => {
             if (checkAuth) {
-                console.log('ok');
                 import('@/components/others/HomePage')
                 return 0;
             }
@@ -20,12 +21,12 @@ const routes = [
     {
         path: '/giris',
         name: 'Login',
-        component: () => import('@/components/AuthPages/Login')
+        component: () => import('@/components/authPages/Login')
     },
     {
         path: '/kayit',
         name: 'Register',
-        component: () => import('@/components/AuthPages/Register')
+        component: () => import('@/components/authPages/Register')
     },
     /*
     * {
@@ -35,8 +36,8 @@ const routes = [
     }*/
 ]
 
-const router = createRouter({
-    history: createWebHashHistory(),
+const router = new VueRouter({
+    mode: 'history',
     routes
 })
 

@@ -51,10 +51,10 @@
 </template>
 
 <script>
-import AuthInput from "@/components/AuthPages/Shared/Input";
-import AuthTemplate from "@/components/AuthPages/Shared/Template";
-import AuthButton from "@/components/AuthPages/Shared/Button";
-import InputStatus from "@/components/AuthPages/Shared/InputStatus";
+import AuthInput from "@/components/authPages/Shared/Input";
+import AuthTemplate from "@/components/authPages/Shared/Template";
+import AuthButton from "@/components/authPages/Shared/Button";
+import InputStatus from "@/components/authPages/Shared/InputStatus";
 
 export default {
   name: "Register",

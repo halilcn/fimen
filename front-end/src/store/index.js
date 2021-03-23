@@ -1,7 +1,10 @@
-import {createStore} from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 import {auth} from "@/store/modules/auth";
 
-export default createStore({
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
     state: {
         fastRegisterEmail: 'adasda'
     },
@@ -14,4 +17,6 @@ export default createStore({
     modules: {
         auth
     }
-})
+});
+
+export default store;
