@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\Auth\TokenController;
+use App\Http\Controllers\API\Auth\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware('auth:api')->get(
+    '/user',
+    function (Request $request) {
+        return $request->user();
+    }
+);
+
+Route::group(
+    ['prefix' => '/v1'],
+    function () {
+        // ----- PUBLIC -----
+        Route::post('/login', [AuthController::class, 'login']);
+        Route::post('/register', [AuthController::class, 'register']);
+
+        Route::post('/token', [TokenController::class, 'store']);
+
+        // ----- AUTH -----
+        Route::group(
+            ['middleware' => 'api:sanctum'],
+            function () {
+                Route::post('/logout', [AuthController::class, 'logout']);
+            }
+        );
+    }
+);
