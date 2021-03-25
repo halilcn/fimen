@@ -10,19 +10,55 @@
           <auth-input
               :placeholder="'Ad'"
               :type="'text'"
-              :name="'name'"/>
+              :name="'name'"
+              v-model="$v.user.name.$model"/>
           <auth-input
               :placeholder="'Soyad'"
               :type="'text'"
-              :name="'surname'"/>
+              :name="'surname'"
+              v-model="$v.user.surname.$model"/>
+
           <input-status
-              :status="true"/>
+              v-if="($v.user.name.$error && $v.user.name.$dirty) || $v.user.surname.$error && $v.user.surname.$dirty"
+              :status="false">
+            <template v-slot:errors>
+              <span v-if="!$v.user.name.required">{{ $errors.required('Ad') }}</span>
+              <span v-if="!$v.user.name.maxLength">
+                {{ $errors.maxLength('Ad', $v.user.name.$params.maxLength.max) }}
+              </span>
+
+              <span v-if="!$v.user.surname.required">{{ $errors.required('Soyad') }}</span>
+              <span v-if="!$v.user.surname.maxLength">
+                {{ $errors.maxLength('Soyad', $v.user.surname.$params.maxLength.max) }}
+              </span>
+            </template>
+          </input-status>
+
+          <!--
+          <input-status
+              :status="true"/>-->
         </div>
         <div class="inputs">
+          <!-- en son burada -->
           <auth-input
               :placeholder="'Kulllanıcı Adı'"
               :type="'text'"
-              :name="'username'"/>
+              :name="'username'"
+              v-model="$v.user.username.$model"/>
+          <input-status
+              v-if="$v.user.username.$error && $v.user.username.$dirty"
+              :status="false">
+            <template v-slot:errors>
+              <span v-if="!$v.user.username.required">{{ $errors.required('Kullanıcı Adı') }}</span>
+              <span v-if="!$v.user.username.maxLength">
+                {{ $errors.maxLength('Kullanıcı Adı', !$v.user.username.$params.maxLength.max) }}
+              </span>
+              <span v-if="!$v.user.username.minLength">
+                {{ $errors.minLength('Kullanıcı Adı', !$v.user.username.$params.minLength.min) }}
+              </span>
+              <span v-if="!$v.user.username.usernameRegex">{{ $errors.regex('Kullanıcı Adı') }}</span>
+            </template>
+          </input-status>
         </div>
         <div class="inputs">
           <auth-input
@@ -56,6 +92,10 @@ import AuthTemplate from "@/components/authPages/Shared/Template";
 import AuthButton from "@/components/authPages/Shared/Button";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
 
+import {required, maxLength, minLength, email, sameAs, helpers} from 'vuelidate/lib/validators'
+
+const usernameRegex = helpers.regex('usernameRegex', '/^\\S*$/u');
+
 export default {
   name: "Register",
   components: {
@@ -64,6 +104,47 @@ export default {
     AuthButton,
     InputStatus
   },
+  data() {
+    return {
+      user: {
+        name: '',
+        surname: '',
+        username: '',
+        email: '',
+        password: '',
+        repeatPassword: ''
+      }
+    }
+  },
+  validations: {
+    user: {
+      name: {
+        required,
+        maxLength: maxLength(50)
+      },
+      surname: {
+        required,
+        maxLength: maxLength(50)
+      },
+      username: {
+        required,
+        maxLength: maxLength(15),
+        minLength: minLength(3),
+        usernameRegex
+      },
+      email: {
+        required,
+        email
+      },
+      password: {
+        required
+      },
+      repeatPassword: {
+        required,
+        sameAs: sameAs('password')
+      }
+    }
+  }
 }
 </script>
 

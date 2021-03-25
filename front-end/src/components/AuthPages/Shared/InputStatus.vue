@@ -4,15 +4,19 @@
       <i v-if="status" class="bi bi-check-circle-fill success"></i>
       <i v-if="!status" class="bi bi-exclamation-circle-fill warning"></i>
     </div>
-    <div v-if="errors" class="tooltip">
-      <span
-          v-for="(error,index) in errors"
-          :key="index">
-         <span class="number">
-           {{ index + 1 }} -
-         </span>
-         {{ error }}
-       </span>
+    <div
+        v-if="!status"
+        class="tooltip">
+      <slot
+          name="errors"
+          class="tooltip">
+      </slot>
+      <!--  <span>
+          <span class="number">
+             1
+          </span>
+          haokdsakdja jda
+        </span>-->
     </div>
   </div>
 </template>
@@ -24,10 +28,6 @@ export default {
     status: {
       type: Boolean,
       required: true
-    },
-    errors: {
-      type: Array,
-      default: null
     }
   }
 }

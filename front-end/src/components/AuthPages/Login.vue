@@ -5,32 +5,41 @@
       :backgroundText="'Mentor BUl BLa BAL BLA BAL'">
     <template v-slot:form>
       <form @submit.prevent="postLogin">
-        {{ user.email }} --
         <div class="inputs">
           <auth-input
               :placeholder="'E-posta'"
               :type="'text'"
               :name="'phone_number'"
-              :value="user.email"/>
+              v-model="$v.user.email.$model"/>
           <input-status
               v-if="$v.user.email.$error && $v.user.email.$dirty"
-              :status="false"
-              :errors="returnErrors('asd')"/>
-          {{ !$v.user.email.required }}
+              :status="false">
+            <template v-slot:errors>
+              <span v-if="!$v.user.email.required">{{ $errors.required('E-mail') }}</span>
+              <span v-if="!$v.user.email.email">{{ $errors.email() }}</span>
+            </template>
+          </input-status>
         </div>
-        {{ returnErrors }}
         <div class="inputs">
           <auth-input
               :placeholder="'Şifre'"
               :type="'password'"
               :name="'password'"
+              v-model="$v.user.password.$model"
               @keyup.enter="postLogin"/>
+          <input-status
+              v-if="$v.user.password.$error && $v.user.password.$dirty"
+              :status="false">
+            asdsa
+            <template v-slot:errors>
+              <span v-if="!$v.user.password.required">{{ $errors.required('Şifre') }}</span>
+            </template>
+          </input-status>
         </div>
-        <auth-button :text="'Giriş Yap'"/>
+        <auth-button
+            :isDisable="$v.user.$invalid"
+            :text="'Giriş Yap'"/>
       </form>
-      <input type="text" v-model.trim="$v.user.email.$model">
-      <input type="text" v-model="user.password">
-      {{ $v.user.email.$error }}
     </template>
   </auth-template>
 </template>
@@ -40,6 +49,7 @@ import AuthButton from "@/components/authPages/Shared/Button";
 import AuthTemplate from "@/components/authPages/Shared/Template";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
 
+
 import {email, required} from 'vuelidate/lib/validators'
 
 export default {
@@ -47,22 +57,9 @@ export default {
   data() {
     return {
       user: {
-        email: 'email',
+        email: '',
         password: ''
       }
-    }
-  },
-  methods: {
-    postLogin(event) {
-      console.log(event);
-      alert();
-    },
-    returnErrors(type) {
-      return [
-          type,
-        'asdad asd asd',
-        'asdksadjsada'
-      ];
     }
   },
   components: {
@@ -71,16 +68,23 @@ export default {
     AuthTemplate,
     InputStatus
   },
+  methods: {
+    postLogin(event) {
+      console.log(event);
+      alert();
+    }
+  },
   validations: {
     user: {
       email: {
         required,
         email
+      },
+      password: {
+        required
       }
     },
-    password: {}
   }
-
 }
 </script>
 

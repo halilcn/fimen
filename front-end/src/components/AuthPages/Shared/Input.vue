@@ -4,7 +4,7 @@
         :placeholder="placeholder"
         :type="type"
         :name="name"
-        v-model="value">
+        v-model="inputValue">
   </div>
 </template>
 
@@ -13,16 +13,29 @@ export default {
   name: "AuthInput",
   props: {
     placeholder: {
-      required: true
+      required: true,
+      type: String
     },
     type: {
-      required: true
+      required: true,
+      type: String
     },
     name: {
-      required: true
+      required: true,
+      type: String
     },
     value: {
       default: ''
+    }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 }
