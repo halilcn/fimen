@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             'username' => ['required', 'unique:users', 'max:15', 'min:3', 'string', 'regex:/^\S*$/u'],
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required'],
-            'password_confirm' => ['required', 'same:password']
+            'repeat_password' => ['required', 'same:password']
         ];
     }
 }
