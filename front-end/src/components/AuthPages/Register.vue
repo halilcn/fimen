@@ -34,12 +34,15 @@
             </template>
           </input-status>
 
+          <input-status
+              v-if="(!$v.user.name.$error && $v.user.name.$dirty) && !$v.user.surname.$error && $v.user.surname.$dirty"
+              :status="true"/>
+
           <!--
           <input-status
               :status="true"/>-->
         </div>
         <div class="inputs">
-          <!-- en son burada -->
           <auth-input
               :placeholder="'Kulllanıcı Adı'"
               :type="'text'"
@@ -51,36 +54,64 @@
             <template v-slot:errors>
               <span v-if="!$v.user.username.required">{{ $errors.required('Kullanıcı Adı') }}</span>
               <span v-if="!$v.user.username.maxLength">
-                {{ $errors.maxLength('Kullanıcı Adı', !$v.user.username.$params.maxLength.max) }}
+                {{ $errors.maxLength('Kullanıcı Adı', $v.user.username.$params.maxLength.max) }}
               </span>
               <span v-if="!$v.user.username.minLength">
-                {{ $errors.minLength('Kullanıcı Adı', !$v.user.username.$params.minLength.min) }}
+                {{ $errors.minLength('Kullanıcı Adı', $v.user.username.$params.minLength.min) }}
               </span>
-              <span v-if="!$v.user.username.usernameRegex">{{ $errors.regex('Kullanıcı Adı') }}</span>
+              <span v-if="!$v.user.username.checkUsernameRegex">{{ $errors.regex('Kullanıcı Adı') }}</span>
             </template>
           </input-status>
+          <input-status
+              v-else-if="!$v.user.username.$error && $v.user.username.$dirty"
+              :status="true"/>
         </div>
         <div class="inputs">
           <auth-input
               :placeholder="'E-mail'"
               :type="'email'"
               :name="'email'"
-              :value="$store.state.fastRegisterEmail"/>
+              v-model="$v.user.email.$model"/>
           <input-status
-              :status="false"
-              :errors="['asdadada asda d','asdada asdsa']"/>
+              v-if="$v.user.email.$error && $v.user.email.$dirty"
+              :status="false">
+            <template v-slot:errors>
+              <span v-if="!$v.user.email.required">{{ $errors.required('E-mail') }}</span>
+              <span v-if="!$v.user.email.email">{{ $errors.email() }}</span>
+            </template>
+          </input-status>
+          <input-status
+              v-else-if="!$v.user.email.$error && $v.user.email.$dirty"
+              :status="true"/>
         </div>
         <div class="inputs">
           <auth-input
               :placeholder="'Şifre'"
               :type="'password'"
-              :name="'password'"/>
+              :name="'password'"
+              v-model="$v.user.password.$model"/>
           <auth-input
               :placeholder="'Şifre Tekrar'"
               :type="'password'"
-              :name="'password_repeat'"/>
+              :name="'password_repeat'"
+              v-model="$v.user.repeatPassword.$model"/>
+          <input-status
+              v-if="($v.user.password.$error && $v.user.password.$dirty) || ($v.user.repeatPassword.$error && $v.user.repeatPassword.$dirty)"
+              :status="false">
+            <template v-slot:errors>
+              <span v-if="!$v.user.password.required">{{ $errors.required('Şifre') }}</span>
+
+              <span v-if="!$v.user.repeatPassword.required">{{ $errors.required('Şifre Tekrar') }}</span>
+              <span v-if="!$v.user.repeatPassword.sameAs">{{ $errors.sameAs('Şifreler') }}</span>
+            </template>
+          </input-status>
+          <input-status
+              v-if="(!$v.user.password.$error && $v.user.password.$dirty) && (!$v.user.repeatPassword.$error && $v.user.repeatPassword.$dirty)"
+              :status="true"/>
         </div>
-        <auth-button :text="'Kayıt Ol'"/>
+        <auth-button
+            :isDisable="$v.user.$invalid"
+            :text="'Kayıt Ol'"/>
       </form>
     </template>
   </auth-template>
@@ -91,10 +122,11 @@ import AuthInput from "@/components/authPages/Shared/Input";
 import AuthTemplate from "@/components/authPages/Shared/Template";
 import AuthButton from "@/components/authPages/Shared/Button";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
-
 import {required, maxLength, minLength, email, sameAs, helpers} from 'vuelidate/lib/validators'
 
-const usernameRegex = helpers.regex('usernameRegex', '/^\\S*$/u');
+const checkUsernameRegex = () => {
+  return !!helpers.regex('usernameRegex', '/^\\S*$/u');
+};
 
 export default {
   name: "Register",
@@ -110,7 +142,7 @@ export default {
         name: '',
         surname: '',
         username: '',
-        email: '',
+        email: '',//$store.state.fastRegisterEmail
         password: '',
         repeatPassword: ''
       }
@@ -130,7 +162,7 @@ export default {
         required,
         maxLength: maxLength(15),
         minLength: minLength(3),
-        usernameRegex
+        checkUsernameRegex
       },
       email: {
         required,
