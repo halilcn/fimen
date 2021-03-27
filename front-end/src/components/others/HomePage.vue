@@ -27,6 +27,9 @@
           <span>
            DOĞRU MENTORU BUL !
           </span>
+          <span class="mobile">
+            HEDEFİNE GİDEN YOLDA DOĞRU MENTORU BUL !
+          </span>
         </div>
         <div class="fast_register">
           <div class="title">
@@ -48,7 +51,6 @@
           <div class="info_text">
             <i class="fas fa-info-circle"></i>
             mentorluk içinde kayıt olmak gerekir.
-            <i class="fa fa-info-circle"></i>
           </div>
         </div>
       </div>
@@ -80,7 +82,7 @@ export default {
 
 <style scoped>
 .home_page {
-
+  height: 100%;
 }
 
 .home_page > .top {
@@ -89,8 +91,8 @@ export default {
   align-items: center;
 }
 
-.top > .logo {
-
+.top > .logo > img {
+  width: 100%;
 }
 
 .top > .links {
@@ -120,6 +122,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   padding: 20px 40px;
+  height: 100%;
 }
 
 .content > img {
@@ -148,6 +151,10 @@ export default {
 
 .content > .introduction > .text > span {
   margin: 10px 0px;
+}
+
+.content > .introduction > .text > .mobile {
+  display: none;
 }
 
 .content > .introduction > .fast_register {
@@ -207,6 +214,79 @@ export default {
   font-size: 11px;
   color: #8a8a8a;
   margin-top: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .home_page > .top {
+  }
+
+  .home_page > .content {
+    padding: 10px 20px;
+  }
+
+  .top > .logo > img {
+    width: 150px;
+  }
+
+  .top > .links {
+    margin: 0px
+  }
+
+  .top > .links > a {
+    margin: 0px;
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+
+  .content > img {
+    width: 100%;
+    height: 100%;
+    top: 60px;
+  }
+
+  .content > .introduction {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .content > .introduction > .text {
+    font-size: 40px;
+  }
+
+  .content > .introduction > .text > .mobile {
+    display: block;
+    text-space: 300;
+  }
+
+  .content > .introduction > .text > span {
+    display: none;
+    text-align: center;
+    line-height: 2.1;
+  }
+
+  .content > .introduction > .fast_register {
+    background-color: white;
+    padding: 10px;
+    border-radius: 3px;
+
+    box-shadow: 0 0px 0.6px rgba(0, 0, 0, 0.051),
+    0 0px 1.5px rgba(0, 0, 0, 0.073),
+    0 0px 2.8px rgba(0, 0, 0, 0.09),
+    0 0px 4.9px rgba(0, 0, 0, 0.107),
+    0 0px 9.2px rgba(0, 0, 0, 0.129),
+    0 0px 22px rgba(0, 0, 0, 0.18);
+
+  }
+
+  .fast_register > .title {
+    text-align: center;
+  }
+
+  .fast_register > .form > input {
+    width: 65%;
+  }
+
 }
 
 </style>

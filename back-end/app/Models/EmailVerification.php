@@ -15,5 +15,32 @@ class EmailVerification extends Model
         'code'
     ];
 
+    public function deleteLastVerification(string $email)
+    {
+        $this->where('email', $email)->delete();
+    }
+
+    public function createVerification(array $information)
+    {
+        $this->create(
+            [
+                'email' => $information['email'],
+                'code' => $information['code']
+            ]
+        );
+    }
+
+    public function checkVerification(string $email, string $code)
+    {
+        $this->where(
+            [
+                'email' => $email,
+                'code' => $code
+            ]
+        )
+            ->firstOrFail()
+            ->delete();
+    }
+
 
 }

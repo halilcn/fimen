@@ -37,10 +37,6 @@
           <input-status
               v-if="(!$v.user.name.$error && $v.user.name.$dirty) && !$v.user.surname.$error && $v.user.surname.$dirty"
               :status="true"/>
-
-          <!--
-          <input-status
-              :status="true"/>-->
         </div>
         <div class="inputs">
           <auth-input
@@ -142,11 +138,15 @@ export default {
         name: '',
         surname: '',
         username: '',
-        email: '',//$store.state.fastRegisterEmail
+        email: '',
         password: '',
         repeatPassword: ''
       }
     }
+  },
+  created() {
+    // Set Fast Register Email
+    this.user.email = this.$store.state.fastRegisterEmail;
   },
   validations: {
     user: {

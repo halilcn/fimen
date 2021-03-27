@@ -10,33 +10,37 @@ use Illuminate\Support\Str;
 
 class EmailVerificationController extends Controller
 {
+    protected $emailVerification;
+
+    public function __construct()
+    {
+        $this->emailVerification = new EmailVerification();
+    }
+
     public function send(Request $request)
     {
         $information = [
-            'email' => 'halilc.2001"@gmail.com',  //$request->input('email'),
-            'username' => 'hcan', //$request->input('username'),
+            'email' => $request->input('email'),
+            'username' => $request->input('username'),
             'code' => Str::random(6)
         ];
 
-        //daha önce gönderilmişse sil!
-        EmailVerification::query()
-            ->where('email', $information['email'])
-            ->delete();
+        $this->emailVerification->deleteLastVerification($information['email']);
+        $this->emailVerification->createVerification($information);
 
-
-        //code u table a kaydet
-        EmailVerification::create(
-            [
-                'email' => $information['email'],
-                'code' => $information['code']
-            ]
-        );
-
+        // Send E-mail
         SendEmailVerification::dispatch($information);
+
         return response(['status' => true], 201);
     }
 
     public function verify(Request $request)
     {
+        try {
+            $this->emailVerification->checkVerification($request->input('email'), $request->input('code'));
+            return response(['status' => 'true']);
+        } catch (\Exception $e) {
+            return response(['message' => 'Kod yanlış girildi.'], 422);
+        }
     }
 }
