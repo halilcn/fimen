@@ -35,6 +35,12 @@ const routes = [
         beforeEnter: guest
     },
     {
+        path: '/kayit/email-dogrulama',
+        name: 'EmailVerification',
+        component: () => import('@/components/authPages/EmailVerification'),
+        beforeEnter: guest
+    },
+    {
         path: '/',
         component: () => import('@/components/mainPage/Home'),
         beforeEnter: auth,

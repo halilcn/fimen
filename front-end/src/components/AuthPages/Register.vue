@@ -107,7 +107,7 @@
         </div>
         <auth-button
             :isDisable="$v.user.$invalid"
-            :text="'Kayıt Ol'"/>
+            :text="'Devam Et'"/>
       </form>
     </template>
   </auth-template>

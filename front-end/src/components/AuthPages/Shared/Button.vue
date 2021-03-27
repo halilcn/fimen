@@ -31,13 +31,13 @@ button {
   font-size: 15px;
   border: 0px;
   border-radius: 3px;
-  background-color: #38496b;
+  background-color: var(--navy-blue-bg-color);
   color: white;
   transition: .3s;
 }
 
 button:hover {
-  background-color: #303e5a;
+  background-color: var(--navy-blue-bg-hover-color);
   transform: translateY(-2px);
 }
 

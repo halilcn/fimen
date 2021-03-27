@@ -29,4 +29,9 @@ body, html {
 .page_container {
   height: 100%;
 }
+
+:root {
+  --navy-blue-bg-color: #38496B;
+  --navy-blue-bg-hover-color: #303e5a;
+}
 </style>
