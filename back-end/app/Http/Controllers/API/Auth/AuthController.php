@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Jobs\SendEmailVerification;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +31,7 @@ class AuthController extends Controller
         ];
     }
 
-    public function register(RegisterRequest $request)
+    public function register(Request $request)
     {
         $user = User::create(
             [

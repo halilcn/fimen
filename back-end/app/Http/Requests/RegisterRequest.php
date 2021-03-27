@@ -31,4 +31,11 @@ class RegisterRequest extends FormRequest
             'repeat_password' => ['required', 'same:password']
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'username' => 'Kullanıcı Adı'
+        ];
+    }
 }
