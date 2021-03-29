@@ -2,9 +2,9 @@
   <auth-template
       :title="'Hoşgeldin!'"
       :backgroundImage="'login.jpg'"
-      :backgroundText="'Mentor BUl BLa BAL BLA BAL'">
+      :backgroundText="'Alanında Uzmanlardan Destek Al!'">
     <template v-slot:form>
-      <form @submit.prevent="postLogin">
+      <form onsubmit="return false;">
         <div class="inputs">
           <auth-input
               :placeholder="'E-posta'"
@@ -38,7 +38,9 @@
         </div>
         <auth-button
             :isDisable="$v.user.$invalid"
-            :text="'Giriş Yap'"/>
+            :text="'Giriş Yap'"
+            :isLoading="isLoading"
+            @click.native="postLogin"/>
       </form>
     </template>
   </auth-template>
@@ -59,7 +61,8 @@ export default {
       user: {
         email: '',
         password: ''
-      }
+      },
+      isLoading: false
     }
   },
   components: {
@@ -69,9 +72,18 @@ export default {
     InputStatus
   },
   methods: {
-    postLogin(event) {
-      console.log(event);
-      alert();
+    postLogin() {
+      this.isLoading = true;
+      this.$store.dispatch('postLogin', {...this.user})
+          .then(res => {
+            console.log(res + '+++')
+          })
+          .catch(err => {
+            console.log(err + '--');
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
     }
   },
   validations: {

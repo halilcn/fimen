@@ -116,14 +116,15 @@ export default {
   font-family: 'Montserrat', 'sans-serif';
 }
 
-.auth_actions > div > a {
+.auth_actions > div > span {
   text-decoration: none;
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   color: #5a5a5a;
+  cursor: pointer;
 }
 
-.auth_actions > div > a:hover {
+.auth_actions > div > span:hover {
   text-decoration: underline;
   color: #2b374f;
 }

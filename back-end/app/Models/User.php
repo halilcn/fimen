@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
+use phpDocumentor\Reflection\Types\True_;
 
 
 class User extends Authenticatable
@@ -31,7 +34,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -43,4 +46,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Password Mutator
+    public function setPasswordAttribute($password): void
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+
+    public function checkEmail(string $email): User
+    {
+        return $this->where('email', $email)->firstOrFail();
+    }
+
+    public function checkPassword(string $password, string $userPassword): bool
+    {
+        if (Hash::check($password, $userPassword)) {
+            return false;
+        };
+        return true;
+    }
+
+    public function createUser(array $user): User
+    {
+        return $this->create($user);
+    }
 }

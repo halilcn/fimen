@@ -3,12 +3,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Vuelidate from 'vuelidate'
-import {errors} from "@/errors";
+import {errors} from "@/helpers/errors";
 
-Vue.config.productionTip = false
 //Import Global Errors
 Vue.prototype.$errors = errors;
 
+Vue.config.productionTip = false
 Vue.use(Vuelidate);
 
 new Vue({

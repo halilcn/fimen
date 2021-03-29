@@ -33,5 +33,7 @@ body, html {
 :root {
   --navy-blue-bg-color: #38496B;
   --navy-blue-bg-hover-color: #303e5a;
+  --navy-red-bg-color: #FF7268;
+  --navy-blue-text-color: #2B374F;
 }
 </style>

@@ -1,12 +1,19 @@
 <template>
   <button
-      :class="{'button_disable':isDisable}"
+      :class="{
+    'button_disable':isDisable,
+     'button_loading':isLoading
+     }"
       type="submit">
-    {{ text }}
+    <span v-if="!isLoading">
+      {{ text }}
+    </span>
+    <img v-else src="../../../assets/images/share/loading.gif" height="22" width="22"/>
   </button>
 </template>
 
 <script>
+
 export default {
   name: "AuthButton",
   props: {
@@ -15,8 +22,11 @@ export default {
     },
     isDisable: {
       default: true
+    },
+    isLoading: {
+      default: false
     }
-  }
+  },
 }
 </script>
 
@@ -34,6 +44,9 @@ button {
   background-color: var(--navy-blue-bg-color);
   color: white;
   transition: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:hover {
@@ -45,5 +58,11 @@ button:hover {
   opacity: .1;
   cursor: default;
   pointer-events: none;
+}
+
+.button_loading {
+  pointer-events: none;
+  cursor: default;
+  opacity: .8;
 }
 </style>

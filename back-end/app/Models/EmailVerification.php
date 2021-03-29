@@ -15,12 +15,12 @@ class EmailVerification extends Model
         'code'
     ];
 
-    public function deleteLastVerification(string $email)
+    public function deleteLastVerification(string $email): void
     {
         $this->where('email', $email)->delete();
     }
 
-    public function createVerification(array $information)
+    public function createVerification(array $information): void
     {
         $this->create(
             [
@@ -30,7 +30,7 @@ class EmailVerification extends Model
         );
     }
 
-    public function checkVerification(string $email, string $code)
+    public function checkVerification(string $email, string $code): void
     {
         $this->where(
             [

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\EmailVerificationController;
+use App\Http\Controllers\API\Auth\MeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +19,10 @@ Route::group(
 
 
         // ----- AUTH -----
-        Route::group(
-            ['middleware' => 'api:sanctum'],
+        Route::middleware('auth:sanctum')->group(
             function () {
+                Route::get('/me', [MeController::class, 'index']);
+
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
         );

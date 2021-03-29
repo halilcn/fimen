@@ -2,7 +2,7 @@
   <auth-template
       :title="'Ücretsiz Hesap Oluştur'"
       :backgroundImage="'register.jpg'"
-      :backgroundText="'Profilini Oluştur, Mentörünü Bul!'"
+      :backgroundText="'Profilini Oluştur, Mentorunu Bul!'"
       :passwordResetShow="false">
     <template v-slot:form>
       <form>

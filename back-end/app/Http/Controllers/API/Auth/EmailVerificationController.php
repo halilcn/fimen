@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 
 class EmailVerificationController extends Controller
 {
-    protected $emailVerification;
+    protected EmailVerification $emailVerification;
 
     public function __construct()
     {
@@ -40,7 +40,13 @@ class EmailVerificationController extends Controller
             $this->emailVerification->checkVerification($request->input('email'), $request->input('code'));
             return response(['status' => 'true']);
         } catch (\Exception $e) {
-            return response(['message' => 'Kod yanlış girildi.'], 422);
+            return response(
+                [
+                    'message' => 'Kod yanlış girildi.',
+                    'email' => $request->input('email')
+                ],
+                422
+            );
         }
     }
 }

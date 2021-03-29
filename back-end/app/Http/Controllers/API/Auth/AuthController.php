@@ -7,6 +7,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Jobs\SendEmailVerification;
 use App\Models\User;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,38 +17,36 @@ class AuthController extends Controller
 {
     use Token;
 
+    public User $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
+
     public function login(LoginRequest $request)
     {
-        $user = User::query()
-            ->where('email', $request->input('email'))
-            ->firstOrFail();
-
-        if (!Hash::check($request->input('password'), $user->password)) {
+        try {
+            $user = $this->user->checkEmail($request->input('email'));
+            if ($this->user->checkPassword($request->input('password'), $user->password)) {
+                throw new \Exception();
+            }
+        } catch (\Exception $e) {
             abort(401);
         }
 
-        return [
-            'token' => $this->createToken($user)
-        ];
+        return response(['token' => $this->createToken($user)], 201);
     }
 
     public function register(RegisterRequest $request)
     {
-        $user = User::create(
-            [
-                'name' => $request->input('name'),
-                'username' => $request->username,
-                'email' => $request->email,
-                'password' => bcrypt($request->password)
-            ]
-        );
-
-        return [
-            'token' => $this->createToken($user)
-        ];
+        $user = $this->user->createUser($request->validated());
+        return response(['token' => $this->createToken($user)], 201);
     }
 
     public function logout(Request $request)
     {
+        $request->user()->tokens()->delete();
+        return ['status' => true];
     }
 }

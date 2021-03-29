@@ -1,29 +1,77 @@
 <template>
   <div class="container">
+    <div class="title">
+      Henüz kayıt işlemi tamamlanmadı.
+    </div>
     <div class="content">
-      <div class="title">
-        Henüz kayıt işlemi tamamlanmadı.
+      <div class="info_text">
+        Lütfen e-mail'e gönderilen kodu girin.
       </div>
       <div class="input_form">
-        <auth-input/>
-        <div class="repeat_send_button">
-          Tekrar Gönder
+        <input
+            maxlength="6"
+            type="text"
+            v-model="code">
+        <div
+            :class="{'timer_button':timer >  0}"
+            class="repeat_send_button">
+          <div
+              v-if="timer < 0"
+              class="send_text">
+            <span class="desktop">
+              Tekrar Gönder
+            </span>
+            <span class="mobile">
+               <i class="fas fa-redo-alt"></i>
+            </span>
+          </div>
+          <div
+              v-else
+              class="wait_text">
+            <i class="fas fa-clock"></i>
+            {{ timer }}
+          </div>
         </div>
       </div>
-      <div class="send_button">
-        Onayla ve Kayıt Ol
-      </div>
+      <auth-button
+          :text="'Onayla ve Kayıt Ol'"
+          :isDisable="isButtonDisable"/>
     </div>
+    {{ timer }}
   </div>
 </template>
 
 <script>
-import AuthInput from "@/components/authPages/Shared/Input";
+import AuthButton from "@/components/authPages/Shared/Button";
 
 export default {
   name: "EmailVerification",
+  data() {
+    return {
+      code: '',
+      timer: 120
+    }
+  },
   components: {
-    AuthInput
+    AuthButton
+  },
+  computed: {
+    isButtonDisable() {
+      return !(this.code.length === 6);
+    }
+  },
+  methods: {
+    reduceTimer() {
+      const setInterval = setInterval(() => {
+        if (this.timer === 119) {
+          clearInterval(setInterval);
+        }
+        this.timer--;
+      }, 1000);
+    }
+  },
+  created() {
+    this.reduceTimer();
   }
 }
 </script>
@@ -33,15 +81,27 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 100%;
 }
 
-.content {
+.container .title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  text-align: center;
+  color: var(--navy-blue-text-color);
+}
+
+.container > .content {
   width: 450px;
-  height: 250px;
+  height: 180px;
   padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid #dbdbdb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
 
   box-shadow: 0 0px 0.6px rgba(0, 0, 0, 0.014),
   0 0px 1.5px rgba(0, 0, 0, 0.02),
@@ -51,25 +111,78 @@ export default {
   0 0px 22px rgba(0, 0, 0, 0.05);
 }
 
+.content > .info_text {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #535353;
+}
+
 .content > .input_form {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   width: 100%;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.content > .input_form > input {
+  width: 70%;
+  padding: 5px 10px;
+  border: 1px solid #ffaeae;
+  border-radius: 3px;
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: 25px;
+  font-size: 30px;
+  text-align: center;
+  color: #484848;
 }
 
 .content > .input_form > .repeat_send_button {
-  background-color: #ff0000;
-}
-
-.content > .send_button {
-  padding: 5px 10px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  width: 30%;
+  text-align: center;
+  margin-left: 8px;
+  padding: 13px 10px;
   cursor: pointer;
-  background-color: var(--navy-blue-bg-color);
-  transition: .3s;
+  border-radius: 3px;
+  background-color: var(--navy-red-bg-color);
+  color: white;
 }
 
-.content > .send_button:hover {
-  background-color: var(--navy-blue-bg-hover-color);
+.content > .input_form > .timer_button {
+  cursor: default !important;
+  background-color: #fff1f1 !important;
+  color: var(--navy-red-bg-color) !important;
 }
+
+.content > .input_form > .repeat_send_button > .send_text > .mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .container > .content {
+    width: 90%;
+  }
+
+  .content > .input_form > input {
+    width: 80%;
+    padding: 10px 7px;
+    letter-spacing: 15px;
+    font-size: 20px;
+  }
+
+  .content > .input_form > .repeat_send_button {
+    width: 20%;
+  }
+
+  .content > .input_form > .repeat_send_button > .send_text > .mobile {
+    display: block;
+  }
+
+  .content > .input_form > .repeat_send_button > .send_text > .desktop {
+    display: none;
+  }
+}
+
 </style>
