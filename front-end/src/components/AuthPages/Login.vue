@@ -36,6 +36,9 @@
             </template>
           </input-status>
         </div>
+        <error
+            v-if="hasError"
+            :message="'E-posta ya da Şifre yanlış.'"/>
         <auth-button
             :isDisable="$v.user.$invalid"
             :text="'Giriş Yap'"
@@ -50,6 +53,7 @@ import AuthInput from "@/components/authPages/Shared/Input";
 import AuthButton from "@/components/authPages/Shared/Button";
 import AuthTemplate from "@/components/authPages/Shared/Template";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
+import Error from "@/components/shared/Error";
 
 
 import {email, required} from 'vuelidate/lib/validators'
@@ -62,24 +66,29 @@ export default {
         email: '',
         password: ''
       },
-      isLoading: false
+      isLoading: false,
+      hasError: false
     }
   },
   components: {
     AuthInput,
     AuthButton,
     AuthTemplate,
-    InputStatus
+    InputStatus,
+    Error
   },
   methods: {
     postLogin() {
       this.isLoading = true;
       this.$store.dispatch('postLogin', {...this.user})
-          .then(res => {
-            console.log(res + '+++')
+          .then(() => {
+            //this.$route.path('/');
           })
           .catch(err => {
-            console.log(err + '--');
+            if (err.response.status === 401) {
+              this.hasError = true;
+              return 0;
+            }
           })
           .finally(() => {
             this.isLoading = false;

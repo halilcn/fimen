@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from "@/store";
 
 Vue.use(VueRouter)
 
 const checkAuth = () => {
-    return false;
-    // return store.getters.checkToken;
+    return store.getters.checkAuth;
 };
 
 const auth = (to, from, next) => {
@@ -56,6 +56,12 @@ const routes = [
 const router = new VueRouter({
     mode: 'history',
     routes
+})
+
+// Set State from Local Storage
+router.beforeEach((to, from, next) => {
+    store.commit('setState');
+    next();
 })
 
 export default router
