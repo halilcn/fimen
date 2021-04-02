@@ -7,7 +7,7 @@ Vue.use(Vuex);
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/v1/";
 axios.defaults.headers.Accept = "application/json";
-axios.defaults.headers.common['Authorization'] = `Bearer  ${store.auth.state.userToken}`;
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('user_token')}`;
 //axios.defaults.headers.Authorization = '';
 
 const store = new Vuex.Store({
