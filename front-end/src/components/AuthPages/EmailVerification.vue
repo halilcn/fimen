@@ -16,7 +16,8 @@
             :class="{'timer_button':timer >  0}"
             class="repeat_send_button">
           <div
-              v-if="timer < 0"
+              v-if="timer === 0"
+              @click="postEmailVerification"
               class="send_text">
             <span class="desktop">
               Tekrar Gönder
@@ -33,16 +34,20 @@
           </div>
         </div>
       </div>
+      <error
+          v-if="false"
+          :message="'Girilen kod yanlış.'"/>
       <auth-button
+          @click.native="postRegisterStep2"
           :text="'Onayla ve Kayıt Ol'"
           :isDisable="isButtonDisable"/>
     </div>
-    {{ timer }}
   </div>
 </template>
 
 <script>
 import AuthButton from "@/components/authPages/Shared/Button";
+import Error from "@/components/shared/Error";
 
 export default {
   name: "EmailVerification",
@@ -53,7 +58,8 @@ export default {
     }
   },
   components: {
-    AuthButton
+    AuthButton,
+    Error
   },
   computed: {
     isButtonDisable() {
@@ -62,16 +68,34 @@ export default {
   },
   methods: {
     reduceTimer() {
-      const setInterval = setInterval(() => {
-        if (this.timer === 119) {
-          clearInterval(setInterval);
+      this.timer = 120;
+      setInterval(() => {
+        if (this.timer === 0) {
+          return 0;
         }
         this.timer--;
       }, 1000);
+    },
+    postRegisterStep2() {
+      this.$store.dispatch('registerStep2', this.code)
+          .then(res => {
+            console.log('suc' + res);
+          }).catch(err => {
+        console.log('err' + err);
+      });
+    },
+    postEmailVerification() {
+      this.$store.dispatch('postEmailVerification')
+          .then(() => {
+            this.reduceTimer();
+          })
+          .catch(() => {
+            alert('E-mail gönderiminde bir hata oluştu!');
+          });
     }
   },
   created() {
-    this.reduceTimer();
+    this.postEmailVerification();
   }
 }
 </script>
@@ -94,7 +118,7 @@ export default {
 
 .container > .content {
   width: 450px;
-  height: 180px;
+  height: 210px;
   padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid #dbdbdb;

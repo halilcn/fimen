@@ -82,7 +82,7 @@ export default {
       this.isLoading = true;
       this.$store.dispatch('postLogin', {...this.user})
           .then(() => {
-            //this.$route.path('/');
+            this.$router.push('/');
           })
           .catch(err => {
             if (err.response.status === 401) {

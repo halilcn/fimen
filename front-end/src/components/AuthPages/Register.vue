@@ -5,7 +5,7 @@
       :backgroundText="'Profilini Oluştur, Mentorunu Bul!'"
       :passwordResetShow="false">
     <template v-slot:form>
-      <form>
+      <form @submit.prevent="postRegisterStep1">
         <div class="inputs">
           <auth-input
               :placeholder="'Ad'"
@@ -175,6 +175,14 @@ export default {
         required,
         sameAs: sameAs('password')
       }
+    }
+  },
+  methods: {
+    postRegisterStep1() {
+      this.$store.dispatch('registerStep1', {...this.user})
+          .then(() => {
+            this.$router.push('/kayit/email-dogrulama');
+          });
     }
   }
 }

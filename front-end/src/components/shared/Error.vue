@@ -25,6 +25,7 @@ export default {
   color: #e01c1c;
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
+  margin: 8px 0px;
 }
 
 i {
