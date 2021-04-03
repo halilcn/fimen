@@ -45,28 +45,35 @@ export const auth = {
                 });
         },
         async postRegister({state, dispatch, commit}) {
-            await axios.post('/register', {...state.registerUser})
+            return await axios.post('/register', {...state.registerUser})
                 .then((res) => {
                     commit('setToken', res.data.token);
                     dispatch('getMeInfo');
                 })
-                .catch(err => {
-                    console.log(err);
+                .catch((err) => {
+                    throw err.response;
                 });
         },
         async postEmailVerification({getters}) {
-            return await axios.post('/email-verification-send', getters.getRegisterUserEmailVerificationData);
+            return await axios.post('/email-verification-send', getters.registerUserEmailVerificationData);
         },
         async postEmailCode({getters}, payload) {
-            return await axios.post('/email-verification-verify', getters.getEmailCodeData(payload));
+            return await axios.post('/email-verification-verify', getters.emailCodeData(payload))
+                .catch((err) => {
+                    throw err.response;
+                });
         },
         registerStep1({commit}, payload) {
             commit('setRegisterUser', payload);
         },
         registerStep2({dispatch}, payload) {
-            dispatch('postEmailCode', payload)
+            return dispatch('postEmailCode', payload)
                 .then(() => {
-                    dispatch('postRegister');
+                    return dispatch('postRegister');
+                })
+                .catch((err) => {
+                    console.log(err);
+                    throw err;
                 });
         },
         async getMeInfo({commit, state}) {
@@ -91,16 +98,18 @@ export const auth = {
             console.log(state.userToken);
             return state.userToken !== '';
         },
-        getRegisterUserEmailVerificationData(state) {
+        registerUserEmailVerificationData(state) {
             return {
                 email: state.registerUser.email,
                 username: state.registerUser.username
             };
         },
-        getEmailCodeData({state}, payload) {
-            return {
-                email: state.registerUser.email,
-                code: payload
+        emailCodeData(state) {
+            return function (payload) {
+                return {
+                    email: state.registerUser.email,
+                    code: payload
+                }
             }
         }
     }

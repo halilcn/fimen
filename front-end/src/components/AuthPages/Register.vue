@@ -90,19 +90,19 @@
               :placeholder="'Şifre Tekrar'"
               :type="'password'"
               :name="'password_repeat'"
-              v-model="$v.user.repeatPassword.$model"/>
+              v-model="$v.user.repeat_password.$model"/>
           <input-status
-              v-if="($v.user.password.$error && $v.user.password.$dirty) || ($v.user.repeatPassword.$error && $v.user.repeatPassword.$dirty)"
+              v-if="($v.user.password.$error && $v.user.password.$dirty) || ($v.user.repeat_password.$error && $v.user.repeat_password.$dirty)"
               :status="false">
             <template v-slot:errors>
               <span v-if="!$v.user.password.required">{{ $errors.required('Şifre') }}</span>
 
-              <span v-if="!$v.user.repeatPassword.required">{{ $errors.required('Şifre Tekrar') }}</span>
-              <span v-if="!$v.user.repeatPassword.sameAs">{{ $errors.sameAs('Şifreler') }}</span>
+              <span v-if="!$v.user.repeat_password.required">{{ $errors.required('Şifre Tekrar') }}</span>
+              <span v-if="!$v.user.repeat_password.sameAs">{{ $errors.sameAs('Şifreler') }}</span>
             </template>
           </input-status>
           <input-status
-              v-if="(!$v.user.password.$error && $v.user.password.$dirty) && (!$v.user.repeatPassword.$error && $v.user.repeatPassword.$dirty)"
+              v-if="(!$v.user.password.$error && $v.user.password.$dirty) && (!$v.user.repeat_password.$error && $v.user.repeat_password.$dirty)"
               :status="true"/>
         </div>
         <auth-button
@@ -140,7 +140,7 @@ export default {
         username: '',
         email: '',
         password: '',
-        repeatPassword: ''
+        repeat_password: ''
       }
     }
   },
@@ -171,7 +171,7 @@ export default {
       password: {
         required
       },
-      repeatPassword: {
+      repeat_password: {
         required,
         sameAs: sameAs('password')
       }

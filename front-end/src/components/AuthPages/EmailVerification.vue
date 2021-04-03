@@ -5,7 +5,7 @@
     </div>
     <div class="content">
       <div class="info_text">
-        Lütfen e-mail'e gönderilen kodu girin.
+        Lütfen {{ $store.state.auth.registerUser.email }} e-mail adresine gönderilen kodu girin.
       </div>
       <div class="input_form">
         <input
@@ -35,7 +35,7 @@
         </div>
       </div>
       <error
-          v-if="false"
+          v-if="isWrongCode"
           :message="'Girilen kod yanlış.'"/>
       <auth-button
           @click.native="postRegisterStep2"
@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       code: '',
+      isWrongCode: false,
       timer: 120
     }
   },
@@ -78,10 +79,14 @@ export default {
     },
     postRegisterStep2() {
       this.$store.dispatch('registerStep2', this.code)
-          .then(res => {
-            console.log('suc' + res);
+          .then(() => {
+            this.$router.push('/');
           }).catch(err => {
-        console.log('err' + err);
+        if (err.status === 422 && err.config.url === '/email-verification-verify') {
+          this.isWrongCode = true;
+          return 0;
+        }
+        alert('Bir hata oluştu.')
       });
     },
     postEmailVerification() {
