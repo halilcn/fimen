@@ -4,6 +4,7 @@
       :backgroundImage="'register.jpg'"
       :backgroundText="'Profilini Oluştur, Mentorunu Bul!'"
       :passwordResetShow="false">
+    {{ $v }}
     <template v-slot:form>
       <form @submit.prevent="postRegisterStep1">
         <div class="inputs">
@@ -124,6 +125,12 @@ const checkUsernameRegex = () => {
   return !!helpers.regex('usernameRegex', '/^\\S*$/u');
 };
 
+/*
+*
+const checkUniqueUsername = () => {
+
+}*/
+
 export default {
   name: "Register",
   components: {
@@ -162,7 +169,10 @@ export default {
         required,
         maxLength: maxLength(15),
         minLength: minLength(3),
-        checkUsernameRegex
+        checkUsernameRegex,
+        checkUniqueUsername: () => {
+          return false;
+        }
       },
       email: {
         required,
@@ -183,6 +193,18 @@ export default {
           .then(() => {
             this.$router.push('/kayit/email-dogrulama');
           });
+    },
+    checkUniqueUsername() {
+      this.$store.dispatch('checkUsername');
+    },
+    checkUniqueEmail() {
+      this.$store.dispatch('checkEmail')
+    }
+
+  },
+  computed: {
+    a() {
+      return !this.user.username;
     }
   }
 }

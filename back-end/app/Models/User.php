@@ -52,7 +52,6 @@ class User extends Authenticatable
         $this->attributes['password'] = bcrypt($password);
     }
 
-
     public function checkEmail(string $email): User
     {
         return $this->where('email', $email)->firstOrFail();
@@ -69,5 +68,15 @@ class User extends Authenticatable
     public function createUser(array $user): User
     {
         return $this->create($user);
+    }
+
+    public function checkUniqueUsername(string $username): bool
+    {
+        return !$this->where('username', $username)->exists();
+    }
+
+    public function checkUniqueEmail(string $email): bool
+    {
+        return !$this->where('email', $email)->exists();
     }
 }

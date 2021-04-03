@@ -76,6 +76,12 @@ export const auth = {
                     throw err;
                 });
         },
+        checkUsername(_, payload) {
+            return axios.post('/register-check/username', {username: payload});
+        },
+        checkEmail() {
+
+        },
         async getMeInfo({commit, state}) {
             await axios.get('/me', {
                 headers: {
