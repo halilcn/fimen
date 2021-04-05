@@ -38,12 +38,16 @@ class EmailVerificationController extends Controller
     {
         try {
             $this->emailVerification->checkVerification($request->input('email'), $request->input('code'));
-            return response(['status' => 'true']);
+            return response(
+                [
+                    'status' => 'true',
+                    'email' => $request->input('email')
+                ]
+            );
         } catch (\Exception $e) {
             return response(
                 [
                     'message' => 'Kod yanlış girildi.',
-                    'email' => $request->input('email')
                 ],
                 422
             );

@@ -15,7 +15,6 @@ class RegisterCheckController extends Controller
         $this->user = new User();
     }
 
-
     public function username(Request $request)
     {
         if ($this->user->checkUniqueUsername($request->input('username'))) {

@@ -31,11 +31,10 @@ class AuthController extends Controller
             if ($this->user->checkPassword($request->input('password'), $user->password)) {
                 throw new \Exception();
             }
+            return response(['token' => $this->createToken($user)], 201);
         } catch (\Exception $e) {
             abort(401);
         }
-
-        return response(['token' => $this->createToken($user)], 201);
     }
 
     public function register(RegisterRequest $request)

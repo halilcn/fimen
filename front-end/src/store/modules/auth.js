@@ -3,8 +3,8 @@ import axios from "axios";
 export const auth = {
     state: {
         userToken: '',
-        registerUser: '',
-        user: ''
+        registerUser: {},
+        user: {}
     },
     mutations: {
         setState(state) {
@@ -34,6 +34,9 @@ export const auth = {
         setRegisterUser(state, payload) {
             state.registerUser = payload;
         },
+        setRegisterUserEmail(state, payload) {
+            state.registerUser.email = payload;
+        }
     },
     actions: {
         async postLogin({commit, dispatch}, payload) {
@@ -56,8 +59,11 @@ export const auth = {
         async postEmailVerification({getters}) {
             return await axios.post('/email-verification-send', getters.registerUserEmailVerificationData);
         },
-        async postEmailCode({getters}, payload) {
+        async postEmailCode({getters, commit}, payload) {
             return await axios.post('/email-verification-verify', getters.emailCodeData(payload))
+                .then((res) => {
+                    commit('setRegisterUserEmail', res.data.email);
+                })
                 .catch((err) => {
                     throw err.response;
                 });

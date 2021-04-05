@@ -17,7 +17,8 @@ class MeResource extends JsonResource
         return [
             'name_surname' => $this->name,
             'username' => $this->username,
-            'email' => $this->email
+            'email' => $this->email,
+            //'image'=>''
         ];
     }
 }
