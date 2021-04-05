@@ -18,7 +18,6 @@
               :type="'text'"
               :name="'surname'"
               v-model="$v.user.surname.$model"/>
-
           <input-status
               v-if="($v.user.name.$error && $v.user.name.$dirty) || $v.user.surname.$error && $v.user.surname.$dirty"
               :status="false">
@@ -27,14 +26,12 @@
               <span v-if="!$v.user.name.maxLength">
                 {{ $errors.maxLength('Ad', $v.user.name.$params.maxLength.max) }}
               </span>
-
               <span v-if="!$v.user.surname.required">{{ $errors.required('Soyad') }}</span>
               <span v-if="!$v.user.surname.maxLength">
                 {{ $errors.maxLength('Soyad', $v.user.surname.$params.maxLength.max) }}
               </span>
             </template>
           </input-status>
-
           <input-status
               v-if="(!$v.user.name.$error && $v.user.name.$dirty) && !$v.user.surname.$error && $v.user.surname.$dirty"
               :status="true"/>
@@ -96,7 +93,6 @@
               :status="false">
             <template v-slot:errors>
               <span v-if="!$v.user.password.required">{{ $errors.required('Şifre') }}</span>
-
               <span v-if="!$v.user.repeat_password.required">{{ $errors.required('Şifre Tekrar') }}</span>
               <span v-if="!$v.user.repeat_password.sameAs">{{ $errors.sameAs('Şifreler') }}</span>
             </template>

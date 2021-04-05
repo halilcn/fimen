@@ -31,7 +31,6 @@
           <input-status
               v-if="$v.user.password.$error && $v.user.password.$dirty"
               :status="false">
-            asdsa
             <template v-slot:errors>
               <span v-if="!$v.user.password.required">{{ $errors.required('Şifre') }}</span>
             </template>
