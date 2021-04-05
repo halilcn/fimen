@@ -12,10 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use App\Traits\Token;
+use App\Traits\Image;
 
 class AuthController extends Controller
 {
-    use Token;
+    use Token, Image;
 
     public User $user;
 
@@ -39,7 +40,14 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $user = $this->user->createUser($request->validated());
+        $user = $this->user->createUser(
+            array_merge(
+                $request->validated(),
+                [
+                    'image' => $this->createDefaultProfileImage($request->input('name'), $request->input('surname'))
+                ]
+            )
+        );
         return response(['token' => $this->createToken($user)], 201);
     }
 

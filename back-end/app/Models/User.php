@@ -24,7 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'username',
-        'password'
+        'password',
+        'image'
     ];
 
     /**
@@ -67,6 +68,7 @@ class User extends Authenticatable
 
     public function createUser(array $user): User
     {
+        $user['name'] = $user['name'].' '.$user['surname'];
         return $this->create($user);
     }
 
