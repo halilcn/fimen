@@ -2,7 +2,8 @@
   <auth-template
       :title="'Hoşgeldin!'"
       :backgroundImage="'login.jpg'"
-      :backgroundText="'Alanında Uzmanlardan Destek Al!'">
+      :backgroundText="'Alanında Uzmanlardan Destek Al!'"
+      :type="'login'">
     <template v-slot:form>
       <form onsubmit="return false;">
         <div class="inputs">

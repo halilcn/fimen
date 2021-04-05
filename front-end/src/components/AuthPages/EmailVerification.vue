@@ -40,7 +40,8 @@
       <auth-button
           @click.native="postRegisterStep2"
           :text="'Onayla ve Kayıt Ol'"
-          :isDisable="isButtonDisable"/>
+          :isDisable="isButtonDisable"
+          :isLoading="isLoading"/>
     </div>
   </div>
 </template>
@@ -55,7 +56,8 @@ export default {
     return {
       code: '',
       isWrongCode: false,
-      timer: 120
+      timer: 120,
+      isLoading: false
     }
   },
   components: {
@@ -78,6 +80,7 @@ export default {
       }, 1000);
     },
     postRegisterStep2() {
+      this.isLoading = true;
       this.$store.dispatch('registerStep2', this.code)
           .then(() => {
             this.$router.push('/');
@@ -86,14 +89,14 @@ export default {
           this.isWrongCode = true;
           return 0;
         }
-        alert('Bir hata oluştu.')
+        alert('Bir hata oluştu.');
+      }).finally(() => {
+        this.isLoading = false;
       });
     },
     postEmailVerification() {
+      this.reduceTimer();
       this.$store.dispatch('postEmailVerification')
-          .then(() => {
-            this.reduceTimer();
-          })
           .catch(() => {
             alert('E-mail gönderiminde bir hata oluştu!');
           });
@@ -101,6 +104,13 @@ export default {
   },
   created() {
     this.postEmailVerification();
+  },
+  watch: {
+    code(val) {
+      if (val.length === 6) {
+        this.postRegisterStep2();
+      }
+    }
   }
 }
 </script>

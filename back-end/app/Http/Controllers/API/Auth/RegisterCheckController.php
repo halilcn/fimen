@@ -26,5 +26,9 @@ class RegisterCheckController extends Controller
 
     public function email(Request $request)
     {
+        if ($this->user->checkUniqueEmail($request->input('email'))) {
+            return ['status' => true];
+        }
+        return response(['status' => false], 422);
     }
 }

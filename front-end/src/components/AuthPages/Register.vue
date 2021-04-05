@@ -3,8 +3,8 @@
       :title="'Ücretsiz Hesap Oluştur'"
       :backgroundImage="'register.jpg'"
       :backgroundText="'Profilini Oluştur, Mentorunu Bul!'"
-      :passwordResetShow="false">
-    {{ $v }}
+      :passwordResetShow="false"
+      :type="'register'">
     <template v-slot:form>
       <form @submit.prevent="postRegisterStep1">
         <div class="inputs">
@@ -50,9 +50,7 @@
               :status="false">
             <template v-slot:errors>
               <span v-if="!$v.user.username.required">{{ $errors.required('Kullanıcı Adı') }}</span>
-              <span v-if="!$v.user.username.maxLength">
-                {{ $errors.maxLength('Kullanıcı Adı', $v.user.username.$params.maxLength.max) }}
-              </span>
+              <span v-if="!$v.user.username.checkUniqueUsername">Bu kullanıcı adı daha önce kullanılmış.</span>
               <span v-if="!$v.user.username.minLength">
                 {{ $errors.minLength('Kullanıcı Adı', $v.user.username.$params.minLength.min) }}
               </span>
@@ -74,6 +72,7 @@
               :status="false">
             <template v-slot:errors>
               <span v-if="!$v.user.email.required">{{ $errors.required('E-mail') }}</span>
+              <span v-if="!$v.user.email.checkUniqueEmail">Bu e-mail daha önce kullanılmış.</span>
               <span v-if="!$v.user.email.email">{{ $errors.email() }}</span>
             </template>
           </input-status>
@@ -113,23 +112,25 @@
     </template>
   </auth-template>
 </template>
-
 <script>
 import AuthInput from "@/components/authPages/Shared/Input";
 import AuthTemplate from "@/components/authPages/Shared/Template";
 import AuthButton from "@/components/authPages/Shared/Button";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
+import {customValidators} from "@/helpers/customValidators";
 import {required, maxLength, minLength, email, sameAs, helpers} from 'vuelidate/lib/validators'
 
 const checkUsernameRegex = () => {
   return !!helpers.regex('usernameRegex', '/^\\S*$/u');
 };
 
-/*
-*
-const checkUniqueUsername = () => {
+const checkUniqueUsername = (value) => {
+  return customValidators.checkUniqueUsername(value);
+}
 
-}*/
+const checkUniqueEmail = (value) => {
+  return customValidators.checkUniqueEmail(value);
+}
 
 export default {
   name: "Register",
@@ -170,13 +171,12 @@ export default {
         maxLength: maxLength(15),
         minLength: minLength(3),
         checkUsernameRegex,
-        checkUniqueUsername: () => {
-          return false;
-        }
+        checkUniqueUsername
       },
       email: {
         required,
-        email
+        email,
+        checkUniqueEmail
       },
       password: {
         required
@@ -194,13 +194,6 @@ export default {
             this.$router.push('/kayit/email-dogrulama');
           });
     },
-    checkUniqueUsername() {
-      this.$store.dispatch('checkUsername');
-    },
-    checkUniqueEmail() {
-      this.$store.dispatch('checkEmail')
-    }
-
   },
   computed: {
     a() {

@@ -9,7 +9,7 @@
         <slot name="form"/>
       </div>
       <div class="auth_actions">
-        <div>
+        <div v-if="type==='login'">
           Hesabın mı yok?
           <router-link
               tag="span"
@@ -17,7 +17,15 @@
             Hesap oluştur!
           </router-link>
         </div>
-        <div v-if="passwordResetShow">
+        <div v-else>
+          Hesabın mı var?
+          <router-link
+              tag="span"
+              to="/giris">
+            Giriş yap!
+          </router-link>
+        </div>
+        <div>
           Şifreni mi unuttun?
           <router-link
               tag="span"
@@ -43,16 +51,20 @@ export default {
   name: "AuthTemplate",
   props: {
     title: {
-      required: true
+      required: true,
+      type: String
     },
     backgroundImage: {
-      required: true
+      required: true,
+      type: String
     },
     backgroundText: {
-      required: true
+      required: true,
+      type: String
     },
-    passwordResetShow: {
-      default: true
+    type: {
+      required: true,
+      type: String
     }
   }
 }

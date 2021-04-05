@@ -77,10 +77,22 @@ export const auth = {
                 });
         },
         checkUsername(_, payload) {
-            return axios.post('/register-check/username', {username: payload});
+            return axios.post('/register-check/username', {username: payload})
+                .then(() => {
+                    return true;
+                })
+                .catch(() => {
+                    return false;
+                });
         },
-        checkEmail() {
-
+        checkEmail(_, payload) {
+            return axios.post('/register-check/email', {email: payload})
+                .then(() => {
+                    return true;
+                })
+                .catch(() => {
+                    return false;
+                });
         },
         async getMeInfo({commit, state}) {
             await axios.get('/me', {
