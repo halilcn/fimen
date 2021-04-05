@@ -190,11 +190,6 @@ export default {
             this.$router.push('/kayit/email-dogrulama');
           });
     },
-  },
-  computed: {
-    a() {
-      return !this.user.username;
-    }
   }
 }
 </script>

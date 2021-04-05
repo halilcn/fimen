@@ -29,7 +29,6 @@ export const auth = {
         },
         setUser(state, payload) {
             state.user = payload;
-            console.log(payload);
             localStorage.setItem('user', JSON.stringify(payload));
         },
         setRegisterUser(state, payload) {
@@ -72,7 +71,6 @@ export const auth = {
                     return dispatch('postRegister');
                 })
                 .catch((err) => {
-                    console.log(err);
                     throw err;
                 });
         },
@@ -105,7 +103,7 @@ export const auth = {
                 });
         },
         postLogout({commit}) {
-            axios.post('/logout')
+            return axios.post('/logout')
                 .then(() => {
                     commit('removeStateAndStorage');
                 });
@@ -113,7 +111,6 @@ export const auth = {
     },
     getters: {
         checkAuth(state) {
-            console.log(state.userToken);
             return state.userToken !== '';
         },
         registerUserEmailVerificationData(state) {
@@ -129,6 +126,9 @@ export const auth = {
                     code: payload
                 }
             }
+        },
+        checkRegisterUser(state) {
+            return state.registerUser === '';
         }
     }
 }

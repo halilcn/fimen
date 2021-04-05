@@ -103,6 +103,10 @@ export default {
     }
   },
   created() {
+    if (this.$store.getters.checkRegisterUser) {
+      this.$router.push('/kayit');
+      return 0;
+    }
     this.postEmailVerification();
   },
   watch: {

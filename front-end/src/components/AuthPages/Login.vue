@@ -55,7 +55,6 @@ import AuthTemplate from "@/components/authPages/Shared/Template";
 import InputStatus from "@/components/authPages/Shared/InputStatus";
 import Error from "@/components/shared/Error";
 
-
 import {email, required} from 'vuelidate/lib/validators'
 
 export default {
@@ -89,6 +88,7 @@ export default {
               this.hasError = true;
               return 0;
             }
+            alert('Bir hata oluştu!');
           })
           .finally(() => {
             this.isLoading = false;
