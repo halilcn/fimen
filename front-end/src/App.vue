@@ -9,6 +9,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap');
 
@@ -34,6 +35,8 @@ body, html {
   --navy-blue-bg-color: #38496B;
   --navy-blue-bg-hover-color: #303e5a;
   --navy-red-bg-color: #FF7268;
+  --navy-red-bg-dark-color: #f16b61;
   --navy-blue-text-color: #2B374F;
+  --navy-user-profile-border-radius: 40%;
 }
 </style>
