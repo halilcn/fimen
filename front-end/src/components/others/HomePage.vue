@@ -7,12 +7,12 @@
       <div class="links">
         <router-link
             tag="a"
-            to="/">
+            to="/giris">
           GİRİŞ YAP
         </router-link>
         <router-link
             tag="a"
-            to="/">
+            to="/kayit">
           KAYIT OL
         </router-link>
       </div>
