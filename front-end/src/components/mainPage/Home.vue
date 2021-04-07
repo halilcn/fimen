@@ -3,11 +3,17 @@
     <div class="head_container">
       <div class="head_content">
         <div class="logo">
-          <img src="@/assets/images/logos/red.png"/>
+          <img src="@/assets/images/logos/red_233x65.png"/>
         </div>
         <div class="links">
           <div>
             <i class="bi bi-house-door"></i>
+          </div>
+          <div>
+            <i class="bi bi-bell"></i>
+          </div>
+          <div>
+            <i class="bi bi-bell"></i>
           </div>
           <div>
             <i class="bi bi-bell"></i>
@@ -53,7 +59,7 @@
                 <i class="bi bi-gear-fill"></i>
                 Ayarlar
               </div>
-              <div @click="postLogout">
+              <div class="logout" @click="postLogout">
                 <i class="bi bi-door-open-fill"></i>
                 Çıkış
               </div>
@@ -96,7 +102,7 @@ export default {
   name: "Home",
   data() {
     return {
-      userDropdown: true
+      userDropdown: false
     }
   },
   methods: {
@@ -129,22 +135,29 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  padding: 4px 0px;
 }
 
 .head_content > .logo > img {
-  width: 170px;
+  width: 130px;
 }
 
 .head_content > .links {
   display: flex;
   justify-content: flex-start;
+  margin-left: 40px;
 }
 
 .head_content > .links > div {
   font-size: 25px;
   cursor: pointer;
-  background-color: red;
-  padding: 7px;
+  padding: 10px 22px;
+  border-radius: 4px;
+  color: var(--navy-blue-bg-hover-color);
+}
+
+.head_content > .links > div:hover {
+  background-color: #f5f5f5;
 }
 
 .head_content > .user {
@@ -268,14 +281,23 @@ export default {
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
   color: #404040;
+  transition: .2s;
+}
+
+.dropdown > .links > div:hover {
+  background-color: #f1f1f1;
 }
 
 .dropdown > .links > div > i {
   margin-right: 7px;
 }
 
-.dropdown > .links > div:hover {
-  background-color: #f1f1f1;
+.dropdown > .links > .logout {
+  color: #c81616;
+}
+
+.dropdown > .links > .logout:hover {
+  background-color: #fff1f1;
 }
 
 .dropdown > .footer {
@@ -289,9 +311,14 @@ export default {
 .dropdown > .footer > div {
   margin: 5px;
   font-family: 'Poppins', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
   color: #585858;
+}
+
+.dropdown > .footer > div:hover {
+  text-decoration: underline;
+  color: #858585;
 }
 
 .main_container {
