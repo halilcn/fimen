@@ -42,12 +42,16 @@ const routes = [
     },
     {
         path: '/',
-        component: () => import('@/components/mainPage/Home'),
+        component: () => import('@/components/pages/Home'),
         beforeEnter: auth,
         children: [
             {
                 path: '/',
-                component: () => import('@/components/mainPage/MainPage'),
+                component: () => import('@/components/pages/MainPage'),
+            },
+            {
+                path: '/bildirimler',
+                component: () => import('@/components/pages/Notification'),
             },
         ]
     },

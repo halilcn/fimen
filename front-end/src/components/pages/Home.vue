@@ -6,12 +6,20 @@
           <img src="@/assets/images/logos/red_233x65.png"/>
         </div>
         <div class="links">
-          <div>
-            <i class="bi bi-house-door"></i>
-          </div>
-          <div>
-            <i class="bi bi-bell"></i>
-          </div>
+          <router-link
+              to="/"
+              tag="div"
+              exact-active-class="active_button">
+            <i class="bi bi-house-door not_active_icon"></i>
+            <i class="bi bi-house-door-fill active_icon"></i>
+          </router-link>
+          <router-link
+              to="/bildirimler"
+              tag="div"
+              exact-active-class="active_button">
+            <i class="bi bi-bell not_active_icon"></i>
+            <i class="bi bi-bell-fill active_icon"></i>
+          </router-link>
           <div>
             <i class="bi bi-bell"></i>
           </div>
@@ -19,15 +27,24 @@
             <i class="bi bi-bell"></i>
           </div>
         </div>
+        <div class="search_user">
+          <label for="search_input">
+            <i class="bi bi-search"></i>
+          </label>
+          <input id="search_input" placeholder="Kişi ara" type="text">
+        </div>
         <div class="user">
-          <div class="info">
-            <img src="https://ui-avatars.com/api/?name=halil+can&background=f2f2f2&size=128">
-            <span class="username">hcan</span>
+          <div @click="isEnableDropdown=!isEnableDropdown" class="info">
+            <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D1&color=FFFFFF&size=128">
+            <span class="username">
+              hcan
+            </span>
+            <i class="bi bi-caret-down-fill"></i>
           </div>
-          <div v-if="userDropdown" class="dropdown">
+          <div v-if="isEnableDropdown" class="dropdown">
             <div class="top">
               <div class="user_profile">
-                <img src="https://ui-avatars.com/api/?name=halil+can&background=f2f2f2&size=128">
+                <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D1&color=FFFFFF&size=128">
                 <div class="info">
                   <div class="name">
                     Halil CAN
@@ -84,7 +101,22 @@
     </div>
     <div class="main_container">
       <div class="main_content">
+        <router-view></router-view>
         asdsa
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
       </div>
     </div>
     <!-- home pageasdkdasd
@@ -102,7 +134,7 @@ export default {
   name: "Home",
   data() {
     return {
-      userDropdown: false
+      isEnableDropdown: false
     }
   },
   methods: {
@@ -127,6 +159,13 @@ export default {
 .head_container {
   width: 100%;
   background-color: white;
+  border-bottom: 1px solid #eeeeee;
+  box-shadow: 0 0.5px 0.5px rgba(0, 0, 0, 0.006),
+  0 1.1px 1.3px rgba(0, 0, 0, 0.008),
+  0 2.1px 2.4px rgba(0, 0, 0, 0.01),
+  0 3.8px 4.2px rgba(0, 0, 0, 0.012),
+  0 7.1px 7.9px rgba(0, 0, 0, 0.014),
+  0 17px 19px rgba(0, 0, 0, 0.02);
 }
 
 .head_content {
@@ -154,14 +193,66 @@ export default {
   padding: 10px 22px;
   border-radius: 4px;
   color: var(--navy-blue-bg-hover-color);
+  position: relative;
 }
 
 .head_content > .links > div:hover {
   background-color: #f5f5f5;
 }
 
-.head_content > .user {
+.head_content > .links > div > .active_icon {
+  display: none;
+}
 
+.head_content > .links > .active_button {
+  color: var(--navy-red-bg-dark-color);
+}
+
+.head_content > .links > .active_button:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-top: 2px solid var(--navy-red-bg-dark-color);
+  border-radius: 10px;
+}
+
+.head_content > .links > .active_button > .active_icon {
+  display: block;
+}
+
+.head_content > .links > .active_button > .not_active_icon {
+  display: none;
+}
+
+.head_content > .search_user {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 320px;
+  border: 1px solid #c3c3c3;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 3px 5px;
+  color: #515151;
+}
+
+.head_content > .search_user:hover {
+  border-color: #a5a5a5;
+}
+
+.head_content > .search_user > input {
+  border: 0px;
+  padding: 5px 10px;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #515151;
+}
+
+.head_content > .user {
+  border-radius: 3px;
 }
 
 .user {
@@ -175,6 +266,11 @@ export default {
   cursor: pointer;
   padding: 5px 7px;
   border-radius: 3px;
+  color: var(--navy-blue-text-color);
+}
+
+.user > .info:hover {
+  background-color: #f7f7f7;
 }
 
 .user > .info > .username {
@@ -189,13 +285,19 @@ export default {
   height: 33px;
 }
 
+.user > .info > i {
+  margin-left: 3px;
+  color: #3e4b66;
+}
+
 .user > .dropdown {
   position: absolute;
   background-color: white;
-  width: 210px;
+  width: 225px;
   border: 1px solid #e0e0e0;
   border-radius: 5px;
   right: 0px;
+  top: 61px;
 
   box-shadow: 0 0.4px 0.5px rgba(0, 0, 0, 0.008),
   0 1.1px 1.3px rgba(0, 0, 0, 0.012),
@@ -203,6 +305,21 @@ export default {
   0 3.6px 4.2px rgba(0, 0, 0, 0.018),
   0 6.7px 7.9px rgba(0, 0, 0, 0.022),
   0 16px 19px rgba(0, 0, 0, 0.03);
+}
+
+.dropdown:after {
+  right: 40px;
+  top: -11px;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(0, 0, 0, 0);
+  border-bottom-color: #ffffff;
+  border-width: 10px;
+  margin-top: -10px;
 }
 
 .dropdown > .top {
@@ -256,7 +373,7 @@ export default {
   color: white;
   padding: 5px 10px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   text-align: center;
@@ -275,7 +392,7 @@ export default {
 
 .dropdown > .links > div {
   cursor: pointer;
-  padding: 7px 14px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   font-family: 'Nunito', sans-serif;
@@ -323,12 +440,12 @@ export default {
 
 .main_container {
   width: 100%;
-  background-color: #2b374f;
+  background-color: #f5f5f5;
 }
 
 .main_content {
   max-width: 1050px;
   margin: auto;
-  background-color: #1a202c;
+  min-height: 600px;
 }
 </style>
