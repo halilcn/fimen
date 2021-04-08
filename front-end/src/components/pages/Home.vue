@@ -73,5 +73,6 @@ export default {
   max-width: 1050px;
   margin: auto;
   min-height: 600px;
+  padding: 20px 0px;
 }
 </style>

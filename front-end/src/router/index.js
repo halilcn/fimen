@@ -53,6 +53,10 @@ const routes = [
                 path: '/bildirimler',
                 component: () => import('@/components/pages/Notification'),
             },
+            {
+                path: '/mentor-basvuru',
+                component: () => import('@/components/pages/ApplyMentor'),
+            },
         ]
     },
 ]
