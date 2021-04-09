@@ -65,25 +65,62 @@
         <standart-input/>
       </li>
       <li>
-        <standart-button/>
+        <div class="title">
+          Belge
+        </div>
+        <standart-file-input
+            :id="'id'"/>
+        <div class="info">
+          <i class="bi bi-info-circle-fill"></i>
+          asdas dsa
+        </div>
+      </li>
+      <li>
+        <div class="title">
+          Linkedin
+        </div>
+        <standart-input/>
+      </li>
+      <li>
+        <div class="title">
+          Eğer açlışyorsan şirket ve pozisyon
+        </div>
+        <standart-input/>
+      </li>
+      <li>
+        <div class="title">
+          Eklenmek istenilen
+        </div>
+        <standart-textarea/>
+      </li>
+      <li>
+        <standart-checkbox
+            :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"/>
+      </li>
+      <li class="button_li">
+        <standart-button @click.native="postMentorForm"/>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import BgImgTitle from "@/components/pages/shared/BgImgTitle";
-import StandartSelector from "@/components/pages/shared/StandartSelector";
-import StandartInput from "@/components/pages/shared/StandartInput";
-import StandartButton from "@/components/pages/shared/StandartButton";
 
 export default {
   name: "ApplyMentor",
   components: {
-    BgImgTitle,
-    StandartSelector,
-    StandartInput,
-    StandartButton
+    BgImgTitle: () => import('@/components/pages/shared/BgImgTitle'),
+    StandartSelector: () => import('@/components/pages/shared/elements/StandartSelector'),
+    StandartInput: () => import('@/components/pages/shared/elements/StandartInput'),
+    StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
+    StandartFileInput: () => import('@/components/pages/shared/elements/StandartFileInput'),
+    StandartTextarea: () => import('@/components/pages/shared/elements/StandartTextarea'),
+    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox')
+  },
+  methods: {
+    postMentorForm() {
+      alert()
+    }
   }
 }
 </script>
@@ -191,8 +228,6 @@ export default {
   0 2px 3.8px rgba(0, 0, 0, 0.012),
   0 3.8px 7.1px rgba(0, 0, 0, 0.014),
   0 9px 17px rgba(0, 0, 0, 0.02);
-
-
 }
 
 .form_ul > li {
@@ -205,6 +240,18 @@ export default {
   font-size: 17px;
   margin-bottom: 4px;
   color: var(--navy-blue-text-color);
+}
+
+.form_ul > li > .info {
+  font-family: 'Montserrat', 'sans-serif';
+  font-size: 11px;
+  color: #434343;
+}
+
+.form_ul > .button_li {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
 }
 
 </style>
