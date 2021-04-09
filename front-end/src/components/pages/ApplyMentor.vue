@@ -1,12 +1,8 @@
 <template>
   <div class="content">
-    <div class="top">
-      <img src="@/assets/images/applyMentor/top-bg.jpg"/>
-      <div class="filter"></div>
-      <div class="title">
-        Mentor Başvurusu
-      </div>
-    </div>
+    <bg-img-title
+        :image="'applyMentor/top-bg.jpg'"
+        :title="'Mentor Başvurusu'"/>
     <div class="title">
       Süreç Nasıl İşler ?
     </div>
@@ -65,8 +61,13 @@
 </template>
 
 <script>
+import BgImgTitle from "@/components/pages/shared/BgImgTitle";
+
 export default {
-  name: "ApplyMentor"
+  name: "ApplyMentor",
+  components: {
+    BgImgTitle
+  }
 }
 </script>
 
@@ -74,37 +75,6 @@ export default {
 .content {
   display: flex;
   flex-direction: column;
-}
-
-.content > .top {
-  position: relative;
-  width: 100%;
-  height: 180px;
-}
-
-.content > .top > img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  position: absolute;
-  border-radius: 10px;
-}
-
-.content > .top > .filter {
-  background-color: #000000;
-  opacity: .3;
-  position: absolute;
-  width: 100%;
-  height: 180px;
-  border-radius: 10px;
-}
-
-.content > .top > .title {
-  position: relative;
-  font-family: 'Rubik', sans-serif;
-  font-size: 35px;
-  color: var(--navy-red-bg-dark-color);
-  text-align: center;
 }
 
 .content > .title {
