@@ -16,8 +16,7 @@
             Gerekli Alanları Doldur
           </div>
           <div class="detail">
-            asdsa da dsa sas dasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd
-            asas asdksad
+            Seni daha iyi tanımamız için eksiksiz doldurmalısın.
           </div>
         </div>
       </li>
@@ -27,8 +26,7 @@
             Profilini İnceleyelim
           </div>
           <div class="detail">
-            asdsa da dsa sas dasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd
-            asas asdksad
+            Yetkinliğini onaylamak için profilini ve başvururken dolduruğun formu incelememiz gerekir.
           </div>
         </div>
         <div class="number">
@@ -44,8 +42,7 @@
             Artık Mentorluk Verebilirsin !
           </div>
           <div class="detail">
-            asdsa da dsa sas dasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd asas asdksaddasd
-            asas asdksad
+            Sende mentorluk programı başlatabilir ve mentorluk verebilirsin.
           </div>
         </div>
       </li>
@@ -54,19 +51,39 @@
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
-    <div class="form">
-
-    </div>
+    <ul class="form_ul">
+      <li>
+        <div class="title">
+          Yetkinlik Alanı
+        </div>
+        <standart-selector/>
+      </li>
+      <li>
+        <div class="title">
+          Yetkinlik Alanı
+        </div>
+        <standart-input/>
+      </li>
+      <li>
+        <standart-button/>
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
 import BgImgTitle from "@/components/pages/shared/BgImgTitle";
+import StandartSelector from "@/components/pages/shared/StandartSelector";
+import StandartInput from "@/components/pages/shared/StandartInput";
+import StandartButton from "@/components/pages/shared/StandartButton";
 
 export default {
   name: "ApplyMentor",
   components: {
-    BgImgTitle
+    BgImgTitle,
+    StandartSelector,
+    StandartInput,
+    StandartButton
   }
 }
 </script>
@@ -81,6 +98,7 @@ export default {
   font-family: 'Poppins', sans-serif;
   font-size: 30px;
   text-align: center;
+  margin-top: 40px;
 }
 
 .content > .steps {
@@ -158,4 +176,35 @@ export default {
 .content > .apply_now_button:hover {
   background-color: var(--navy-red-bg-dark-color);
 }
+
+.content .form_ul {
+  padding: 7px 40px;
+  list-style-type: none;
+  width: 70%;
+  border: 1px solid #dedede;
+  border-radius: 5px;
+  margin: auto;
+
+  box-shadow: 0 0.2px 0.5px rgba(0, 0, 0, 0.006),
+  0 0.6px 1.1px rgba(0, 0, 0, 0.008),
+  0 1.1px 2.1px rgba(0, 0, 0, 0.01),
+  0 2px 3.8px rgba(0, 0, 0, 0.012),
+  0 3.8px 7.1px rgba(0, 0, 0, 0.014),
+  0 9px 17px rgba(0, 0, 0, 0.02);
+
+
+}
+
+.form_ul > li {
+  margin: 20px 0px;
+}
+
+.form_ul > li > .title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  margin-bottom: 4px;
+  color: var(--navy-blue-text-color);
+}
+
 </style>

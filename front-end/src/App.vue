@@ -37,6 +37,7 @@ body, html {
   --navy-red-bg-color: #FF7268;
   --navy-red-bg-dark-color: #f16b61;
   --navy-blue-text-color: #2B374F;
+  --navy-blue-text-light-color: #3b465a;
   --navy-user-profile-border-radius: 40%;
 }
 </style>
