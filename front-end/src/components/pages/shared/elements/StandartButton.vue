@@ -1,5 +1,7 @@
 <template>
-  <div class="send_button">
+  <div
+      class="send_button"
+      :class="{'button_disable':isDisable}">
     {{ text }}
   </div>
 </template>
@@ -10,6 +12,10 @@ export default {
   props: {
     text: {
       default: 'Gönder'
+    },
+    isDisable: {
+      default: true,
+      type: Boolean
     }
   }
 }
@@ -31,5 +37,10 @@ export default {
 .send_button:hover {
   background-color: var(--navy-red-bg-dark-color);
   transform: translateY(-2px);
+}
+
+.button_disable {
+  opacity: .5;
+  pointer-events: none;
 }
 </style>

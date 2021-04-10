@@ -1,10 +1,20 @@
 <template>
-  <textarea></textarea>
+  <textarea v-model="inputValue"></textarea>
 </template>
 
 <script>
 export default {
-  name: "StandartTextarea"
+  name: "StandartTextarea",
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    }
+  }
 }
 </script>
 

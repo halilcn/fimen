@@ -70,18 +70,24 @@
             :type="'text'"
             v-model="$v.user.year.$model"
         />
+        <error-alert
+            v-if="!$v.user.year.required && $v.user.year.$dirty"
+            :text="'Bu alan zorunludur'"/>
       </li>
       <li>
         <div class="title">
-          Belge
-
+          Yetkinlik Alanını Destekleyen Belge/Belgeler
         </div>
         <standart-file-input
-            :id="'id'"/>
+            :id="'mentor_form_file'"
+            v-model="$v.user.file.$model"/>
         <div class="info">
           <i class="bi bi-info-circle-fill"></i>
-          asdas dsa
+          Lütfen tek dosya halinde yükleyiniz.(maksimum 20mb)
         </div>
+        <error-alert
+            v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
+            :text="'Dosya boyutu maksimum 20mb olabilir'"/>
       </li>
       <li>
         <div class="title">
@@ -89,36 +95,51 @@
         </div>
         <standart-input
             :type="'text'"
-            v-model="$v.user.linkedin.$model"/>
+            v-model="user.linkedin"/>
       </li>
       <li>
         <div class="title">
-          Eğer açlışyorsan şirket ve pozisyon
-          <span class="required_icon">*</span>
+          Eğer Çalışıyorsan Şirket ve Pozisyon
         </div>
         <standart-input
-        :typ="'text'"
-         v-model="$v.user."/>
+            :type="'text'"
+            v-model="user.company_and_position"/>
       </li>
       <li>
         <div class="title">
-          Eklenmek istenilen
+          Ek Olarak Eklemek İstediklerin
         </div>
-        <standart-textarea/>
+        <standart-textarea v-model="user.postscript"/>
       </li>
       <li>
         <standart-checkbox
-            :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"/>
+            :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
+            :id="'mentor_form_confirmation'"
+            v-model="$v.user.confirmation.$model"/>
+        <error-alert
+            v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
+            :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
       </li>
       <li class="button_li">
-        <standart-button @click.native="postMentorForm"/>
+        <standart-button
+            :isDisable="$v.user.$invalid"
+            @click.native="postMentorForm"/>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import {required} from 'vuelidate/lib/validators';
+import {required, integer, sameAs} from 'vuelidate/lib/validators';
+import {customValidators} from "@/helpers/customValidators";
+
+const checkFileSize = (file) => {
+  if (file.size > 0) {
+    return customValidators.checkFileSize(file.size, 20);
+  }
+  return true;
+}
+
 
 export default {
   name: "ApplyMentor",
@@ -129,7 +150,7 @@ export default {
         year: '',
         file: '',
         linkedin: '',
-        companyAndPosition: '',
+        company_and_position: '',
         postscript: '',
         confirmation: false
       },
@@ -152,7 +173,8 @@ export default {
     StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
     StandartFileInput: () => import('@/components/pages/shared/elements/StandartFileInput'),
     StandartTextarea: () => import('@/components/pages/shared/elements/StandartTextarea'),
-    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox')
+    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox'),
+    ErrorAlert: () => import('@/components/pages/shared/ErrorAlert')
   },
   methods: {
     postMentorForm() {
@@ -168,14 +190,19 @@ export default {
   validations: {
     user: {
       competency: {
+        required,
+        integer
+      },
+      year: {
         required
       },
-      year: {},
-      file: {},
-      linkedin: {},
-      companyAndPosition: {},
-      postscript: {},
-      confirmation: {}
+      file: {
+        checkFileSize
+      },
+      confirmation: {
+        required,
+        sameAs: sameAs(() => true)
+      }
     }
   }
 }
@@ -306,6 +333,7 @@ export default {
   font-family: 'Montserrat', 'sans-serif';
   font-size: 11px;
   color: #434343;
+  margin-top: 5px;
 }
 
 .form_ul > .button_li {

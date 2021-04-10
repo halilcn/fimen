@@ -1,5 +1,6 @@
 <template>
   <div class="selector">
+    <!--  <input type="hidden" name="a" :value="inputValue">-->
     <div @click="isEnableDropdown=!isEnableDropdown" class="selected_option">
       {{ selectedValue }}
       <i class="bi bi-caret-down-fill"></i>

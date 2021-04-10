@@ -1,7 +1,12 @@
 <template>
   <div class="checkbox">
-    <input id="deneme" type="checkbox">
-    <label for="deneme">{{ text }}</label>
+    <input
+        v-model="inputValue"
+        :id="id"
+        type="checkbox">
+    <label :for="id">
+      {{ text }}
+    </label>
   </div>
 </template>
 
@@ -10,7 +15,25 @@ export default {
   name: "StandartCheckbox",
   props: {
     text: {
+      required: true,
+      type: String
+    },
+    id: {
+      required: true,
+      type: String
+    },
+    value: {
       required: true
+    }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 }

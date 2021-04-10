@@ -1,11 +1,18 @@
 <template>
   <div class="file_input">
-    <label :for="id">
-      <!-- <i class="fas fa-check-circle"></i>-->
+    <label
+        :class="{'selected':selectedFile}"
+        :for="id">
+      <span v-if="selectedFile">
+      <i class="fas fa-check-circle"></i>
+       Dosya Seçildi
+      </span>
+      <span v-else>
       Dosya Seç
+      </span>
     </label>
     <input
-        @change="selectFile"
+        @change="uploadImage"
         :id="id"
         type="file">
   </div>
@@ -19,25 +26,43 @@ export default {
     id: {
       required: true,
       type: String
+    },
+    value: {
+      required: true
     }
   },
   data() {
     return {
-      file: ''
+      file: '',
+      selectedFile: false
     }
   },
   methods: {
-    selectFile(e) {
-      var files = e.target.files || e.dataTransfer.files;
-      if (!files.length)
-        return;
-      this.file(files[0]);
+    uploadImage(event) {
+      this.file = event.target.files[0];
+      this.selectedFile = true;
+      this.$emit('input', this.file);
+    }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+
+.file_input {
+  padding: 8px 0px;
+}
+
 .file_input input {
   display: none;
 }
