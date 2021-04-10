@@ -1,11 +1,34 @@
 <template>
-  <input type="text">
+  <input
+      :type="type"
+      v-model="inputValue"
+      :placeholder="placeholder">
 </template>
 
 <script>
 export default {
   name: "StandartInput",
-  props: {}
+  props: {
+    type: {
+      required: true
+    },
+    placeholder: {
+      default: ''
+    },
+    value: {
+      required: true
+    }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    }
+  }
 }
 </script>
 

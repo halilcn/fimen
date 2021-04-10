@@ -51,11 +51,11 @@
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
-    {{ $v.user.competency }}
     <ul class="form_ul">
       <li>
         <div class="title">
           Yetkinlik Alanı
+          <span class="required_icon">*</span>
         </div>
         <standart-selector
             v-model="$v.user.competency.$model"
@@ -63,13 +63,18 @@
       </li>
       <li>
         <div class="title">
-          Yetkinlik Alanı
+          Kaç Yıldır Kendi Alanınızda Uğraş Veriyorsunuz ?
+          <span class="required_icon">*</span>
         </div>
-        <standart-input/>
+        <standart-input
+            :type="'text'"
+            v-model="$v.user.year.$model"
+        />
       </li>
       <li>
         <div class="title">
           Belge
+
         </div>
         <standart-file-input
             :id="'id'"/>
@@ -80,15 +85,20 @@
       </li>
       <li>
         <div class="title">
-          Linkedin
+          Linkedin Profil Linki
         </div>
-        <standart-input/>
+        <standart-input
+            :type="'text'"
+            v-model="$v.user.linkedin.$model"/>
       </li>
       <li>
         <div class="title">
           Eğer açlışyorsan şirket ve pozisyon
+          <span class="required_icon">*</span>
         </div>
-        <standart-input/>
+        <standart-input
+        :typ="'text'"
+         v-model="$v.user."/>
       </li>
       <li>
         <div class="title">
@@ -159,7 +169,13 @@ export default {
     user: {
       competency: {
         required
-      }
+      },
+      year: {},
+      file: {},
+      linkedin: {},
+      companyAndPosition: {},
+      postscript: {},
+      confirmation: {}
     }
   }
 }
@@ -280,6 +296,10 @@ export default {
   font-size: 17px;
   margin-bottom: 4px;
   color: var(--navy-blue-text-color);
+}
+
+.form_ul > li > .title > .required_icon {
+  color: red;
 }
 
 .form_ul > li > .info {
