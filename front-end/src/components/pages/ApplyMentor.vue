@@ -51,12 +51,15 @@
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
+    {{ $v.user.competency }}
     <ul class="form_ul">
       <li>
         <div class="title">
           Yetkinlik Alanı
         </div>
-        <standart-selector/>
+        <standart-selector
+            v-model="$v.user.competency.$model"
+            :options="options"/>
       </li>
       <li>
         <div class="title">
@@ -105,9 +108,33 @@
 </template>
 
 <script>
+import {required} from 'vuelidate/lib/validators';
 
 export default {
   name: "ApplyMentor",
+  data() {
+    return {
+      user: {
+        competency: '',
+        year: '',
+        file: '',
+        linkedin: '',
+        companyAndPosition: '',
+        postscript: '',
+        confirmation: false
+      },
+      options: [
+        {
+          key: 1,
+          text: 'selam 1'
+        },
+        {
+          key: 4,
+          text: 'selam 2'
+        }
+      ]
+    }
+  },
   components: {
     BgImgTitle: () => import('@/components/pages/shared/BgImgTitle'),
     StandartSelector: () => import('@/components/pages/shared/elements/StandartSelector'),
@@ -120,6 +147,13 @@ export default {
   methods: {
     postMentorForm() {
       alert()
+    }
+  },
+  validations: {
+    user: {
+      competency: {
+        required
+      }
     }
   }
 }

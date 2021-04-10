@@ -2,14 +2,15 @@
   <div class="selector">
     <div @click="isEnableDropdown=!isEnableDropdown" class="selected_option">
       Seçili Değer
+      {{ inputValue }}
       <i class="bi bi-caret-down-fill"></i>
     </div>
     <div v-show="isEnableDropdown" class="dropdown">
-      <div class="option">
-        asd asda das dsa
-      </div>
-      <div class="option">
-        asdasdsadas dasdasd
+      <div
+          v-for="(option,index) in options"
+          :key="index"
+          @click="setValue(option.key)" class="option">
+        {{ option.text }}
       </div>
     </div>
   </div>
@@ -18,9 +19,33 @@
 <script>
 export default {
   name: "StandartSelector",
+  props: {
+    value: {
+      default: ''
+    },
+    options: {
+      required: true,
+      type: Array
+    }
+  },
   data() {
     return {
       isEnableDropdown: false
+    }
+  },
+  methods: {
+    setValue(key) {
+      this.inputValue = key;
+    }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
     }
   }
 }
