@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
@@ -80,5 +81,10 @@ class User extends Authenticatable
     public function checkUniqueEmail(string $email): bool
     {
         return !$this->where('email', $email)->exists();
+    }
+
+    public function mentorAppeal(): HasMany
+    {
+        return $this->hasMany(MentorAppeal::class);
     }
 }

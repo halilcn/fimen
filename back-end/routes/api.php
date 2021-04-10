@@ -5,6 +5,7 @@ use App\Http\Controllers\API\Auth\EmailVerificationController;
 use App\Http\Controllers\API\Auth\MeController;
 use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\CompetenceResourceController;
+use App\Http\Controllers\API\MentorAppealResourceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::group(
                 Route::get('/me', [MeController::class, 'index']);
 
                 Route::resource('/competencies', CompetenceResourceController::class);
+                Route::resource('/mentor-appeal', MentorAppealResourceController::class);
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
