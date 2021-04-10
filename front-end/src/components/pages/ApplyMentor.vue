@@ -59,7 +59,7 @@
         </div>
         <standart-selector
             v-model="$v.user.competency.$model"
-            :options="options"/>
+            :options="$store.state.competence.competencies"/>
       </li>
       <li>
         <div class="title">
@@ -147,7 +147,13 @@ export default {
   methods: {
     postMentorForm() {
       alert()
+    },
+    getCompetencies() {
+      this.$store.dispatch('getCompetencies');
     }
+  },
+  created() {
+    this.getCompetencies();
   },
   validations: {
     user: {

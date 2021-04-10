@@ -4,6 +4,7 @@ use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\EmailVerificationController;
 use App\Http\Controllers\API\Auth\MeController;
 use App\Http\Controllers\API\Auth\RegisterCheckController;
+use App\Http\Controllers\API\CompetenceResourceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ Route::group(
         Route::middleware('auth:sanctum')->group(
             function () {
                 Route::get('/me', [MeController::class, 'index']);
+
+                Route::resource('/competencies', CompetenceResourceController::class);
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }

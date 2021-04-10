@@ -1,16 +1,16 @@
 <template>
   <div class="selector">
     <div @click="isEnableDropdown=!isEnableDropdown" class="selected_option">
-      Seçili Değer
-      {{ inputValue }}
+      {{ selectedValue }}
       <i class="bi bi-caret-down-fill"></i>
     </div>
     <div v-show="isEnableDropdown" class="dropdown">
       <div
           v-for="(option,index) in options"
           :key="index"
-          @click="setValue(option.key)" class="option">
-        {{ option.text }}
+          @click="select(option)"
+          class="option">
+        {{ option.name }}
       </div>
     </div>
   </div>
@@ -25,17 +25,20 @@ export default {
     },
     options: {
       required: true,
-      type: Array
+      type: Object
     }
   },
   data() {
     return {
-      isEnableDropdown: false
+      isEnableDropdown: false,
+      selectedValue: 'Lütfe bir seçenek seçiniz'
     }
   },
   methods: {
-    setValue(key) {
-      this.inputValue = key;
+    select(option) {
+      this.inputValue = option.id;
+      this.selectedValue = option.name;
+      this.isEnableDropdown = false;
     }
   },
   computed: {
@@ -83,6 +86,16 @@ export default {
   position: absolute;
   width: 100%;
   top: 40px;
+  max-height: 180px;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  box-shadow: 0 0px 0.4px rgba(0, 0, 0, 0.028),
+  0 0px 0.9px rgba(0, 0, 0, 0.04),
+  0 0px 1.8px rgba(0, 0, 0, 0.05),
+  0 0px 3.1px rgba(0, 0, 0, 0.06),
+  0 0px 5.8px rgba(0, 0, 0, 0.072),
+  0 0px 14px rgba(0, 0, 0, 0.1);
 }
 
 .selector > .dropdown > .option {

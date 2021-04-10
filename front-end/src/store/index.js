@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {auth} from "@/store/modules/auth";
+import {competence} from "@/store/modules/competence";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -25,7 +26,8 @@ const store = new Vuex.Store({
     },
     actions: {},
     modules: {
-        auth
+        auth,
+        competence
     }
 });
 
