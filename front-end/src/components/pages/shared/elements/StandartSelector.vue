@@ -1,6 +1,9 @@
 <template>
   <div class="selector">
-    <!--  <input type="hidden" name="a" :value="inputValue">-->
+    <input
+        type="hidden"
+        :name="name"
+        :value="inputValue">
     <div @click="isEnableDropdown=!isEnableDropdown" class="selected_option">
       {{ selectedValue }}
       <i class="bi bi-caret-down-fill"></i>
@@ -22,17 +25,23 @@ export default {
   name: "StandartSelector",
   props: {
     value: {
+      required: false,
       default: ''
+    },
+    name: {
+      required: false,
+      default: '',
+      type: String
     },
     options: {
       required: true,
-      type: Object
+      type: Array
     }
   },
   data() {
     return {
       isEnableDropdown: false,
-      selectedValue: 'Lütfe bir seçenek seçiniz'
+      selectedValue: 'Lütfen bir seçenek seçiniz'
     }
   },
   methods: {

@@ -69,6 +69,13 @@ const router = new VueRouter({
 // Set State from Local Storage
 router.beforeEach((to, from, next) => {
     store.commit('setState');
+    if (checkAuth()) {
+        store.dispatch('getMeInfo')
+            .then(() => {
+                next();
+            });
+        return 0;   //Kullanıcı bilgilerini almadan next() çalışmasın diye
+    }
     next();
 })
 

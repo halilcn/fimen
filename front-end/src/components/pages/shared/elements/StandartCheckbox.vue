@@ -2,6 +2,7 @@
   <div class="checkbox">
     <input
         v-model="inputValue"
+        :name="name"
         :id="id"
         type="checkbox">
     <label :for="id">
@@ -20,6 +21,10 @@ export default {
     },
     id: {
       required: true,
+      type: String
+    },
+    name: {
+      required: false,
       type: String
     },
     value: {

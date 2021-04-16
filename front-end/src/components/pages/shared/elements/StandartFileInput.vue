@@ -12,7 +12,8 @@
       </span>
     </label>
     <input
-        @change="uploadImage"
+        @change="uploadFile"
+        :name="name"
         :id="id"
         type="file">
   </div>
@@ -22,10 +23,14 @@
 export default {
   name: "StandartFileInput",
   props: {
-    text: {},
     id: {
       required: true,
       type: String
+    },
+    name: {
+      required: false,
+      type: String,
+      default: ''
     },
     value: {
       required: true
@@ -33,15 +38,14 @@ export default {
   },
   data() {
     return {
-      file: '',
       selectedFile: false
     }
   },
   methods: {
-    uploadImage(event) {
-      this.file = event.target.files[0];
+    uploadFile(event) {
+      const file = event.target.files[0];
       this.selectedFile = true;
-      this.$emit('input', this.file);
+      this.$emit('input', file);
     }
   },
   computed: {

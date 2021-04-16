@@ -1,10 +1,21 @@
 <template>
-  <textarea v-model="inputValue"></textarea>
+  <textarea
+      :name="name"
+      v-model="inputValue"></textarea>
 </template>
 
 <script>
 export default {
   name: "StandartTextarea",
+  props: {
+    name: {
+      required: false,
+      default: ''
+    },
+    value: {
+      required: false
+    }
+  },
   computed: {
     inputValue: {
       get() {

@@ -18,7 +18,18 @@ class MeResource extends JsonResource
             'name_surname' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
-            'image' => $this->image
+            'image' => $this->image,
+            'mentor' => $this->when(
+                $this->mentor()->exists(),
+                function () {
+                    return $this->mentor()->get();
+                },
+                function () {
+                    return [
+                        'status' => $this->mentorAppeal()->exists()
+                    ];
+                }
+            )
         ];
     }
 }

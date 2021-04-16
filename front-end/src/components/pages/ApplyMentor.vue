@@ -51,81 +51,103 @@
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
-    <ul class="form_ul">
-      <li>
-        <div class="title">
-          Yetkinlik Alanı
-          <span class="required_icon">*</span>
-        </div>
-        <standart-selector
-            v-model="$v.user.competency.$model"
-            :options="$store.state.competence.competencies"/>
-      </li>
-      <li>
-        <div class="title">
-          Kaç Yıldır Kendi Alanınızda Uğraş Veriyorsunuz ?
-          <span class="required_icon">*</span>
-        </div>
-        <standart-input
-            :type="'text'"
-            v-model="$v.user.year.$model"
-        />
-        <error-alert
-            v-if="!$v.user.year.required && $v.user.year.$dirty"
-            :text="'Bu alan zorunludur'"/>
-      </li>
-      <li>
-        <div class="title">
-          Yetkinlik Alanını Destekleyen Belge/Belgeler
-        </div>
-        <standart-file-input
-            :id="'mentor_form_file'"
-            v-model="$v.user.file.$model"/>
-        <div class="info">
-          <i class="bi bi-info-circle-fill"></i>
-          Lütfen tek dosya halinde yükleyiniz.(maksimum 20mb)
-        </div>
-        <error-alert
-            v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
-            :text="'Dosya boyutu maksimum 20mb olabilir'"/>
-      </li>
-      <li>
-        <div class="title">
-          Linkedin Profil Linki
-        </div>
-        <standart-input
-            :type="'text'"
-            v-model="user.linkedin"/>
-      </li>
-      <li>
-        <div class="title">
-          Eğer Çalışıyorsan Şirket ve Pozisyon
-        </div>
-        <standart-input
-            :type="'text'"
-            v-model="user.company_and_position"/>
-      </li>
-      <li>
-        <div class="title">
-          Ek Olarak Eklemek İstediklerin
-        </div>
-        <standart-textarea v-model="user.postscript"/>
-      </li>
-      <li>
-        <standart-checkbox
-            :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
-            :id="'mentor_form_confirmation'"
-            v-model="$v.user.confirmation.$model"/>
-        <error-alert
-            v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
-            :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
-      </li>
-      <li class="button_li">
-        <standart-button
-            :isDisable="$v.user.$invalid"
-            @click.native="postMentorForm"/>
-      </li>
-    </ul>
+    {{ $store.getters.isMentor }} -
+    {{ $store.getters.hasMentorAppeal }} -
+    <!-- yanlış--><!-- yanlış--><!-- yanlış--><!-- yanlış-->
+    <form
+        id="mentorAppealForm">
+      <ul class="form_ul">
+        <li>
+          <div class="title">
+            Yetkinlik Alanınız
+            <span class="required_icon">*</span>
+          </div>
+          <standart-selector
+              v-model="$v.user.competency_id.$model"
+              :name="'competency_id'"
+              :options="$store.state.mentor.competencies"/>
+        </li>
+        <li>
+          <div class="title">
+            Kaç Yıldır Kendi Alanınızda Uğraş Veriyorsunuz ?
+            <span class="required_icon">*</span>
+          </div>
+          <standart-input
+              :type="'text'"
+              :name="'year'"
+              v-model="$v.user.year.$model"/>
+          <error-alert
+              v-if="!$v.user.year.required && $v.user.year.$dirty"
+              :text="'Bu alan zorunludur'"/>
+        </li>
+        <li>
+          <div class="title">
+            Yetkinlik Alanınızı Destekleyen Belge/Belgeler
+          </div>
+          <standart-file-input
+              :id="'mentor_form_file'"
+              :name="'file'"
+              v-model="$v.user.file.$model"/>
+          <div class="info">
+            <i class="bi bi-info-circle-fill"></i>
+            Lütfen tek dosya halinde yükleyiniz.(maksimum 20mb)
+          </div>
+          <error-alert
+              v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
+              :text="'Dosya boyutu maksimum 20mb olabilir'"/>
+        </li>
+        <li>
+          <div class="title">
+            Linkedin Profil Linki
+          </div>
+          <standart-input
+              :type="'text'"
+              :name="'linkedin'"/>
+        </li>
+        <li>
+          <div class="title">
+            Eğer Çalışıyorsan,Çalıştığınız Şirket ve Pozisyon
+          </div>
+          <standart-input
+              :type="'text'"
+              :name="'company_and_position'"/>
+        </li>
+        <li>
+          <div class="title">
+            Ek Olarak Eklemek İstediklerin
+          </div>
+          <standart-textarea
+              :name="'postscript'"/>
+        </li>
+        <li>
+          <standart-checkbox
+              :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
+              :id="'mentor_form_confirmation'"
+              :name="'confirmation'"
+              v-model="$v.user.confirmation.$model"/>
+          <error-alert
+              v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
+              :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
+        </li>
+        <li class="button_li">
+          <standart-button
+              :isDisable="$v.user.$invalid"
+              @click.native="postMentorForm"/>
+        </li>
+      </ul>
+    </form>
+
+    <div
+    class="already_applied">
+    <i class="fas fa-check-circle"></i>
+    <span>
+        Başvurunuz Alındı.
+      </span>
+  </div>
+  <div
+      class="already_mentor">
+    zaten mentorsun
+  </div>
   </div>
 </template>
 
@@ -140,30 +162,16 @@ const checkFileSize = (file) => {
   return true;
 }
 
-
 export default {
   name: "ApplyMentor",
   data() {
     return {
       user: {
-        competency: '',
+        competency_id: '',
         year: '',
         file: '',
-        linkedin: '',
-        company_and_position: '',
-        postscript: '',
         confirmation: false
-      },
-      options: [
-        {
-          key: 1,
-          text: 'selam 1'
-        },
-        {
-          key: 4,
-          text: 'selam 2'
-        }
-      ]
+      }
     }
   },
   components: {
@@ -178,10 +186,17 @@ export default {
   },
   methods: {
     postMentorForm() {
-      alert()
+      const formData = new FormData(document.getElementById('mentorAppealForm'));
+      this.$store.dispatch('postMentorAppeal', formData)
+          .catch(() => {
+            alert('Bir hata oluştu!');
+          });
     },
     getCompetencies() {
-      this.$store.dispatch('getCompetencies');
+      this.$store.dispatch('getCompetencies')
+          .catch((err) => {
+            alert(err);
+          });
     }
   },
   created() {
@@ -189,7 +204,7 @@ export default {
   },
   validations: {
     user: {
-      competency: {
+      competency_id: {
         required,
         integer
       },
@@ -297,7 +312,7 @@ export default {
   background-color: var(--navy-red-bg-dark-color);
 }
 
-.content .form_ul {
+.content > form > .form_ul {
   padding: 7px 40px;
   list-style-type: none;
   width: 70%;
@@ -340,6 +355,27 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-top: 40px;
+}
+
+.content .already_applied {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #1b911b;
+  font-family: 'Rubik', 'sans-serif';
+  font-size: 35px;
+  background-color: #e3ffe3;
+  border: 1px solid #c8ffc8;
+  padding: 20px 0px;
+  margin: 40px 0px;
+}
+
+.content .already_applied > i {
+  margin-right: 10px;
+}
+
+.content .already_mentor {
+
 }
 
 </style>

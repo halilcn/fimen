@@ -12,31 +12,26 @@ export const auth = {
             const token = localStorage.getItem('user_token');
             if (token) {
                 state.userToken = token;
-                // User Info
-                state.user = JSON.parse(localStorage.getItem('user'));
             }
         },
         removeStateAndStorage(state) {
             state.userToken = '';
-            state.user = '';
-
             localStorage.removeItem('user_token');
-            localStorage.removeItem('user');
         },
         setToken(state, payload) {
             localStorage.setItem('user_token', payload);
             state.userToken = payload;
         },
         setUser(state, payload) {
+            console.log(payload);
             state.user = payload;
-            localStorage.setItem('user', JSON.stringify(payload));
         },
         setRegisterUser(state, payload) {
             state.registerUser = payload;
         },
         setRegisterUserEmail(state, payload) {
             state.registerUser.email = payload;
-        }
+        },
     },
     actions: {
         async postLogin({commit, dispatch}, payload) {
@@ -135,6 +130,18 @@ export const auth = {
         },
         checkRegisterUser(state) {
             return state.registerUser === '';
-        }
+        },
+        checkMentorState(state) {
+            return typeof state.user.mentor.status == 'undefined' ? null : state.user.mentor.status;
+        },
+        isMentor(getters) {
+            return getters.checkMentorState == null;
+        },
+        hasMentorAppeal(getters) {
+            if (getters.checkMentorState == null) {
+                return false;
+            }
+            return getters.checkMentorState;
+        },
     }
 }

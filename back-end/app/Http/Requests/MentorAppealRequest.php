@@ -26,10 +26,10 @@ class MentorAppealRequest extends FormRequest
         return [
             'competency_id' => ['required', 'integer'],
             'year' => ['required'],
-            'file' => ['required', 'max:20000'],
-            'linkedin' => ['required'],
-            'company_and_position' => ['required'],
-            'postscript' => ['required'],
+            'file' => ['max:20000'],
+            'linkedin' => ['max:1000'],
+            'company_and_position' => ['max:1000'],
+            'postscript' => ['max:1000'],
         ];
     }
 }

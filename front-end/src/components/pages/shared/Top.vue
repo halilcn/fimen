@@ -161,6 +161,7 @@ export default {
   border-radius: 4px;
   color: var(--navy-blue-bg-hover-color);
   position: relative;
+  z-index: 99999;
 }
 
 .head_content > .links > div:hover {
@@ -230,12 +231,13 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 320px;
+  width: 100%;
   border: 1px solid #c3c3c3;
   border-radius: 3px;
   font-size: 15px;
   padding: 3px 5px;
   color: #515151;
+  margin: 0 40px;
 }
 
 .head_content > .search_user:hover {
@@ -435,5 +437,9 @@ export default {
 .dropdown > .footer > div:hover {
   text-decoration: underline;
   color: #858585;
+}
+
+@media only screen and (max-width: 768px){
+
 }
 </style>

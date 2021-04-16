@@ -118,6 +118,9 @@
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/monolog/monolog" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/mockery/mockery" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/laravel/sanctum" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/event-manager" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

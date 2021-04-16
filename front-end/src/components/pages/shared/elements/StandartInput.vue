@@ -1,8 +1,9 @@
 <template>
   <input
       :type="type"
-      v-model="inputValue"
-      :placeholder="placeholder">
+      :name="name"
+      :placeholder="placeholder"
+      v-model="inputValue">
 </template>
 
 <script>
@@ -10,13 +11,20 @@ export default {
   name: "StandartInput",
   props: {
     type: {
-      required: true
+      required: true,
+      type: String
+    },
+    name: {
+      required: false,
+      default: '',
+      type: String
     },
     placeholder: {
+      required: false,
       default: ''
     },
     value: {
-      required: true
+      required: false
     }
   },
   computed: {
