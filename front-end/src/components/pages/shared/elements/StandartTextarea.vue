@@ -55,4 +55,11 @@ textarea:focus, textarea:hover {
   0 2.1px 7.1px rgba(0, 0, 0, 0.007),
   0 5px 17px rgba(0, 0, 0, 0.01);
 }
+
+@media only screen and (max-width: 768px) {
+  textarea {
+    font-size: 12px;
+    padding: 6px 15px;
+  }
+}
 </style>

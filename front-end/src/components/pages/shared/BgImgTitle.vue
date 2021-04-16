@@ -55,4 +55,14 @@ export default {
   font-size: 35px;
   color: #e2e2e2;
 }
+
+@media only screen and (max-width: 768px) {
+  .bg_img_title, .bg_img_title > img, .bg_img_title > .filter {
+    height: 100px;
+  }
+
+  .bg_img_title > .title {
+    font-size: 25px;
+  }
+}
 </style>

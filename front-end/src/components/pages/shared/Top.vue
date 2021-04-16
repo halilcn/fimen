@@ -4,7 +4,8 @@
         tag="div"
         to="/"
         class="logo">
-      <img src="@/assets/images/logos/red_233x65.png"/>
+      <img class="desktop" src="@/assets/images/logos/red_233x65.png"/>
+      <img class="mobile">
     </router-link>
     <div class="links">
       <router-link
@@ -76,12 +77,8 @@
         </div>
         <div class="links">
           <div>
-            <i class="bi bi-gear-fill"></i>
-            Ayarlar
-          </div>
-          <div>
-            <i class="bi bi-gear-fill"></i>
-            Ayarlar
+            <i class="bi bi-person-fill"></i>
+            Profile Git
           </div>
           <div>
             <i class="bi bi-gear-fill"></i>
@@ -144,8 +141,12 @@ export default {
   cursor: pointer;
 }
 
-.head_content > .logo > img {
+.head_content > .logo > .desktop {
   width: 130px;
+}
+
+.head_content > .logo > .mobile {
+  display: none;
 }
 
 .head_content > .links {
@@ -299,6 +300,7 @@ export default {
   border-radius: 5px;
   right: 0px;
   top: 61px;
+  z-index: 99999;
 
   box-shadow: 0 0.4px 0.5px rgba(0, 0, 0, 0.008),
   0 1.1px 1.3px rgba(0, 0, 0, 0.012),
@@ -311,7 +313,6 @@ export default {
 .dropdown:after {
   right: 40px;
   top: -11px;
-  border: solid transparent;
   content: "";
   height: 0;
   width: 0;
@@ -439,7 +440,44 @@ export default {
   color: #858585;
 }
 
-@media only screen and (max-width: 768px){
+@media only screen and (max-width: 768px) {
+  .head_content {
+  }
+
+  .head_content > .links {
+    margin-left: 10px;
+  }
+
+  .head_content > .links > div {
+    padding: 5px 15px;
+  }
+
+  .head_content > .links > div > .info{
+    display: none;
+  }
+
+  .head_content > .logo > .desktop {
+    display: none;
+  }
+
+  .head_content > .logo > .mobile {
+    display: block;
+  }
+
+  .head_content > .search_user {
+    display: none;
+  }
+
+  .user > .info > .username, .user > .info > i {
+    display: none;
+  }
+
+  .dropdown {
+    width: 100%;
+    background-color: red;
+  }
+
+
 
 }
 </style>

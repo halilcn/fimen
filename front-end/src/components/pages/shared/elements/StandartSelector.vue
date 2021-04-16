@@ -116,4 +116,10 @@ export default {
 .selector > .dropdown > .option:hover {
   background-color: #f8f8f8;
 }
+
+@media only screen and (max-width: 768px) {
+  .selector {
+    font-size: 12px;
+  }
+}
 </style>

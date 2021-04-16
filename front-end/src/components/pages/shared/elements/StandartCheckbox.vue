@@ -129,4 +129,11 @@ export default {
   }
 
 }
+
+@media only screen and (max-width: 768px) {
+  input[type=checkbox] + label,
+  input[type=radio] + label {
+    font-size: 12px;
+  }
+}
 </style>

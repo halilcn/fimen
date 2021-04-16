@@ -35,4 +35,10 @@ export default {
 .error > i {
   margin-right: 10px;
 }
+
+@media only screen and (max-width: 768px) {
+  .error {
+    font-size: 11px;
+  }
+}
 </style>

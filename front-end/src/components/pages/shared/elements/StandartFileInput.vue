@@ -89,4 +89,11 @@ export default {
   background-color: #199419;
   color: white;
 }
+
+@media only screen and (max-width: 768px) {
+  .file_input > label {
+    padding: 5px 14px;
+    font-size: 12px;
+  }
+}
 </style>

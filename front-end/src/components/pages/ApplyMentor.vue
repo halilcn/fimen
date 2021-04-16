@@ -47,7 +47,7 @@
         </div>
       </li>
     </ul>
-    <div class="apply_now_button">
+    <div  class="apply_now_button">
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
@@ -136,18 +136,18 @@
         </li>
       </ul>
     </form>
-
     <div
-    class="already_applied">
-    <i class="fas fa-check-circle"></i>
-    <span>
+        class="already_applied">
+      <i class="fas fa-check-circle"></i>
+      <span>
         Başvurunuz Alındı.
       </span>
-  </div>
-  <div
-      class="already_mentor">
-    zaten mentorsun
-  </div>
+    </div>
+    <div
+        class="already_mentor">
+      <i class="bi bi-emoji-smile"></i>
+      <span> zaten mentorsun</span>
+    </div>
   </div>
 </template>
 
@@ -341,7 +341,7 @@ export default {
 }
 
 .form_ul > li > .title > .required_icon {
-  color: red;
+  color: #dd1212;
 }
 
 .form_ul > li > .info {
@@ -363,7 +363,7 @@ export default {
   align-items: center;
   color: #1b911b;
   font-family: 'Rubik', 'sans-serif';
-  font-size: 35px;
+  font-size: 32px;
   background-color: #e3ffe3;
   border: 1px solid #c8ffc8;
   padding: 20px 0px;
@@ -371,10 +371,77 @@ export default {
 }
 
 .content .already_applied > i {
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .content .already_mentor {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 15px 0;
+  border-radius: 4px;
+  font-family: 'Rubik', 'sans-serif';
+  font-size: 22px;
+  color: var(--navy-red-bg-dark-color);
+  background-color: #ffebe8;;
+}
+
+.content .already_mentor > i {
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+  .content > .title {
+    font-size: 25px;
+    margin-top: 10px;
+  }
+
+  .content > .steps {
+    width: 100%;
+  }
+
+  .steps > li {
+    margin: 14px 0;
+  }
+
+  .steps > li > .number {
+    width: 20%;
+  }
+
+  .steps > li > .number > img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .steps > li > .text {
+    width: 80%;
+  }
+
+  .steps > li > .text > .title {
+    font-size: 16px;
+  }
+
+  .steps > li > .text > .detail {
+    font-size: 13px;
+    text-align: justify;
+  }
+
+  .content > form > .form_ul {
+    width: 100%;
+    padding: 5px 25px;
+  }
+
+  .form_ul > li > .title {
+    font-size: 15px;
+  }
+
+  .form_ul > li > .info {
+    font-size: 9px;
+  }
+
+  .content .already_applied {
+    font-size: 20px;
+  }
 
 }
 

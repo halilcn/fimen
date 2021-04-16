@@ -75,4 +75,18 @@ export default {
   min-height: 600px;
   padding: 20px 0px;
 }
+
+@media only screen and (max-width: 768px) {
+  .head_container {
+    padding: 0 10px;
+  }
+
+  .main_container {
+    padding: 0 10px;
+  }
+
+  .main_content {
+    padding: 10px 0;
+  }
+}
 </style>
