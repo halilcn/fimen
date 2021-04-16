@@ -32,6 +32,7 @@ export default {
   font-size: 14px;
   border-radius: 4px;
   transition: .3s;
+  text-align: center;
 }
 
 .send_button:hover {

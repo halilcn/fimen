@@ -32,6 +32,7 @@ export const auth = {
         setRegisterUserEmail(state, payload) {
             state.registerUser.email = payload;
         },
+
     },
     actions: {
         async postLogin({commit, dispatch}, payload) {
@@ -46,6 +47,7 @@ export const auth = {
                 .then((res) => {
                     commit('setToken', res.data.token);
                     dispatch('getMeInfo');
+                    commit('setShowMentorAppeal', true);
                 })
                 .catch((err) => {
                     throw err.response;

@@ -22,6 +22,7 @@
         <br>
       </div>
     </div>
+    <apply-mentor-alert/>
     <!-- home pageasdkdasd
     {{ $store.state.auth.user }}--
     <router-view></router-view>
@@ -33,12 +34,12 @@
 </template>
 
 <script>
-import Top from "@/components/pages/shared/Top";
 
 export default {
   name: "Home",
   components: {
-    Top
+    Top: () => import( "@/components/pages/shared/Top"),
+    ApplyMentorAlert: () => import( "@/components/pages/shared/ApplyMentorAlert"),
   },
   created() {
     this.$store.dispatch('getMeInfo');
