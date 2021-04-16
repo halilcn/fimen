@@ -19,13 +19,13 @@
         </div>
       </router-link>
       <router-link
-          to="/"
+          to="/mentor-programlari"
           tag="div"
           exact-active-class="active_button">
         <i class="bi bi-calendar3-event not_active_icon"></i>
         <i class="bi bi-calendar3-event-fill active_icon"></i>
         <div class="info">
-          işlemler
+          programlar
         </div>
       </router-link>
       <router-link
@@ -452,7 +452,7 @@ export default {
     padding: 5px 15px;
   }
 
-  .head_content > .links > div > .info{
+  .head_content > .links > div > .info {
     display: none;
   }
 
@@ -476,7 +476,6 @@ export default {
     width: 100%;
     background-color: red;
   }
-
 
 
 }

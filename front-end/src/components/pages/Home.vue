@@ -6,7 +6,6 @@
     <div class="main_container">
       <div class="main_content">
         <router-view></router-view>
-        asdsa
         <br>
         <br>
         <br>

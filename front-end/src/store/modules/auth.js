@@ -135,13 +135,22 @@ export const auth = {
             return typeof state.user.mentor.status == 'undefined' ? null : state.user.mentor.status;
         },
         isMentor(getters) {
-            return getters.checkMentorState == null;
+            return getters.checkMentorState === null;
+        },
+        deneme() { //hatalı
+            return true;
         },
         hasMentorAppeal(getters) {
-            if (getters.checkMentorState == null) {
+            if (getters.checkMentorState === null) { //mentor demek
                 return false;
             }
-            return getters.checkMentorState;
+
+            if (getters.isMentor === false && getters.checkMentorState === false) {
+                return false;
+            } else if (getters.isMentor === false && getters.checkMentorState === true) {
+                return true;
+            }
+            return getters.deneme;
         },
     }
 }

@@ -47,14 +47,14 @@
         </div>
       </li>
     </ul>
-    <div  class="apply_now_button">
+    <div class="apply_now_button">
       Hemen Başvur
       <i class="bi bi-caret-down"></i>
     </div>
-    {{ $store.getters.isMentor }} -
     {{ $store.getters.hasMentorAppeal }} -
     <!-- yanlış--><!-- yanlış--><!-- yanlış--><!-- yanlış-->
     <form
+        v-if="!$store.getters.hasMentorAppeal"
         id="mentorAppealForm">
       <ul class="form_ul">
         <li>
@@ -137,6 +137,7 @@
       </ul>
     </form>
     <div
+        v-else
         class="already_applied">
       <i class="fas fa-check-circle"></i>
       <span>
@@ -144,6 +145,7 @@
       </span>
     </div>
     <div
+        v-if="$store.getters.isMentor"
         class="already_mentor">
       <i class="bi bi-emoji-smile"></i>
       <span> zaten mentorsun</span>

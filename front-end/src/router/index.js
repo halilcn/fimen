@@ -57,6 +57,10 @@ const routes = [
                 path: '/mentor-basvuru',
                 component: () => import('@/components/pages/ApplyMentor'),
             },
+            {
+                path: '/mentor-programlari',
+                component: () => import('@/components/pages/MentorPrograms'),
+            },
         ]
     },
 ]
