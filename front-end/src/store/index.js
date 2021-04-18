@@ -15,15 +15,11 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem(
 const store = new Vuex.Store({
     state: {
         fastRegisterEmail: '',
-        isLoadingButton: false,  //???
-        showMentorAppealAlert: true
+        showMentorAppealAlert: false
     },
     mutations: {
         setFastRegisterEmail(state, payload) {
             state.fastRegisterEmail = payload;
-        },
-        setIsLoadingButton(state, payload) {
-            state.isLoadingButton = payload;
         },
         setShowMentorAppeal(state, payload) {
             state.showMentorAppealAlert = payload;

@@ -8,11 +8,13 @@
         Mentor mu olmak istiyorsun ?
       </div>
       <router-link
-          @click="setShowMentorAppeal(false)"
+          @click.native="setShowMentorAppeal(false)"
           to="/mentor-basvuru"
           tag="div"
           class="button">
-        <standart-button :isDisable="false" :text="'Hemen Başvur'"/>
+        <standart-button
+            :isDisable="false"
+            :text="'Hemen Başvur'"/>
       </router-link>
     </div>
   </div>

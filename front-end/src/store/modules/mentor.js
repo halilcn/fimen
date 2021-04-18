@@ -8,8 +8,8 @@ export const mentor = {
         setCompetencies(state, payload) {
             state.competencies = payload;
         },
-        setMentorStatus(state) {
-            state.auth.user.mentor.status = true;
+        setMentorStatus() {
+            this.state.auth.user.mentor.status = true;
         }
     },
     actions: {
@@ -28,7 +28,6 @@ export const mentor = {
                 .then(() => {
                     commit('setMentorStatus');
                 });
-
         }
     },
     getters: {}

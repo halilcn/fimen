@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MentorAppealRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -31,5 +32,16 @@ class MentorAppealRequest extends FormRequest
             'company_and_position' => ['max:1000'],
             'postscript' => ['max:1000'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(
+            function ($validator) {
+                if ($this->user()->mentorAppeal()->first()) {
+                    $validator->errors()->add('already_has_appeal', 'Zaten başvuru yapılmış.');
+                }
+            }
+        );
     }
 }

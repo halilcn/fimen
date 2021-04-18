@@ -136,23 +136,14 @@ export const auth = {
         checkMentorState(state) {
             return typeof state.user.mentor.status == 'undefined' ? null : state.user.mentor.status;
         },
-        isMentor(getters) {
-            return getters.checkMentorState === null;
+        isMentor(_, getters) {
+            return getters.checkMentorState == null;
         },
-        deneme() { //hatalı
-            return true;
-        },
-        hasMentorAppeal(getters) {
-            if (getters.checkMentorState === null) { //mentor demek
+        hasMentorAppeal(_, getters) {
+            if (getters.isMentor) {
                 return false;
             }
-
-            if (getters.isMentor === false && getters.checkMentorState === false) {
-                return false;
-            } else if (getters.isMentor === false && getters.checkMentorState === true) {
-                return true;
-            }
-            return getters.deneme;
+            return getters.checkMentorState;
         },
     }
 }

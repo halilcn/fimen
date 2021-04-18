@@ -47,105 +47,101 @@
         </div>
       </li>
     </ul>
-    <div class="apply_now_button">
-      Hemen Başvur
-      <i class="bi bi-caret-down"></i>
-    </div>
-    {{ $store.getters.hasMentorAppeal }} -
-    <!-- yanlış--><!-- yanlış--><!-- yanlış--><!-- yanlış-->
-    <form
-        v-if="!$store.getters.hasMentorAppeal"
-        id="mentorAppealForm">
-      <ul class="form_ul">
-        <li>
-          <div class="title">
-            Yetkinlik Alanınız
-            <span class="required_icon">*</span>
-          </div>
-          <standart-selector
-              v-model="$v.user.competency_id.$model"
-              :name="'competency_id'"
-              :options="$store.state.mentor.competencies"/>
-        </li>
-        <li>
-          <div class="title">
-            Kaç Yıldır Kendi Alanınızda Uğraş Veriyorsunuz ?
-            <span class="required_icon">*</span>
-          </div>
-          <standart-input
-              :type="'text'"
-              :name="'year'"
-              v-model="$v.user.year.$model"/>
-          <error-alert
-              v-if="!$v.user.year.required && $v.user.year.$dirty"
-              :text="'Bu alan zorunludur'"/>
-        </li>
-        <li>
-          <div class="title">
-            Yetkinlik Alanınızı Destekleyen Belge/Belgeler
-          </div>
-          <standart-file-input
-              :id="'mentor_form_file'"
-              :name="'file'"
-              v-model="$v.user.file.$model"/>
-          <div class="info">
-            <i class="bi bi-info-circle-fill"></i>
-            Lütfen tek dosya halinde yükleyiniz.(maksimum 20mb)
-          </div>
-          <error-alert
-              v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
-              :text="'Dosya boyutu maksimum 20mb olabilir'"/>
-        </li>
-        <li>
-          <div class="title">
-            Linkedin Profil Linki
-          </div>
-          <standart-input
-              :type="'text'"
-              :name="'linkedin'"/>
-        </li>
-        <li>
-          <div class="title">
-            Eğer Çalışıyorsan,Çalıştığınız Şirket ve Pozisyon
-          </div>
-          <standart-input
-              :type="'text'"
-              :name="'company_and_position'"/>
-        </li>
-        <li>
-          <div class="title">
-            Ek Olarak Eklemek İstediklerin
-          </div>
-          <standart-textarea
-              :name="'postscript'"/>
-        </li>
-        <li>
-          <standart-checkbox
-              :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
-              :id="'mentor_form_confirmation'"
-              :name="'confirmation'"
-              v-model="$v.user.confirmation.$model"/>
-          <error-alert
-              v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
-              :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
-        </li>
-        <li class="button_li">
-          <standart-button
-              :isDisable="$v.user.$invalid"
-              @click.native="postMentorForm"/>
-        </li>
-      </ul>
-    </form>
-    <div
-        v-else
-        class="already_applied">
-      <i class="fas fa-check-circle"></i>
-      <span>
+    <template v-if="!$store.getters.isMentor">
+      <form
+          v-if="!$store.getters.hasMentorAppeal"
+          id="mentorAppealForm">
+        <ul class="form_ul">
+          <li>
+            <div class="title">
+              Yetkinlik Alanınız
+              <span class="required_icon">*</span>
+            </div>
+            <standart-selector
+                v-model="$v.user.competency_id.$model"
+                :name="'competency_id'"
+                :options="$store.state.mentor.competencies"/>
+          </li>
+          <li>
+            <div class="title">
+              Kaç Yıldır Kendi Alanınızda Uğraş Veriyorsunuz ?
+              <span class="required_icon">*</span>
+            </div>
+            <standart-input
+                :type="'text'"
+                :name="'year'"
+                v-model="$v.user.year.$model"/>
+            <error-alert
+                v-if="!$v.user.year.required && $v.user.year.$dirty"
+                :text="'Bu alan zorunludur'"/>
+          </li>
+          <li>
+            <div class="title">
+              Yetkinlik Alanınızı Destekleyen Belge/Belgeler
+            </div>
+            <standart-file-input
+                :id="'mentor_form_file'"
+                :name="'file'"
+                v-model="$v.user.file.$model"/>
+            <div class="info">
+              <i class="bi bi-info-circle-fill"></i>
+              Lütfen tek dosya halinde yükleyiniz.(maksimum 20mb)
+            </div>
+            <error-alert
+                v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
+                :text="'Dosya boyutu maksimum 20mb olabilir'"/>
+          </li>
+          <li>
+            <div class="title">
+              Linkedin Profil Linki
+            </div>
+            <standart-input
+                :type="'text'"
+                :name="'linkedin'"/>
+          </li>
+          <li>
+            <div class="title">
+              Eğer Çalışıyorsan,Çalıştığınız Şirket ve Pozisyon
+            </div>
+            <standart-input
+                :type="'text'"
+                :name="'company_and_position'"/>
+          </li>
+          <li>
+            <div class="title">
+              Ek Olarak Eklemek İstediklerin
+            </div>
+            <standart-textarea
+                :name="'postscript'"/>
+          </li>
+          <li>
+            <standart-checkbox
+                :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
+                :id="'mentor_form_confirmation'"
+                :name="'confirmation'"
+                v-model="$v.user.confirmation.$model"/>
+            <error-alert
+                v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
+                :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
+          </li>
+          <li class="button_li">
+            <standart-button
+                :isDisable="$v.user.$invalid"
+                @click.native="postMentorForm"/>
+          </li>
+        </ul>
+      </form>
+      <div
+          v-else
+          class="already_applied">
+        <i class="fas fa-check-circle"></i>
+        <span>
         Başvurunuz Alındı.
       </span>
-    </div>
+      </div>
+    </template>
     <div
-        v-if="$store.getters.isMentor"
+        v-else
         class="already_mentor">
       <i class="bi bi-emoji-smile"></i>
       <span> zaten mentorsun</span>
@@ -297,21 +293,6 @@ export default {
   font-family: 'Montserrat', 'sans-serif';
   font-size: 15px;
   color: #414141;
-}
-
-.content > .apply_now_button {
-  margin: 25px auto;
-  padding: 12px 17px;
-  cursor: pointer;
-  font-family: 'Rubik', sans-serif;
-  font-size: 15px;
-  background-color: var(--navy-red-bg-color);
-  color: white;
-  border-radius: 3px;
-}
-
-.content > .apply_now_button:hover {
-  background-color: var(--navy-red-bg-dark-color);
 }
 
 .content > form > .form_ul {

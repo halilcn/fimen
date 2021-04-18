@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorAppealRequest;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Storage;
 
 class MentorAppealResourceController extends Controller
 {
@@ -21,7 +23,7 @@ class MentorAppealResourceController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illumin ate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -31,10 +33,13 @@ class MentorAppealResourceController extends Controller
     public function store(MentorAppealRequest $request)
     {
         //store file
-        $file = 'asdasasdasdasd';
+        $validatedRequest = $request->validated();
+        $validatedRequest['file'] = $request->has('file')
+            ? $request->file('file')->store('mentorAppeals')
+            : null;
 
         $request->user()->mentorAppeal()->create(
-            array_merge(['file' => $file], $request->validated())
+            $validatedRequest
         );
         return response()->json(['status' => true], 201);
     }
