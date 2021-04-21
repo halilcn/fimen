@@ -2,11 +2,11 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\EmailVerificationController;
-use App\Http\Controllers\API\Auth\MeController;
+use App\Http\Controllers\API\Auth\MeResourceController;
 use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\MentorProgramResourceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,10 +27,10 @@ Route::group(
         // ----- AUTH -----
         Route::middleware('auth:sanctum')->group(
             function () {
-                Route::get('/me', [MeController::class, 'index']);
-
+                Route::resource('/me', MeResourceController::class);
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
+                Route::resource('mentor-programs', MentorProgramResourceController::class);
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
