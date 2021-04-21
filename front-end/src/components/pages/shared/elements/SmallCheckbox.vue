@@ -1,0 +1,129 @@
+<template>
+  <div class="checkbox">
+    <input
+        v-model="inputValue"
+        :name="name"
+        :id="id"
+        type="checkbox">
+    <label :for="id">
+      {{ text }}
+    </label>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "SmallCheckbox",
+  props: {
+    id: {
+      required: false
+    },
+    text: {
+      required: false,
+      type: String
+    }
+  }
+}
+</script>
+
+<style scoped>
+*:before, *:after {
+  box-sizing: inherit;
+}
+
+.checkbox{
+  display: flex;
+  justify-content: flex-start;
+}
+.checkbox > label{
+  width: 80%;
+}
+
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type=checkbox],
+  input[type=radio] {
+    --active: var(--navy-blue-bg-color);
+    --active-inner: #fff;
+    --focus: 2px rgba(39, 94, 254, 0.3);
+    --border: #bbc1e1;
+    --border-hover: #275efe;
+    --background: #fff;
+    --disabled: #f6f8ff;
+    --disabled-inner: #e1e6f9;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 15px;
+    outline: none;
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, var(--border));
+    background: var(--b, var(--background));
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+  }
+
+  input[type=checkbox]:after,
+  input[type=radio]:after {
+    content: "";
+    display: block;
+    left: 0;
+    top: 0;
+    position: absolute;
+    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
+  }
+
+  input[type=checkbox]:checked,
+  input[type=radio]:checked {
+    --b: var(--active);
+    --bc: var(--active);
+    --d-o: 0.3s;
+    --d-t: 0.6s;
+    --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+  }
+
+
+  input[type=checkbox]:not(.switch),
+  input[type=radio]:not(.switch) {
+    width: 15px;
+  }
+
+  input[type=checkbox] + label,
+  input[type=radio] + label {
+    line-height: 15px;
+    cursor: pointer;
+    margin-left: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #3b3b3b;
+  }
+
+  input[type=checkbox]:not(.switch) {
+    border-radius: 4px;
+  }
+
+  input[type=checkbox]:not(.switch):after {
+    width: 3px;
+    height: 6px;
+    border: 2px solid var(--active-inner);
+    border-top: 0;
+    border-left: 0;
+    left: 5px;
+    top: 3px;
+    transform: rotate(var(--r, 20deg));
+  }
+
+  input[type=checkbox]:not(.switch):checked {
+    --r: 43deg;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+  input[type=checkbox] + label,
+  input[type=radio] + label {
+    font-size: 12px;
+  }
+}
+</style>

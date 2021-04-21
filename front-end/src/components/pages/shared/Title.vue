@@ -19,6 +19,12 @@ export default {
 <style scoped>
 .title {
   font-family: 'Poppins', sans-serif;
-  font-size: 23px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  display: inline-block;
+  padding: 6px 19px;
+  background-color: var(--navy-red-bg-color);
+  color: white;
+  border-radius: 4px;
 }
 </style>

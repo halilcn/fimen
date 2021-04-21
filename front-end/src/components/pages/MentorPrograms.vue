@@ -4,32 +4,50 @@
     <div class="content">
       <div class="mentor_programs">
         <div class="filters">
-          <div class="competency_selection">
-            <span>
+          <div :class="{selected:isShowCompetencies}" class="competency_selection">
+            <span @click="isShowCompetencies=!isShowCompetencies">
               Mentorluk Alanı
               <i class="bi bi-caret-down"></i>
             </span>
+            <div v-if="isShowCompetencies" class="dropdown">
+              <small-checkbox
+                  v-for="(index) in 10"
+                  :key="index"
+                  :text="'asdas'"
+                  :id="index"/>
+            </div>
           </div>
           <div class="program_status">
-           <span>
+           <span @click="isShowProgramStatus=!isShowProgramStatus">
               Program Durumu
+             <i class="bi bi-caret-down"></i>
            </span>
+            <div v-if="isShowProgramStatus" class="dropdown">
+              <small-checkbox
+                  v-for="(index) in 2"
+                  :key="index"
+                  :text="'asdas'"
+                  :id="index"/>
+            </div>
+          </div>
+          <div class="create_mentor_program">
+            Yeni Program Oluştur
           </div>
         </div>
         <ul>
-          <li>
+          <li class="expired">
             <div class="infos">
               <div class="type">
-                <i class="bi bi-alarm"></i>
+                <i class="bi bi-list"></i>
                 yazılım
               </div>
               <div class="user_count">
                 <i class="bi bi-people"></i>
                 2 kişi
               </div>
-              <div class="last_date">
+              <div class="last_date expired_date">
                 <i class="bi bi-clock"></i>
-                26 ekim
+                sona erdi
               </div>
             </div>
             <div class="inner">
@@ -61,7 +79,7 @@
           <li>
             <div class="infos">
               <div class="type">
-                <i class="bi bi-alarm"></i>
+                <i class="bi bi-list"></i>
                 yazılım
               </div>
               <div class="user_count">
@@ -196,10 +214,18 @@
 </template>
 
 <script>
+
 export default {
   name: "MentorPrograms",
+  data() {
+    return {
+      isShowCompetencies: false,
+      isShowProgramStatus: false
+    }
+  },
   components: {
-    PageTitle: () => import('@/components/pages/shared/Title')
+    PageTitle: () => import('@/components/pages/shared/Title'),
+    SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox')
   }
 }
 </script>
@@ -207,6 +233,7 @@ export default {
 <style scoped>
 .content {
   display: flex;
+  align-items: flex-start;
   background-color: white;
   padding: 15px;
   border-radius: 4px;
@@ -215,32 +242,103 @@ export default {
 .content > .mentor_programs {
   width: 100%;
   padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .content > .mentor_programs > .filters {
+  width: 100%;
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
   padding: 10px 10px;
   position: sticky;
   top: 0;
   z-index: 2;
   background-color: #F2F2F8;
+  border: 1px solid #ececf8;
   border-radius: 3px;
+  margin-bottom: 30px;
+
+  box-shadow: 0 0.1px 0.5px rgba(0, 0, 0, 0.011),
+  0 0.3px 1.3px rgba(0, 0, 0, 0.016),
+  0 0.5px 2.4px rgba(0, 0, 0, 0.02),
+  0 0.9px 4.2px rgba(0, 0, 0, 0.024),
+  0 1.7px 7.9px rgba(0, 0, 0, 0.029),
+  0 4px 19px rgba(0, 0, 0, 0.04);
 }
 
-
 .content > .mentor_programs > .filters > div {
+  position: relative;
   margin-right: 10px;
-  padding: 9px;
+}
+
+.content > .mentor_programs > .filters > div:hover {
+  background-color: #e9e9f3;
+}
+
+.content > .mentor_programs > .filters > .selected {
+  background-color: #e9e9f3;
+}
+
+.content > .mentor_programs > .filters > .selected > span > i {
+  transform: rotate(180deg);
+}
+
+.content > .mentor_programs > .filters > div > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 7px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
   border-radius: 3px;
+  transition: .3s;
 }
 
-.content > .mentor_programs > .filters > div > span {
-
+.content > .mentor_programs > .filters > div > span > i {
+  margin-left: 3px;
 }
+
+.content > .mentor_programs > .filters > div > .dropdown {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  max-height: 150px;
+  left: 0;
+  top: 30px;
+  overflow-x: auto;
+  padding: 5px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+.content > .mentor_programs > .filters > div > .dropdown > div {
+  padding: 6px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.content > .mentor_programs > .filters > div > .dropdown > div:hover {
+  background-color: #f2f2f8;
+}
+
+.content > .mentor_programs > .filters > .create_mentor_program {
+  margin-left: auto;
+  background-color: var(--navy-red-bg-color);
+  color: white;
+  padding: 7px 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.content > .mentor_programs > .filters > .create_mentor_program:hover {
+  background-color: var(--navy-red-bg-dark-color);
+}
+
 
 .mentor_programs > ul {
   list-style: none;
@@ -253,7 +351,7 @@ export default {
   border: 1px solid #f3f3f3;
   border-radius: 4px;
   transition: .3s;
-  margin: 38px 0;
+  margin-bottom: 30px;
 
   box-shadow: 0 0px 0.3px rgba(0, 0, 0, 0.011),
   0 0px 0.7px rgba(0, 0, 0, 0.016),
@@ -262,6 +360,11 @@ export default {
   0 0px 4.2px rgba(0, 0, 0, 0.029),
   0 0px 10px rgba(0, 0, 0, 0.04);
 
+}
+
+.mentor_programs > ul > .expired {
+  pointer-events: none;
+  opacity: .6;
 }
 
 .mentor_programs > ul > li:hover {
@@ -288,9 +391,10 @@ export default {
   background-color: #f3f3f3;
 }
 
-.mentor_programs > ul > li > .infos > .last_date {
-  background-color: #ffeaea;
-  color: #cf2222;
+
+.mentor_programs > ul > li > .infos > .expired_date {
+  background-color: #cf2222;
+  color: white;
 }
 
 .mentor_programs > ul > li > .inner {
@@ -310,7 +414,6 @@ export default {
   border-radius: var(--navy-user-profile-border-radius);
 }
 
-
 .mentor_programs > ul > li > .inner > .profile > .name_surname {
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
@@ -321,7 +424,6 @@ export default {
 .mentor_programs > ul > li > .inner > .profile > .username {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
-  color: #454545;
   color: #2972cf;
 }
 
@@ -346,8 +448,8 @@ export default {
   width: 350px;
   margin-left: 10px;
   border-radius: 3px;
-  background-color: #f2f2f8;
-  padding: 8px;
+  background-color: #fafafd;
+  border: 1px solid #ebebf5;
 }
 
 .content > .new_mentors > .title {
@@ -355,28 +457,29 @@ export default {
   font-size: 18px;
   text-align: center;
   border-radius: 3px;
-  background-color: #e4e4ef;
-  padding: 5px 0;
+  border-bottom: 1px solid #dedeec;
+  background-color: #F2F2F8;
+  padding: 6px 0;
 }
 
 .content > .new_mentors > ul {
   list-style: none;
-  padding: 0 10px;
+  padding: 0;
+  background-color: #f5f5f5;
+  margin: 0;
 }
 
 .content > .new_mentors > ul > li {
   display: flex;
   justify-content: flex-start;
-  background-color: #ededf8;
-  padding: 6px 10px;
+  padding: 13px 10px;
   border-radius: 4px;
   cursor: pointer;
   transition: .3s;
-  margin: 8px 0;
 }
 
 .content > .new_mentors > ul > li:hover {
-  background-color: #e8e8f3;
+  background-color: #efeff6;
 }
 
 .content > .new_mentors > ul > li > img {
