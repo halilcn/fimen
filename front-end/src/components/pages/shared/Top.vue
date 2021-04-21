@@ -47,39 +47,42 @@
     </div>
     <div class="user">
       <div @click="isEnableDropdown=!isEnableDropdown" class="info">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D1&color=FFFFFF&size=128">
+        <img :src="user.image">
         <span class="username">
-               hcan
-             </span>
+               {{ user.username }}
+        </span>
         <i class="bi bi-caret-down-fill"></i>
       </div>
       <div v-if="isEnableDropdown" class="dropdown">
         <div class="top">
-          <div class="user_profile">
-            <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D1&color=FFFFFF&size=128">
+          <router-link
+              tag="div"
+              :to="getMeProfileUrl"
+              class="user_profile">
+            <img :src="user.image">
             <div class="info">
               <div class="name">
-                Halil CAN
+                {{ user.name_surname }}
               </div>
               <div class="rank">
                      <span class="mentee">
                        Mentee
                      </span>
-                <span class="mentor">
+                <span v-if="isMentor" class="mentor">
                        & Mentor
-                     </span>
+                </span>
               </div>
             </div>
-          </div>
-          <div class="mentor_apply_button">
+          </router-link>
+          <div v-if="!isMentor" class="mentor_apply_button">
             Mentor Başvurusu
           </div>
         </div>
         <div class="links">
-          <div>
+          <router-link to="/" tag="div">
             <i class="bi bi-person-fill"></i>
             Profile Git
-          </div>
+          </router-link>
           <div>
             <i class="bi bi-gear-fill"></i>
             Ayarlar
@@ -109,12 +112,21 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
   name: "Head",
   data() {
     return {
       isEnableDropdown: false
     }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.auth.user
+    }),
+    ...mapGetters(['isMentor', 'getMeProfileUrl'])
   },
   methods: {
     postLogout() {
@@ -367,7 +379,7 @@ export default {
 .dropdown > .top > .user_profile > .info > .rank {
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
-  color: #808080;
+  color: var(--navy-mentor-mentee-text-color);
 }
 
 .dropdown > .top > .mentor_apply_button {

@@ -130,6 +130,9 @@ export const auth = {
                 }
             }
         },
+        getMeProfileUrl(state) {
+            return 'profil/' + state.user.username;
+        },
         checkRegisterUser(state) {
             return state.registerUser === '';
         },

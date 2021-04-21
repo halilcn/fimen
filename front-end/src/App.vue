@@ -39,5 +39,6 @@ body, html {
   --navy-blue-text-color: #2B374F;
   --navy-blue-text-light-color: #3b465a;
   --navy-user-profile-border-radius: 40%;
+  --navy-mentor-mentee-text-color: #1e66cd
 }
 </style>
