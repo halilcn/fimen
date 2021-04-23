@@ -35,7 +35,56 @@
           </div>
         </div>
         <ul>
-          <li class="expired">
+          <loader-content v-if="isLoadingPrograms"
+                          :textLineCount="3"
+                          :textCount="8"
+                          :textLineHeight="15"/>
+          <li
+              v-for="(program,index) in programs"
+              :key="index"
+              :class="{'expired':!program.deadline}">
+            <div class="infos">
+              <div class="type">
+                <i class="bi bi-list"></i>
+                {{ program.user.competency_name }}
+              </div>
+              <div class="user_count">
+                <i class="bi bi-people"></i>
+                {{ program.mentee_count }} kişi
+              </div>
+              <div
+                  class="last_date"
+                  :class="{expired_date:!program.deadline}">
+                <i class="bi bi-clock"></i>
+                <template v-if="program.deadline">
+                  {{ program.deadline }}
+                </template>
+                <template v-else>
+                  sona erdi
+                </template>
+              </div>
+            </div>
+            <div class="inner">
+              <div class="profile">
+                <img :src="program.user.image">
+                <div class="name_surname">
+                  {{ program.user.name }}
+                </div>
+                <div class="username">
+                  @{{ program.user.username }}
+                </div>
+              </div>
+              <div class="program_info">
+                <div class="title">
+                  {{ program.title }}
+                </div>
+                <div class="text">
+                  {{ program.explanation }}
+                </div>
+              </div>
+            </div>
+          </li>
+          <!-- <li class="expired">
             <div class="infos">
               <div class="type">
                 <i class="bi bi-list"></i>
@@ -66,50 +115,6 @@
                   başlık başlıkbaşlıkbaşlık başlık başlık
                 </div>
                 <div class="text">
-                  başlık başlıkbaşlıkbaşlık başlık başlıkbaşlık başlıkbaşlıkbaşlık başlık başlıkbaşlık
-                  başlıkbaşlıkbaşlık başlık başlık
-                  başlık başlıkbaşlıkbaşlık başlık başlık
-                  başlık başlıkbaşlıkbaşlık başlık başlıkbaşlık başlıkbaşlıkbaşlık başlık başlıkbaşlık
-                  başlıkbaşlıkbaşlık başlık başlık
-                  başlık başlıkbaşlıkbaşlık başlık başlık
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="infos">
-              <div class="type">
-                <i class="bi bi-list"></i>
-                yazılım
-              </div>
-              <div class="user_count">
-                <i class="bi bi-people"></i>
-                2 kişi
-              </div>
-              <div class="last_date">
-                <i class="bi bi-clock"></i>
-                sona erdi
-              </div>
-            </div>
-            <div class="inner">
-              <div class="profile">
-                <img
-                    src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D1&amp;color=FFFFFF&amp;size=128">
-                <div class="name_surname">
-                  Halil CAN
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-              <div class="program_info">
-                <div class="title">
-                  başlık başlıkbaşlıkbaşlık başlık başlık
-                </div>
-                <div class="text">
-                  başlık başlıkbaşlıkbaşlık başlık başlıkbaşlık başlıkbaşlıkbaşlık başlık başlıkbaşlık
-                  başlıkbaşlıkbaşlık başlık başlık
-                  başlık başlıkbaşlıkbaşlık başlık başlık
                   başlık başlıkbaşlıkbaşlık başlık başlıkbaşlık başlıkbaşlıkbaşlık başlık başlıkbaşlık
                   başlıkbaşlıkbaşlık başlık başlık
                   başlık başlıkbaşlıkbaşlık başlık başlık
@@ -163,7 +168,7 @@
                 </div>
               </div>
             </div>
-          </li>
+          </li>-->
         </ul>
       </div>
       <div class="new_mentors">
@@ -171,42 +176,23 @@
           Yeni Mentorlar
         </div>
         <ul>
-          <li>
-            <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D1&amp;color=FFFFFF&amp;size=128">
+          <loader-content v-if="isLoadingNewMentors"/>
+          <router-link
+              tag="li"
+              to="/"
+              v-for="(mentor,index) in newMentors"
+              :key="index">
+            <img :src="mentor.image">
             <div class="user_info">
               <div class="name_surname">
-                Halil CAN
+                {{ mentor.name }}
               </div>
               <div class="type">
                 <i class="bi bi-circle-fill"></i>
-                yazılım
+                {{ mentor.competency_name }}
               </div>
             </div>
-          </li>
-          <li>
-            <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D1&amp;color=FFFFFF&amp;size=128">
-            <div class="user_info">
-              <div class="name_surname">
-                Halil CAN
-              </div>
-              <div class="type">
-                <i class="bi bi-circle-fill"></i>
-                yazılım
-              </div>
-            </div>
-          </li>
-          <li>
-            <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D1&amp;color=FFFFFF&amp;size=128">
-            <div class="user_info">
-              <div class="name_surname">
-                Halil CAN
-              </div>
-              <div class="type">
-                <i class="bi bi-circle-fill"></i>
-                yazılım
-              </div>
-            </div>
-          </li>
+          </router-link>
         </ul>
       </div>
     </div>
@@ -214,18 +200,38 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
 
 export default {
   name: "MentorPrograms",
   data() {
     return {
       isShowCompetencies: false,
-      isShowProgramStatus: false
+      isShowProgramStatus: false,
+      isLoadingNewMentors: true,
+      isLoadingPrograms: true
     }
   },
   components: {
     PageTitle: () => import('@/components/pages/shared/Title'),
-    SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox')
+    SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox'),
+    LoaderContent: () => import('@/components/pages/shared/LoaderContent')
+  },
+  computed: {
+    ...mapState({
+      programs: state => state.mentorProgram.programs,
+      newMentors: state => state.mentor.newMentors
+    }),
+  },
+  created() {
+    this.$store.dispatch('getMentorPrograms')
+        .finally(() => {
+          this.isLoadingPrograms = false;
+        });
+    this.$store.dispatch('getNewMentors')
+        .finally(() => {
+          this.isLoadingNewMentors = false;
+        });
   }
 }
 </script>

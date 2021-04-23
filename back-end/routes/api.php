@@ -7,6 +7,8 @@ use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
+use App\Http\Controllers\API\MentorResourceController;
+use App\Http\Controllers\API\NewMentorResourceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -30,7 +32,10 @@ Route::group(
                 Route::resource('/me', MeResourceController::class);
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
-                Route::resource('mentor-programs', MentorProgramResourceController::class);
+                Route::resource('/mentor-programs', MentorProgramResourceController::class);
+                Route::resource('/new-mentors', NewMentorResourceController::class);
+                Route::resource('/mentors', MentorResourceController::class);
+
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }

@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MentorProgramsResource;
-use App\Models\MentorProgram;
+use App\Http\Resources\NewMentorResource;
+use App\Models\Mentor;
 use Illuminate\Http\Request;
 
-
-class MentorProgramResourceController extends Controller
+class NewMentorResourceController extends Controller
 {
     /**
-     * @return MentorProgramsResource
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
-        return MentorProgramsResource::collection(MentorProgram::with(['mentorUser.user','mentorUser.competency'])->get());
+        return NewMentorResource::collection(Mentor::latest()->take(5)->get());
     }
 
     /**

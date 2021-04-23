@@ -3,19 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MentorProgramsResource;
-use App\Models\MentorProgram;
 use Illuminate\Http\Request;
 
-
-class MentorProgramResourceController extends Controller
+class MentorResourceController extends Controller
 {
     /**
-     * @return MentorProgramsResource
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return MentorProgramsResource::collection(MentorProgram::with(['mentorUser.user','mentorUser.competency'])->get());
+        //
     }
 
     /**
