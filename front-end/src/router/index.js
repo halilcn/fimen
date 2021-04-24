@@ -55,12 +55,26 @@ const routes = [
             },
             {
                 path: '/mentor-basvuru',
+                name: 'ApplyMentor',
                 component: () => import('@/components/pages/ApplyMentor'),
             },
             {
                 path: '/mentor-programlari',
-                component: () => import('@/components/pages/MentorPrograms'),
+                component: () => import('@/components/pages/MentorPrograms/Home'),
+                children: [
+                    {
+                        path: '/',
+                        name: 'MentorPrograms',
+                        component: () => import('@/components/pages/MentorPrograms/Programs'),
+                    },
+                    {
+                        path: ':slug',
+                        name: 'MentorProgramDetail',
+                        component: () => import('@/components/pages/MentorPrograms/ProgramDetail'),
+                    },
+                ]
             },
+
         ]
     },
 ]

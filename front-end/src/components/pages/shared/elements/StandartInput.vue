@@ -53,7 +53,7 @@ input {
 }
 
 input:focus, input:hover {
-  border-color: #cccccc;
+  border-color: var(--navy-red-input-focus);
   box-shadow: 0 0.1px 0.5px rgba(0, 0, 0, 0.003),
   0 0.3px 1.1px rgba(0, 0, 0, 0.004),
   0 0.6px 2.1px rgba(0, 0, 0, 0.005),

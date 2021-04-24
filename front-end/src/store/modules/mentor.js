@@ -3,7 +3,6 @@ import axios from "axios";
 export const mentor = {
     state: {
         competencies: [],
-        newMentors: []
     },
     mutations: {
         setCompetencies(state, payload) {
@@ -12,9 +11,6 @@ export const mentor = {
         setMentorStatus() {
             this.state.auth.user.mentor.status = true;
         },
-        setNewMentors(state, payload) {
-            state.newMentors = payload;
-        }
     },
     actions: {
         getCompetencies({commit}) {
@@ -33,10 +29,10 @@ export const mentor = {
                     commit('setMentorStatus');
                 });
         },
-        getNewMentors({commit}) {
+        getNewMentors() {
             return axios.get('new-mentors')
                 .then(res => {
-                    commit('setNewMentors', res.data.data);
+                    return res.data.data;
                 })
         }
     },

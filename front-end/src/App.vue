@@ -36,6 +36,7 @@ body, html {
   --navy-blue-bg-hover-color: #303e5a;
   --navy-red-bg-color: #FF7268;
   --navy-red-bg-dark-color: #f16b61;
+  --navy-red-input-focus: #ffa49d;
   --navy-blue-text-color: #2B374F;
   --navy-blue-text-light-color: #3b465a;
   --navy-user-profile-border-radius: 40%;

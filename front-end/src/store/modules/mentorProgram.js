@@ -6,10 +6,13 @@ export const mentorProgram = {
     },
     mutations: {
         setMentorProgram(state, payload) {
+            state.programs = payload;
+        },
+        setMoreMentorPrograms(state, payload) {
             payload.map(function (value) {
                 state.programs.push(value);
             });
-        },
+        }
     },
     actions: {
         getMentorPrograms({commit}) {
@@ -17,6 +20,9 @@ export const mentorProgram = {
                 .then(res => {
                     commit('setMentorProgram', res.data.data);
                 })
+        },
+        getMoreMentorPrograms() {
+
         }
     },
     getters: {}
