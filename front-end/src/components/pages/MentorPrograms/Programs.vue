@@ -10,9 +10,9 @@
             </span>
           <div v-if="isShowCompetencies" class="dropdown">
             <small-checkbox
-                v-for="(index) in 10"
+                v-for="(competency,index) in competencies"
                 :key="index"
-                :text="'asdas'"
+                :text="competency.name"
                 :id="index"/>
           </div>
         </div>
@@ -23,9 +23,9 @@
            </span>
           <div v-if="isShowProgramStatus" class="dropdown">
             <small-checkbox
-                v-for="(index) in 2"
+                v-for="(status,index) in programStatuses"
                 :key="index"
-                :text="'asdas'"
+                :text="status.name"
                 :id="index"/>
           </div>
         </div>
@@ -58,7 +58,7 @@
                 :class="{expired_date:!program.deadline}">
               <i class="bi bi-clock"></i>
               <template v-if="program.deadline">
-                {{ program.deadline }}
+                {{ moment(program.deadline).format('DD MMMM') }}
               </template>
               <template v-else>
                 sona erdi
@@ -123,6 +123,16 @@ export default {
   name: "Programs",
   data() {
     return {
+      programStatuses: [
+        {
+          id: 'deneme',
+          name: 'aktif'
+        },
+        {
+          id: 'deneme2',
+          name: 'pasif'
+        }
+      ],
       isShowCompetencies: false,
       isShowProgramStatus: false,
       isLoadingNewMentors: true,
@@ -139,6 +149,7 @@ export default {
   computed: {
     ...mapState({
       programs: state => state.mentorProgram.programs,
+      competencies: state => state.mentor.competencies,
     }),
   },
   created() {
@@ -153,6 +164,7 @@ export default {
         .finally(() => {
           this.isLoadingNewMentors = false;
         });
+    this.$store.dispatch('getCompetencies');
   }
 }
 </script>
@@ -194,7 +206,7 @@ export default {
 
 .mentor_programs > .filters > div {
   position: relative;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
 .mentor_programs > .filters > div:hover {
@@ -229,7 +241,7 @@ export default {
   position: absolute;
   background-color: white;
   width: 100%;
-  max-height: 150px;
+  max-height: 200px;
   left: 0;
   top: 30px;
   overflow-x: auto;
