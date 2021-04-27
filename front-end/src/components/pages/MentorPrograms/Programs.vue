@@ -144,7 +144,7 @@ export default {
   components: {
     SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox'),
     LoaderContent: () => import('@/components/pages/shared/LoaderContent'),
-    // NewProgramForm: () => import('@/components/pages/MentorPrograms/NewProgramForm')
+   // NewProgramForm: () => import('@/components/pages/MentorPrograms/NewProgramForm')
   },
   computed: {
     ...mapState({
