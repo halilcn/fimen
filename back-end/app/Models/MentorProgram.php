@@ -17,11 +17,13 @@ class MentorProgram extends Model
         'explanation',
         'slug',
         'mentee_count',
-        'deadline'
+        'deadline',
+        'questions'
     ];
 
     protected $casts = [
-        'deadline' => 'date'
+        'deadline' => 'date',
+        'questions' => 'array'
     ];
 
     public function mentorUser(): BelongsTo

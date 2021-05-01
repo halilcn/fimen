@@ -1,6 +1,9 @@
 <template>
   <div class="programs_container">
-    <!-- <new-program-form :popupHeight="50" :title="'Yeni Mentor Programı'"/>-->
+    <new-program-form
+        :showPopup="isShowNewProgramPopup"
+        :popupHeight="50"
+        :title="'Yeni Mentor Programı'"/>
     <div class="mentor_programs">
       <div class="filters">
         <div :class="{selected:isShowCompetencies}" class="competency_selection">
@@ -29,7 +32,7 @@
                 :id="index"/>
           </div>
         </div>
-        <div @click="isShowNewProgramPopup" class="create_mentor_program">
+        <div @click="$store.commit('setShowPopup',true)" class="create_mentor_program">
           Yeni Program Oluştur
         </div>
       </div>
@@ -138,13 +141,13 @@ export default {
       isLoadingNewMentors: true,
       isLoadingPrograms: true,
       newMentors: [],
-      isShowNewProgramPopup: false
+      isShowNewProgramPopup: false,
     }
   },
   components: {
     SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox'),
     LoaderContent: () => import('@/components/pages/shared/LoaderContent'),
-   // NewProgramForm: () => import('@/components/pages/MentorPrograms/NewProgramForm')
+    NewProgramForm: () => import('@/components/pages/MentorPrograms/NewProgramForm')
   },
   computed: {
     ...mapState({

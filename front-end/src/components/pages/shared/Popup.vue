@@ -1,20 +1,22 @@
 <template>
   <div class="popup_container">
-    <div
-        :style="{width:popupHeight+'%'}"
-        class="popup">
-      <div class="top">
-        <div v-if="title" class="title">
-          {{ title }}
+    <transition name="popup-scale" mode="out-in">
+      <div
+          v-if="$store.state.isShowPopup"
+          :style="{width:popupHeight+'%'}"
+          class="popup">
+        <div class="top">
+          <div v-if="title" class="title">
+            {{ title }}
+          </div>
+          <div @click="$store.commit('setShowPopup',false)" class="close">
+            <i class="bi bi-x"></i>
+          </div>
         </div>
-        <div class="close">
-          <i class="bi bi-x-circle"></i>
-        </div>
+        <slot name="popup"/>
       </div>
-      <slot name="popup"/>
-
-    </div>
-    <div class="filter"></div>
+    </transition>
+    <div @click="$store.commit('setShowPopup',false)" class="filter"></div>
   </div>
 </template>
 
@@ -76,27 +78,71 @@ export default {
   0 0px 4.2px rgba(0, 0, 0, 0.05),
   0 0px 10px rgba(0, 0, 0, 0.07);
 }
+.popup::-webkit-scrollbar {
+  width: 5px;
+}
+
+.popup::-webkit-scrollbar-thumb {
+  background: #b1b1b1;
+  border-radius: 5px;
+}
+
+.popup::-webkit-scrollbar-thumb:hover {
+  background: #a5a5a5;
+}
 
 .popup > .top {
   border-bottom: 1px solid #ffd6d6;
-  padding-bottom: 5px;
+  padding-bottom: 2px;
   display: flex;
   align-items: center;
 }
 
 .popup > .top > .title {
-  font-family: 'Rubik', 'sans-serif';
-  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 19px;
   color: var(--navy-red-bg-color);
 }
 
 .popup > .top > .close {
   margin-left: auto;
   cursor: pointer;
-  color: #8d8d8d;
-  font-size: 22px;
+  color: #4a4a4a;
+  font-size: 27px;
+  border-radius: 100%;
+  padding: 0 3px;
 }
-.popup > .top > .close:hover{
-  color: #646464;
+
+.popup > .top > .close:hover {
+  background-color: #f0f0f0;
+}
+
+@keyframes popup-scale-active {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes popup-scale-leave {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.popup-scale-enter-active {
+
+  animation: popup-scale-active .5s;
+  display: none;
+}
+
+.popup-scale-leave-active {
+  animation: popup-sacle-leave .5s;
 }
 </style>

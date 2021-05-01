@@ -121,6 +121,7 @@
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/itsgoingd/clockwork" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

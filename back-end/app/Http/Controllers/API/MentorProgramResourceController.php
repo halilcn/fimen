@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MentorProgramRequest;
 use App\Http\Resources\MentorProgramsResource;
 use App\Models\MentorProgram;
 use Illuminate\Http\Request;
@@ -15,7 +16,9 @@ class MentorProgramResourceController extends Controller
      */
     public function index()
     {
-        return MentorProgramsResource::collection(MentorProgram::with(['mentorUser.user','mentorUser.competency'])->get());
+        return MentorProgramsResource::collection(
+            MentorProgram::with(['mentorUser.user', 'mentorUser.competency'])->get()
+        );
     }
 
     /**
@@ -29,14 +32,16 @@ class MentorProgramResourceController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  MentorProgramRequest  $request
+     * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function store(Request $request)
+    public function store(MentorProgramRequest $request)
     {
-        //
+        $request->user()->mentor->programs()->create(
+            array_merge($request->validated(), ['slug' => rand(100000, 999999)])
+        );
+
+        return response()->json(['status' => true], 201);
     }
 
     /**

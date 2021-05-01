@@ -23,6 +23,12 @@ export const mentorProgram = {
         },
         getMoreMentorPrograms() {
 
+        },
+        postMentorProgram(_, payload) {
+            axios.post('mentor-programs', payload)
+                .then(res => {
+                    console.log(res);
+                });
         }
     },
     getters: {}
