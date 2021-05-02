@@ -5,6 +5,7 @@
         :popupHeight="50"
         :title="'Yeni Mentor Programı'"/>
     <div class="mentor_programs">
+      {{ $route.query }}--
       <div class="filters">
         <div :class="{selected:isShowCompetencies}" class="competency_selection">
             <span @click="isShowCompetencies=!isShowCompetencies">
@@ -16,7 +17,8 @@
                 v-for="(competency,index) in competencies"
                 :key="index"
                 :text="competency.name"
-                :id="index"/>
+                :id="index"
+                @click.native="alert()"/>
           </div>
         </div>
         <div class="program_status">
@@ -282,6 +284,7 @@ export default {
 .mentor_programs > ul {
   list-style: none;
   padding: 0px;
+  width: 100%;
 }
 
 .mentor_programs > ul > li {

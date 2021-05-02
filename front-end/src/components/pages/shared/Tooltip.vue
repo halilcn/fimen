@@ -21,7 +21,7 @@ export default {
   position: relative;
   display: inline-block;
   color: var(--navy-red-bg-dark-color);
-  font-size: 17px;
+  font-size: 14px;
   margin-left: 5px;
 }
 
@@ -32,7 +32,7 @@ export default {
   color: white;
   text-align: center;
   border-radius: 6px;
-  padding: 5px 0;
+  padding: 5px 5px;
   position: absolute;
   z-index: 1;
   bottom: 150%;

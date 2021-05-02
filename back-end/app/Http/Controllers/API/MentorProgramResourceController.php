@@ -17,8 +17,13 @@ class MentorProgramResourceController extends Controller
     public function index()
     {
         return MentorProgramsResource::collection(
-            MentorProgram::with(['mentorUser.user', 'mentorUser.competency'])->get()
+            MentorProgram::query()
+                ->with(['mentorUser.user', 'mentorUser.competency'])
+                ->whereDate('deadline', '>', now())
+                ->take(2)
+                ->get()
         );
+        //->orderBy('ASC', 'deadline')
     }
 
     /**

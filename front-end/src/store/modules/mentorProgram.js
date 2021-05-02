@@ -18,12 +18,14 @@ export const mentorProgram = {
         getMentorPrograms({commit}) {
             return axios.get('/mentor-programs')
                 .then(res => {
+                    console.log(res.data.data);
                     commit('setMentorProgram', res.data.data);
                 })
         },
         getMoreMentorPrograms() {
 
         },
+        // state eklenecek mi?
         postMentorProgram(_, payload) {
             axios.post('mentor-programs', payload)
                 .then(res => {

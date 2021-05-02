@@ -24,11 +24,11 @@ class MentorProgramRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required'],
-            'explanation' => ['required'],
-            'mentee_count' => ['required', 'min:1'],
-            'deadline' => ['required'],  //bugünden geçmiş olmasın
-            'questions.*' => ['max:1000']
+            'title' => ['required', 'string'],
+            'explanation' => ['required', 'string'],
+            'mentee_count' => ['required', 'min:1', 'numeric'],
+            'deadline' => ['required', 'date', 'after:tomorrow'],
+            'questions.*' => ['max:1000', 'string']
         ];
     }
 }

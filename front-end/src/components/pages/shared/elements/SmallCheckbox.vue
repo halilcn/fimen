@@ -22,6 +22,16 @@ export default {
       required: false,
       type: String
     }
+  },
+  computed: {
+    inputValue: {
+      get() {
+        return this.value;
+      },
+      set(value) {
+        this.$emit('input', value);
+      }
+    }
   }
 }
 </script>

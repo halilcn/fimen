@@ -11,6 +11,11 @@
         <small-input
             :type="'text'"
             v-model.number.trim="$v.program.mentee_count.$model"/>
+        <template v-if="$v.program.mentee_count.$error && $v.program.mentee_count.$dirty">
+          <error-alert v-if="!$v.program.mentee_count.required" :text="$errors.required()"/>
+          <error-alert v-if="!$v.program.mentee_count.minValue" :text="$errors.minValue('','1')"/>
+          <error-alert v-if="!$v.program.mentee_count.numeric" :text="$errors.numeric()"/>
+        </template>
       </li>
       <li>
         <div class="input_title">
@@ -19,12 +24,18 @@
         <small-input
             :type="'text'"
             v-model.number.trim="$v.program.title.$model"/>
+        <template v-if="$v.program.title.$error && $v.program.title.$dirty">
+          <error-alert v-if="!$v.program.title.required" :text="$errors.required()"/>
+        </template>
       </li>
       <li>
         <div class="input_title">
           Program Açıklaması
         </div>
         <small-textarea v-model="$v.program.explanation.$model"/>
+        <template v-if="$v.program.explanation.$error && $v.program.explanation.$dirty">
+          <error-alert v-if="!$v.program.explanation.required" :text="$errors.required()"/>
+        </template>
       </li>
       <li>
         <div class="input_title">
@@ -33,13 +44,18 @@
         <small-input
             :type="'datetime-local'"
             v-model="$v.program.deadline.$model"/>
+        <template v-if="$v.program.deadline.$error && $v.program.deadline.$dirty">
+          <error-alert v-if="!$v.program.deadline.required" :text="$errors.required()"/>
+          <error-alert v-if="!$v.program.deadline.minValue" :text="$errors.invalidDate()"/>
+        </template>
       </li>
       <li class="questions">
         <div class="input_title">
           Soru Ekle
-          <tooltip :text="'deneme yazısıdr bu'"/>
+          <tooltip :text="'Başvuracak kişiler, bu soruları cevaplamadan başvuramazlar.'"/>
         </div>
         <ul>
+          {{$v.program.questions}}
           <li
               v-for="(question,index) in program.questions"
               :key="index">
@@ -50,6 +66,11 @@
             <div @click="deleteQuestion(index)" class="delete_question">
               <i class="bi bi-trash-fill"></i>
             </div>
+            <template v-if="$v.program.questions.$each[index].$error ">
+              <!-- && $v.program.questions.$each[index].$dirty-->
+              {{$v.program.questions.$each[index]}}
+              <error-alert v-if="!$v.program.questions.$each[index].required" :text="$errors.required()"/>
+            </template>
           </li>
         </ul>
         <div @click="addQuestion" class="add_question">
@@ -61,14 +82,15 @@
         <standart-button
             @click.native="postMentorProgram"
             :text="'Program Oluştur'"
-            :isDisable="false"/>
+            :isDisable="$v.program.$invalid"/>
       </li>
     </ul>
   </popup>
 </template>
 
 <script>
-import {required, minValue} from 'vuelidate/lib/validators';
+import {required, minValue, numeric} from 'vuelidate/lib/validators';
+import moment from "moment";
 
 export default {
   name: "NewProgramForm",
@@ -79,7 +101,7 @@ export default {
         title: '',
         explanation: '',
         mentee_count: '',
-        deadline: '',
+        deadline: '',//moment().add(1, 'day')
         questions: []
       }
     }
@@ -93,12 +115,13 @@ export default {
         required
       },
       deadline: {
-        required
-        //bugünden geçmiş olmasın
+        required,
+        minValue: value => value > moment().add(1, 'day').toISOString()
       },
       mentee_count: {
         required,
-        minValue: minValue(1)
+        minValue: minValue(1),
+        numeric
       },
       questions: {
         $each: {
@@ -113,6 +136,7 @@ export default {
     SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea'),
     Tooltip: () => import('@/components/pages/shared/Tooltip'),
     StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
+    ErrorAlert: () => import('@/components/pages/shared/ErrorAlert'),
   },
   methods: {
     addQuestion() {
