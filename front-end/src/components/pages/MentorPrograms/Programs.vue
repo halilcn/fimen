@@ -5,33 +5,20 @@
         :popupHeight="50"
         :title="'Yeni Mentor Programı'"/>
     <div class="mentor_programs">
-      {{ $route.query }}--
       <div class="filters">
         <div :class="{selected:isShowCompetencies}" class="competency_selection">
             <span @click="isShowCompetencies=!isShowCompetencies">
               Mentorluk Alanı
               <i class="bi bi-caret-down"></i>
             </span>
-          <div v-if="isShowCompetencies" class="dropdown">
+          <div v-show="isShowCompetencies" class="dropdown">
             <small-checkbox
                 v-for="(competency,index) in competencies"
                 :key="index"
                 :text="competency.name"
-                :id="index"
-                @click.native="alert()"/>
-          </div>
-        </div>
-        <div class="program_status">
-           <span @click="isShowProgramStatus=!isShowProgramStatus">
-              Program Durumu
-             <i class="bi bi-caret-down"></i>
-           </span>
-          <div v-if="isShowProgramStatus" class="dropdown">
-            <small-checkbox
-                v-for="(status,index) in programStatuses"
-                :key="index"
-                :text="status.name"
-                :id="index"/>
+                :id="'competency'+index"
+                @inputClick="actionFilterCompetencies(competency.id)"
+            />
           </div>
         </div>
         <div @click="$store.commit('setShowPopup',true)" class="create_mentor_program">
@@ -91,9 +78,16 @@
           </div>
         </router-link>
       </ul>
-      <div class="more_button">
-        daha fazla yükle
-      </div>
+      <template v-if="programs.length > 0">
+        <div v-if="isShowMoreButton" @click="getMoreMentors" class="more_button">
+          daha fazla yükle
+        </div>
+      </template>
+      <template v-else>
+        <div class="no_program">
+          Hiç mentorluk programı yok.
+        </div>
+      </template>
     </div>
     <div class="new_mentors">
       <div class="title">
@@ -121,6 +115,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import {mapState} from 'vuex'
 
@@ -128,28 +123,45 @@ export default {
   name: "Programs",
   data() {
     return {
-      programStatuses: [
-        {
-          id: 'deneme',
-          name: 'aktif'
-        },
-        {
-          id: 'deneme2',
-          name: 'pasif'
-        }
-      ],
       isShowCompetencies: false,
       isShowProgramStatus: false,
       isLoadingNewMentors: true,
       isLoadingPrograms: true,
-      newMentors: [],
       isShowNewProgramPopup: false,
+      newMentors: [],
+      isShowMoreButton: true,
+      filters: {
+        competencies: [],
+        lastProgramDeadline: 'now'
+      }
     }
   },
   components: {
     SmallCheckbox: () => import('@/components/pages/shared/elements/SmallCheckbox'),
     LoaderContent: () => import('@/components/pages/shared/LoaderContent'),
     NewProgramForm: () => import('@/components/pages/MentorPrograms/NewProgramForm')
+  },
+  methods: {
+    getMentorPrograms() {
+      this.isShowMoreButton = true;
+      this.$store.dispatch('getMentorPrograms', this.filters)
+          .finally(() => {
+            this.isLoadingPrograms = false;
+          });
+    },
+    getMoreMentors() {
+      this.$store.dispatch('getMoreMentorPrograms', this.filters)
+          .then(res => {
+            if (res) {
+              this.isShowMoreButton = false;
+            }
+          })
+    },
+    actionFilterCompetencies(id) {
+      const index = this.filters.competencies.indexOf(id);
+      index > -1 ? this.filters.competencies.splice(index, 1) : this.filters.competencies.push(id);
+      this.getMentorPrograms();
+    },
   },
   computed: {
     ...mapState({
@@ -158,10 +170,7 @@ export default {
     }),
   },
   created() {
-    this.$store.dispatch('getMentorPrograms')
-        .finally(() => {
-          this.isLoadingPrograms = false;
-        });
+    this.getMentorPrograms();
     this.$store.dispatch('getNewMentors')
         .then(res => {
           this.newMentors = res;
@@ -384,15 +393,30 @@ export default {
   margin-top: 5px;
 }
 
+.mentor_programs > .no_program {
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 13px 0;
+  background-color: #f6f6f6;
+  border-radius: 3px;
+}
+
 .mentor_programs > .more_button {
-  padding: 5px 10px;
+  padding: 7px 13px;
   border-radius: 4px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   align-self: center;
+  background-color: #e9eaec;
+  color: var(--navy-blue-text-color);
+}
 
-  background-color: #1a202c;
+.mentor_programs > .more_button:hover {
+  background-color: #e1e3e7;
 }
 
 .new_mentors {
@@ -434,7 +458,7 @@ export default {
 }
 
 .new_mentors > ul > li > img {
-  width: 50px;
+  width: 40px;
   border-radius: var(--navy-user-profile-border-radius);
 }
 

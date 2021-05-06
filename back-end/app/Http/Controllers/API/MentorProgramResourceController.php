@@ -11,19 +11,22 @@ use Illuminate\Http\Request;
 
 class MentorProgramResourceController extends Controller
 {
-    /**
-     * @return MentorProgramsResource
-     */
-    public function index()
+
+    public function index(Request $request)
     {
         return MentorProgramsResource::collection(
             MentorProgram::query()
-                ->with(['mentorUser.user', 'mentorUser.competency'])
-                ->whereDate('deadline', '>', now())
-                ->take(2)
+                ->withFilters($request)
+                ->with(
+                    [
+                        'mentorUser',
+                        'mentorUser.user',
+                        'mentorUser.competency'
+                    ]
+                )
+                ->take(5)
                 ->get()
         );
-        //->orderBy('ASC', 'deadline')
     }
 
     /**

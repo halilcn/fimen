@@ -4,6 +4,7 @@
         v-model="inputValue"
         :name="name"
         :id="id"
+        @click="$emit('inputClick')"
         type="checkbox">
     <label :for="id">
       {{ text }}
@@ -41,11 +42,12 @@ export default {
   box-sizing: inherit;
 }
 
-.checkbox{
+.checkbox {
   display: flex;
   justify-content: flex-start;
 }
-.checkbox > label{
+
+.checkbox > label {
   width: 80%;
 }
 

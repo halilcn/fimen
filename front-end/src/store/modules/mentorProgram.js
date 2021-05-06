@@ -5,25 +5,33 @@ export const mentorProgram = {
         programs: []
     },
     mutations: {
-        setMentorProgram(state, payload) {
+        setMentorPrograms(state, payload) {
             state.programs = payload;
         },
         setMoreMentorPrograms(state, payload) {
-            payload.map(function (value) {
+            payload.map(value => {
                 state.programs.push(value);
             });
         }
     },
     actions: {
-        getMentorPrograms({commit}) {
-            return axios.get('/mentor-programs')
+        getMentorPrograms({commit}, payload) {
+            return axios.get('/mentor-programs', {
+                params: {...payload}
+            })
                 .then(res => {
-                    console.log(res.data.data);
-                    commit('setMentorProgram', res.data.data);
+                    commit('setMentorPrograms', res.data.data);
                 })
         },
-        getMoreMentorPrograms() {
-
+        getMoreMentorPrograms({commit, getters}, payload) {
+            payload.lastProgramDeadline = getters.getLastProgramDeadline;
+            return axios.get('/mentor-programs', {
+                params: {...payload}
+            })
+                .then(res => {
+                    commit('setMoreMentorPrograms', res.data.data);
+                    return res.data.data.length === 0;
+                })
         },
         // state eklenecek mi?
         postMentorProgram(_, payload) {
@@ -33,5 +41,9 @@ export const mentorProgram = {
                 });
         }
     },
-    getters: {}
+    getters: {
+        getLastProgramDeadline(state) {
+            return state.programs.length !== 0 ? state.programs[state.programs.length - 1].deadline : 'now';
+        }
+    }
 }

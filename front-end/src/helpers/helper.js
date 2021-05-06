@@ -4,5 +4,8 @@ export const helper = {
             return false;
         }
         return variable;
+    },
+    convertUrlParams(jsonData) {
+        return new URLSearchParams(jsonData).toString()
     }
 }
