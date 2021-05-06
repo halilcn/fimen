@@ -52,25 +52,22 @@
       <li class="questions">
         <div class="input_title">
           Soru Ekle
-          <tooltip :text="'Başvuracak kişiler, bu soruları cevaplamadan başvuramazlar.'"/>
+          <tooltip :text="'Programa başvuracak kişiler, bu soruları cevaplamadan başvuramazlar.'"/>
         </div>
         <ul>
-          {{$v.program.questions}}
           <li
               v-for="(question,index) in program.questions"
               :key="index">
             <input
                 placeholder="Lütfen soru ekleyin..."
                 type="text"
-                v-model="$v.program.questions.$each[index].$model">
+                v-model.trim="program.questions[index]">
             <div @click="deleteQuestion(index)" class="delete_question">
               <i class="bi bi-trash-fill"></i>
             </div>
-            <template v-if="$v.program.questions.$each[index].$error ">
-              <!-- && $v.program.questions.$each[index].$dirty-->
-              {{$v.program.questions.$each[index]}}
-              <error-alert v-if="!$v.program.questions.$each[index].required" :text="$errors.required()"/>
-            </template>
+            <!-- <template v-if="v.$dirty">
+              <error-alert v-if="v.required" :text="$errors.required()"/>
+            </template>-->
           </li>
         </ul>
         <div @click="addQuestion" class="add_question">
@@ -82,7 +79,8 @@
         <standart-button
             @click.native="postMentorProgram"
             :text="'Program Oluştur'"
-            :isDisable="$v.program.$invalid"/>
+            :isDisable="$v.program.$invalid"
+            :isLoading="isLoading"/>
       </li>
     </ul>
   </popup>
@@ -101,9 +99,10 @@ export default {
         title: '',
         explanation: '',
         mentee_count: '',
-        deadline: '',//moment().add(1, 'day')
+        deadline: moment().add(1, 'day').format('YYYY-MM-DDTHH:mm'),
         questions: []
-      }
+      },
+      isLoading: false
     }
   },
   validations: {
@@ -124,9 +123,9 @@ export default {
         numeric
       },
       questions: {
-        $each: {
+        /*$each: {
           required
-        }
+        }*/
       }
     }
   },
@@ -146,9 +145,19 @@ export default {
       this.program.questions.splice(index, 1);
     },
     postMentorProgram() {
-      this.$store.dispatch('postMentorProgram', {...this.program});
+      this.isLoading = true;
+      this.$store.dispatch('postMentorProgram', {...this.program})
+          .then(() => {
+            this.program = this.$helper.clearItemsInObject(this.program);
+          })
+          .catch(() => {
+            alert('Bir hata oluştu.');
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
     }
-  }
+  },
 }
 </script>
 

@@ -33,11 +33,11 @@ export const mentorProgram = {
                     return res.data.data.length === 0;
                 })
         },
-        // state eklenecek mi?
-        postMentorProgram(_, payload) {
-            axios.post('mentor-programs', payload)
-                .then(res => {
-                    console.log(res);
+        postMentorProgram({commit, dispatch}, payload) {
+            return axios.post('mentor-programs', payload)
+                .then(() => {
+                    commit('setShowPopup', false);
+                    dispatch('getMentorPrograms');
                 });
         }
     },

@@ -1,9 +1,6 @@
 <template>
   <button
-      :class="{
-    'button_disable':isDisable,
-     'button_loading':isLoading
-     }"
+      :class="{'button_disable':isDisable,'button_loading':isLoading}"
       type="submit">
     <span v-if="!isLoading">
       {{ text }}

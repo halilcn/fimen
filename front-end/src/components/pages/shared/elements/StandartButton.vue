@@ -1,7 +1,7 @@
 <template>
   <div
       class="send_button"
-      :class="{'button_disable':isDisable}">
+      :class="{'button_disable':isDisable,'button_loading':isLoading}">
     {{ text }}
   </div>
 </template>
@@ -15,6 +15,10 @@ export default {
     },
     isDisable: {
       default: true,
+      type: Boolean
+    },
+    isLoading: {
+      default: false,
       type: Boolean
     }
   }
@@ -43,5 +47,11 @@ export default {
 .button_disable {
   opacity: .5;
   pointer-events: none;
+}
+
+.button_loading {
+  pointer-events: none;
+  cursor: default;
+  opacity: .8;
 }
 </style>

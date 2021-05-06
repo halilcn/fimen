@@ -16,5 +16,11 @@ export const helper = {
             return text.substring(0, limit) + '...';
         }
         return text;
+    },
+    clearItemsInObject(object) {
+        for (const key in object) {
+            object[key] = '';
+        }
+        return object;
     }
 }

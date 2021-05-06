@@ -43,7 +43,7 @@ class MentorProgram extends Model
             }
         )
             ->when(
-                $request->input('lastProgramDeadline') != 'now',
+                $request->input('lastProgramDeadline', 'now') != 'now',
                 function (Builder $query) use ($request) {
                     $query->whereDate('deadline', '>', $request->input('lastProgramDeadline'));
                 },
