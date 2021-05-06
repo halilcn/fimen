@@ -7,10 +7,10 @@
     <div class="mentor_programs">
       <div class="filters">
         <div :class="{selected:isShowCompetencies}" class="competency_selection">
-            <span @click="isShowCompetencies=!isShowCompetencies">
-              Mentorluk Alanı
-              <i class="bi bi-caret-down"></i>
-            </span>
+          <span @click="isShowCompetencies=!isShowCompetencies">
+            Mentorluk Alanı
+            <i class="bi bi-caret-down"></i>
+          </span>
           <div v-show="isShowCompetencies" class="dropdown">
             <small-checkbox
                 v-for="(competency,index) in competencies"
@@ -21,8 +21,11 @@
             />
           </div>
         </div>
-        <div @click="$store.commit('setShowPopup',true)" class="create_mentor_program">
+        <div @click="$store.commit('setShowPopup',true)" class="create_mentor_program desktop">
           Yeni Program Oluştur
+        </div>
+        <div @click="$store.commit('setShowPopup',true)" class="create_mentor_program mobile">
+          <i class="bi bi-pencil-square"></i>
         </div>
       </div>
       <ul>
@@ -72,7 +75,7 @@
                 {{ program.title }}
               </div>
               <div class="text">
-                {{ program.explanation }}
+                {{ $helper.mobileCutText(program.explanation, 80) }}
               </div>
             </div>
           </div>
@@ -220,7 +223,6 @@ export default {
 
 .mentor_programs > .filters > div {
   position: relative;
-  margin-right: 20px;
 }
 
 .mentor_programs > .filters > div:hover {
@@ -237,8 +239,7 @@ export default {
 
 .mentor_programs > .filters > div > span {
   display: flex;
-  flex-wrap: wrap;
-  align-content: center;
+  align-items: center;
   padding: 7px;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
@@ -283,6 +284,16 @@ export default {
   font-size: 12px;
   border-radius: 3px;
   cursor: pointer;
+}
+
+.mentor_programs > .filters > .create_mentor_program.desktop {
+  display: block;
+}
+
+.mentor_programs > .filters > .create_mentor_program.mobile {
+  display: none;
+  padding: 4px 6px 5px 7px;
+  font-size: 10px;
 }
 
 .mentor_programs > .filters > .create_mentor_program:hover {
@@ -368,6 +379,7 @@ export default {
   font-family: 'Poppins', sans-serif;
   font-size: 12px;
   margin-top: 5px;
+  text-align: center;
   color: var(--navy-blue-text-color);
 }
 
@@ -425,6 +437,13 @@ export default {
   border-radius: 3px;
   background-color: #fafafd;
   border: 1px solid #ebebf5;
+  box-shadow: 0 0px 0.3px rgba(0, 0, 0, 0.014),
+  0 0px 0.8px rgba(0, 0, 0, 0.02),
+  0 0px 1.5px rgba(0, 0, 0, 0.025),
+  0 0px 2.7px rgba(0, 0, 0, 0.03),
+  0 0px 5px rgba(0, 0, 0, 0.036),
+  0 0px 12px rgba(0, 0, 0, 0.05);
+
 }
 
 .new_mentors > .title {
@@ -458,7 +477,7 @@ export default {
 }
 
 .new_mentors > ul > li > img {
-  width: 40px;
+  width: 39px;
   border-radius: var(--navy-user-profile-border-radius);
 }
 
@@ -472,12 +491,13 @@ export default {
 
 .new_mentors > ul > li > .user_info > .name_surname {
   font-family: 'Poppins', sans-serif;
+  font-size: 14px;
   color: var(--navy-blue-text-color);
 }
 
 .new_mentors > ul > li > .user_info > .type {
   font-family: 'Montserrat', sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   display: flex;
   align-items: center;
 }
@@ -485,5 +505,72 @@ export default {
 .new_mentors > ul > li > .user_info > .type > i {
   font-size: 5px;
   margin-right: 3px;
+}
+
+@media only screen and (max-width: 768px) {
+  .programs_container {
+    flex-direction: column;
+  }
+
+  .mentor_programs {
+    padding: 0;
+  }
+
+  .mentor_programs > .filters {
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  .mentor_programs > .filters > div > span {
+    font-size: 11px;
+  }
+
+  .mentor_programs > .filters > .create_mentor_program.desktop {
+    display: none;
+  }
+
+  .mentor_programs > .filters > .create_mentor_program.mobile {
+    display: block;
+  }
+
+  .mentor_programs > ul > li {
+    padding: 5px 10px;
+  }
+
+  .mentor_programs > ul > li > .infos > div {
+    margin-right: 10px;
+    font-size: 8px;
+    padding: 2px 5px;
+  }
+
+  .mentor_programs > ul > li > .inner > .profile > img {
+    width: 40px;
+  }
+
+  .mentor_programs > ul > li > .inner > .profile > .name_surname {
+    margin-top: 2px;
+    font-size: 9px;
+  }
+
+  .mentor_programs > ul > li > .inner > .profile > .username {
+    font-size: 10px;
+  }
+
+  .mentor_programs > ul > li > .inner > .program_info {
+    padding-left: 10px;
+  }
+
+  .mentor_programs > ul > li > .inner > .program_info > .title {
+    font-size: 12px;
+  }
+
+  .mentor_programs > ul > li > .inner > .program_info > .text {
+    margin-top: 3px;
+    font-size: 10px;
+  }
+
+  .new_mentors {
+    display: none;
+  }
 }
 </style>
