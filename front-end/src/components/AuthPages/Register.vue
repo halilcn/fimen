@@ -1,22 +1,22 @@
 <template>
   <auth-template
-      :title="'Ücretsiz Hesap Oluştur'"
-      :backgroundImage="'register.jpg'"
-      :backgroundText="'Profilini Oluştur, Mentorunu Bul!'"
-      :passwordResetShow="false"
-      :type="'register'">
+      title="Ücretsiz Hesap Oluştur"
+      backgroundImage="register.jpg"
+      backgroundText="Profilini Oluştur, Mentorunu Bul!"
+      passwordResetShow="false"
+      type="register">
     <template v-slot:form>
       <form @submit.prevent="postRegisterStep1">
         <div class="inputs">
           <auth-input
-              :placeholder="'Ad'"
-              :type="'text'"
-              :name="'name'"
+              placeholder="Ad"
+              type="text"
+              name="name"
               v-model="$v.user.name.$model"/>
           <auth-input
-              :placeholder="'Soyad'"
-              :type="'text'"
-              :name="'surname'"
+              placeholder="Soyad"
+              type="text"
+              name="surname"
               v-model="$v.user.surname.$model"/>
           <input-status
               v-if="($v.user.name.$error && $v.user.name.$dirty) || $v.user.surname.$error && $v.user.surname.$dirty"
@@ -38,9 +38,9 @@
         </div>
         <div class="inputs">
           <auth-input
-              :placeholder="'Kulllanıcı Adı'"
-              :type="'text'"
-              :name="'username'"
+              placeholder="Kulllanıcı Adı"
+              type="text"
+              name="username"
               v-model="$v.user.username.$model"/>
           <input-status
               v-if="$v.user.username.$error && $v.user.username.$dirty"
@@ -60,9 +60,9 @@
         </div>
         <div class="inputs">
           <auth-input
-              :placeholder="'E-mail'"
-              :type="'email'"
-              :name="'email'"
+              placeholder="E-mail"
+              type="email"
+              name="email"
               v-model="$v.user.email.$model"/>
           <input-status
               v-if="$v.user.email.$error && $v.user.email.$dirty"
@@ -79,14 +79,14 @@
         </div>
         <div class="inputs">
           <auth-input
-              :placeholder="'Şifre'"
-              :type="'password'"
-              :name="'password'"
+              placeholder="Şifre"
+              type="password"
+              name="password"
               v-model="$v.user.password.$model"/>
           <auth-input
-              :placeholder="'Şifre Tekrar'"
-              :type="'password'"
-              :name="'password_repeat'"
+              placeholder="Şifre Tekrar"
+              type="password"
+              name="password_repeat"
               v-model="$v.user.repeat_password.$model"/>
           <input-status
               v-if="($v.user.password.$error && $v.user.password.$dirty) || ($v.user.repeat_password.$error && $v.user.repeat_password.$dirty)"
@@ -103,7 +103,7 @@
         </div>
         <auth-button
             :isDisable="$v.user.$invalid"
-            :text="'Devam Et'"/>
+            text="Devam Et"/>
       </form>
     </template>
   </auth-template>

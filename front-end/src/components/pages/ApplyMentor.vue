@@ -1,8 +1,8 @@
 <template>
   <div class="content">
     <bg-img-title
-        :image="'applyMentor/top-bg.jpg'"
-        :title="'Mentor Başvurusu'"/>
+        image="applyMentor/top-bg.jpg"
+        title="Mentor Başvurusu"/>
     <div class="title">
       Süreç Nasıl İşler ?
     </div>
@@ -59,7 +59,7 @@
             </div>
             <standart-selector
                 v-model="$v.user.competency_id.$model"
-                :name="'competency_id'"
+                name="competency_id"
                 :options="$store.state.mentor.competencies"/>
           </li>
           <li>
@@ -68,20 +68,20 @@
               <span class="required_icon">*</span>
             </div>
             <standart-input
-                :type="'text'"
-                :name="'year'"
+                type="text"
+                name="year"
                 v-model="$v.user.year.$model"/>
             <error-alert
                 v-if="!$v.user.year.required && $v.user.year.$dirty"
-                :text="'Bu alan zorunludur'"/>
+                text="Bu alan zorunludur"/>
           </li>
           <li>
             <div class="title">
               Yetkinlik Alanınızı Destekleyen Belge/Belgeler
             </div>
             <standart-file-input
-                :id="'mentor_form_file'"
-                :name="'file'"
+                id="mentor_form_file"
+                name="file"
                 v-model="$v.user.file.$model"/>
             <div class="info">
               <i class="bi bi-info-circle-fill"></i>
@@ -89,40 +89,40 @@
             </div>
             <error-alert
                 v-if="!$v.user.file.checkFileSize && $v.user.file.$dirty"
-                :text="'Dosya boyutu maksimum 20mb olabilir'"/>
+                text="Dosya boyutu maksimum 20mb olabilir"/>
           </li>
           <li>
             <div class="title">
               Linkedin Profil Linki
             </div>
             <standart-input
-                :type="'text'"
-                :name="'linkedin'"/>
+                type="text"
+                name="linkedin"/>
           </li>
           <li>
             <div class="title">
               Eğer Çalışıyorsan,Çalıştığınız Şirket ve Pozisyon
             </div>
             <standart-input
-                :type="'text'"
-                :name="'company_and_position'"/>
+                type="text"
+                name="company_and_position"/>
           </li>
           <li>
             <div class="title">
               Ek Olarak Eklemek İstediklerin
             </div>
             <standart-textarea
-                :name="'postscript'"/>
+                name="postscript"/>
           </li>
           <li>
             <standart-checkbox
-                :text="'Yukarıdaki bilgilerin doğruluğunu onaylıyorum.'"
-                :id="'mentor_form_confirmation'"
-                :name="'confirmation'"
+                text="Yukarıdaki bilgilerin doğruluğunu onaylıyorum."
+                id="mentor_form_confirmation"
+                name="confirmation"
                 v-model="$v.user.confirmation.$model"/>
             <error-alert
                 v-if="!$v.user.confirmation.sameAs && $v.user.confirmation.$dirty"
-                :text="'Lütfen bilgilerinizin doğruluğunu onaylayınız'"/>
+                text="Lütfen bilgilerinizin doğruluğunu onaylayınız"/>
           </li>
           <li class="button_li">
             <standart-button

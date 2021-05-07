@@ -75,15 +75,15 @@ const routes = [
                 ]
             },
             {
+                path: '/profil-duzenle',
+                name: 'MeSettings',
+                component: () => import('@/components/pages/user/MeSettings')
+            },
+            {
                 path: '/profil/:username',
                 name: 'User',
                 component: () => import('@/components/pages/user/UserProfile')
             },
-            {
-                path: '/profil-düzenle',
-                name: 'MeSettings',
-                component: () => import('@/components/pages/user/MeSettings')
-            }
         ]
     },
 ]

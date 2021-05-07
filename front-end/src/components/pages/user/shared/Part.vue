@@ -25,7 +25,7 @@ export default {
 .user_part {
   background-color: white;
   border: 1px solid #eeeeee;
-  border-radius: 3px;
+  border-radius: 10px;
   padding: 12px;
   margin-top: 30px;
   transition: .3s;
@@ -45,8 +45,9 @@ export default {
 
 .user_part > .title {
   font-family: 'Poppins', sans-serif;
+  font-weight: 500;
   font-size: 18px;
-  color: var(--navy-blue-text-color);
+  color: #666666;
 }
 
 .user_part > .content {

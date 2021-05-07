@@ -9,7 +9,7 @@
           Mentee Sayısı
         </div>
         <small-input
-            :type="'text'"
+            type="text"
             v-model.number.trim="$v.program.mentee_count.$model"/>
         <template v-if="$v.program.mentee_count.$error && $v.program.mentee_count.$dirty">
           <error-alert v-if="!$v.program.mentee_count.required" :text="$errors.required()"/>
@@ -22,7 +22,7 @@
           Program Başlığı
         </div>
         <small-input
-            :type="'text'"
+            type="text"
             v-model.number.trim="$v.program.title.$model"/>
         <template v-if="$v.program.title.$error && $v.program.title.$dirty">
           <error-alert v-if="!$v.program.title.required" :text="$errors.required()"/>
@@ -42,7 +42,7 @@
           Son Başvuru Tarihi
         </div>
         <small-input
-            :type="'datetime-local'"
+            type="datetime-local"
             v-model="$v.program.deadline.$model"/>
         <template v-if="$v.program.deadline.$error && $v.program.deadline.$dirty">
           <error-alert v-if="!$v.program.deadline.required" :text="$errors.required()"/>

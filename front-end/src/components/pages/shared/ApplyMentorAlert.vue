@@ -14,7 +14,7 @@
           class="button">
         <standart-button
             :isDisable="false"
-            :text="'Hemen Başvur'"/>
+            text="Hemen Başvur"/>
       </router-link>
     </div>
   </div>

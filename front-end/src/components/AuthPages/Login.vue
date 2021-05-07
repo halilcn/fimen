@@ -1,16 +1,16 @@
 <template>
   <auth-template
-      :title="'Hoşgeldin!'"
-      :backgroundImage="'login.jpg'"
-      :backgroundText="'Alanında Uzmanlardan Destek Al!'"
-      :type="'login'">
+      title="Hoşgeldin!"
+      backgroundImage="login.jpg"
+      backgroundText="Alanında Uzmanlardan Destek Al!"
+      type="login">
     <template v-slot:form>
       <form onsubmit="return false;">
         <div class="inputs">
           <auth-input
-              :placeholder="'E-posta'"
-              :type="'text'"
-              :name="'phone_number'"
+              placeholder="E-posta"
+              type="text"
+              name="phone_number"
               v-model="$v.user.email.$model"/>
           <input-status
               v-if="$v.user.email.$error && $v.user.email.$dirty"
@@ -23,9 +23,9 @@
         </div>
         <div class="inputs">
           <auth-input
-              :placeholder="'Şifre'"
-              :type="'password'"
-              :name="'password'"
+              placeholder="Şifre"
+              type="password"
+              name="password"
               v-model="$v.user.password.$model"
               @keyup.enter="postLogin"/>
           <input-status
@@ -38,10 +38,10 @@
         </div>
         <error
             v-if="hasError"
-            :message="'E-posta ya da Şifre yanlış.'"/>
+            message="E-posta ya da Şifre yanlış."/>
         <auth-button
             :isDisable="$v.user.$invalid"
-            :text="'Giriş Yap'"
+            text="Giriş Yap"
             :isLoading="isLoading"
             @click.native="postLogin"/>
       </form>
