@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <div class="content">
-      <router-view/>
-    </div>
+  <div class="content">
+    <slot name="content"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Home",
+  name: "BgWhiteTemplate"
 }
 </script>
 
@@ -17,5 +15,6 @@ export default {
   background-color: white;
   padding: 15px;
   border-radius: 4px;
+  border: 1px solid #f6f6f6;
 }
 </style>

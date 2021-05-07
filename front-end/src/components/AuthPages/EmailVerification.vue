@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import AuthButton from "@/components/authPages/Shared/Button";
+import AuthButton from "@/components/authPages/shared/Button";
 import Error from "@/components/shared/Error";
 
 export default {

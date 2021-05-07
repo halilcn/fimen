@@ -49,10 +49,10 @@
   </auth-template>
 </template>
 <script>
-import AuthInput from "@/components/authPages/Shared/Input";
-import AuthButton from "@/components/authPages/Shared/Button";
-import AuthTemplate from "@/components/authPages/Shared/Template";
-import InputStatus from "@/components/authPages/Shared/InputStatus";
+import AuthInput from "@/components/authPages/shared/Input";
+import AuthButton from "@/components/authPages/shared/Button";
+import AuthTemplate from "@/components/authPages/shared/Template";
+import InputStatus from "@/components/authPages/shared/InputStatus";
 import Error from "@/components/shared/Error";
 
 import {email, required} from 'vuelidate/lib/validators'

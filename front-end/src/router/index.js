@@ -60,21 +60,30 @@ const routes = [
             },
             {
                 path: '/mentor-programlari',
-                component: () => import('@/components/pages/MentorPrograms/Home'),
+                component: () => import('@/components/pages/mentorPrograms/Home'),
                 children: [
                     {
                         path: '/',
-                        name: 'MentorPrograms',
-                        component: () => import('@/components/pages/MentorPrograms/Programs'),
+                        name: 'mentorPrograms',
+                        component: () => import('@/components/pages/mentorPrograms/Programs'),
                     },
                     {
                         path: ':slug',
                         name: 'MentorProgramDetail',
-                        component: () => import('@/components/pages/MentorPrograms/ProgramDetail'),
+                        component: () => import('@/components/pages/mentorPrograms/ProgramDetail'),
                     },
                 ]
             },
-
+            {
+                path: '/profil/:username',
+                name: 'User',
+                component: () => import('@/components/pages/user/UserProfile')
+            },
+            {
+                path: '/profil-düzenle',
+                name: 'MeSettings',
+                component: () => import('@/components/pages/user/MeSettings')
+            }
         ]
     },
 ]

@@ -109,10 +109,10 @@
   </auth-template>
 </template>
 <script>
-import AuthInput from "@/components/authPages/Shared/Input";
-import AuthTemplate from "@/components/authPages/Shared/Template";
-import AuthButton from "@/components/authPages/Shared/Button";
-import InputStatus from "@/components/authPages/Shared/InputStatus";
+import AuthInput from "@/components/authPages/shared/Input";
+import AuthTemplate from "@/components/authPages/shared/Template";
+import AuthButton from "@/components/authPages/shared/Button";
+import InputStatus from "@/components/authPages/shared/InputStatus";
 import {customValidators} from "@/helpers/customValidators";
 import {required, maxLength, minLength, email, sameAs, helpers} from 'vuelidate/lib/validators'
 
