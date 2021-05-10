@@ -53,4 +53,11 @@ export default {
 .user_part > .content {
   margin-top: 8px;
 }
+
+@media only screen and (max-width: 768px) {
+  .user_part > .title {
+    font-size: 17px;
+  }
+}
+
 </style>

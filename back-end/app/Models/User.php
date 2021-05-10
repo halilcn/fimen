@@ -27,7 +27,10 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        'image'
+        'image',
+        'about',
+        'social_media',
+        'cv_path'
     ];
 
     /**
@@ -47,6 +50,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'social_media' => 'array'
     ];
 
     // Password Mutator
@@ -68,6 +72,11 @@ class User extends Authenticatable
     public function checkEmail(string $email): User
     {
         return $this->where('email', $email)->firstOrFail();
+    }
+
+    public function favoriteUsers(): HasMany
+    {
+        return $this->hasMany(FavoriteUser::class);
     }
 
     public function checkPassword(string $password, string $userPassword): bool

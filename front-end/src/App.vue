@@ -35,11 +35,13 @@ body, html {
   --navy-blue-bg-color: #38496B;
   --navy-blue-bg-hover-color: #303e5a;
   --navy-red-bg-color: #FF7268;
+  --navy-red-txt-color: #f86e64;
   --navy-red-bg-dark-color: #f16b61;
   --navy-red-input-focus: #ffa49d;
   --navy-blue-text-color: #2B374F;
   --navy-blue-text-light-color: #3b465a;
   --navy-user-profile-border-radius: 40%;
-  --navy-mentor-mentee-text-color: #1e66cd
+  --navy-mentor-mentee-text-color: #1e66cd;
+  --navy-light-black: #888888;
 }
 </style>

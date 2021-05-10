@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import {auth} from "@/store/modules/auth";
 import {mentor} from "@/store/modules/mentor";
 import {mentorProgram} from "@/store/modules/mentorProgram";
+import {user} from "@/store/modules/user";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -34,7 +35,8 @@ const store = new Vuex.Store({
     modules: {
         auth,
         mentor,
-        mentorProgram
+        mentorProgram,
+        user
     }
 });
 

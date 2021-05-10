@@ -4,28 +4,34 @@
       <div class="user_container">
         <div class="user">
           <div class="image">
-            <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D0&amp;color=fff&amp;size=128">
+            <img :src="user.image">
           </div>
           <div class="infos">
             <div class="name_surname">
-              Halil CAN
+              {{ user.name }} | işaretini kullanrak ilk harfleri büyüt
             </div>
             <div class="username">
-              @halilcan
+              @{{ user.username }}
             </div>
             <div class="role">
-              Mentee & Mentor
+              Mentee {{ user.mentor ? '& Mentor' : '' }}
             </div>
             <div class="cv">
               CV İncele
             </div>
           </div>
           <div class="right_action">
-            <!--  <div class="me_settings_button">
-              <i class="fas fa-cog"></i>
-              Profili Düzenle
-            </div>-->
             <div
+                v-if="checkMe()"
+                @click="$router.push({name:'MeSettings'})"
+                class="me_settings_button">
+              <i class="fas fa-cog"></i>
+              <span>
+                Profili Düzenle
+              </span>
+            </div>
+            <div
+                v-else
                 @click="favorite=!favorite"
                 :class="{selected:favorite}"
                 class="add_favorite_button">
@@ -35,12 +41,40 @@
             </div>
           </div>
         </div>
-        <div class="mentor">
+        <div
+            v-if="user.mentor"
+            class="mentor">
           <div class="title">
             Mentorluk Bilgileri
           </div>
-          <ul>
-
+          <ul class="mentor_infos">
+            <li>
+              <div class="title">
+                <i class="bi bi-archive-fill"></i>
+                <span> bugüne kadar mentee sayısı</span>
+              </div>
+              <div class="text">
+                {{ user.mentor.total_mentee_count }}
+              </div>
+            </li>
+            <li>
+              <div class="title">
+                <i class="bi bi-archive-fill"></i>
+                <span>bugüne kadar toplam program sayısı</span>
+              </div>
+              <div class="text">
+                {{ user.mentor.total_program_count }}
+              </div>
+            </li>
+            <li>
+              <div class="title">
+                <i class="bi bi-archive-fill"></i>
+                <span>mentorluk alanı</span>
+              </div>
+              <div class="text">
+                {{ user.mentor.competency }}
+              </div>
+            </li>
           </ul>
         </div>
         <part title="Sosyal Medya Hesapları">
@@ -67,16 +101,11 @@
         </part>
         <part title="Kısacık Ön Yazı">
           <template slot="content">
-            <div class="about">
-              asda djasd ljasd sasdh uhasd hasd ga hdhja dah ssda djasd ljasd sasdh uhasd hasd ga hdhja dah ssda djasd
-              ljasd sasdh uhasd hasd ga hdhja dah ssda djasd ljasd sasdh uhasd hasd ga hdhja dah ssda djasd ljasd sasdh
-              uhasd hasd ga hdhja dah ssda djasd ljasd sasdh uhasd hasd ga hdhja dah ssda djasd ljasd sasdh uhasd hasd
-              ga hdhja dah ssda djasd ljasd sasdh uhasd hasd ga hdhja dah ssda djasd ljasd sasdh uhasd hasd ga hdhja dah
-              ssda djasd ljasd sasdh uhasd hasd ga hdhja dah s
+            <div :class="{empty:!user.about }" class="about">
+              {{ user.about ? user.about : 'Henüz eklememiş' }}
             </div>
           </template>
         </part>
-        mentorse?
       </div>
     </template>
   </bg-white-template>
@@ -87,21 +116,41 @@ export default {
   name: "UserProfile",
   data() {
     return {
-      favorite: false
+      favorite: false,
+      user: []
     }
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
     Part: () => import('@/components/pages/user/shared/Part')
+  },
+  methods: {
+    checkMe() {
+      return this.user.username === this.$store.state.auth.user.username;
+    },
+  },
+  beforeCreate() {
+    this.$store.dispatch('getUser')
+        .then(res => {
+          console.log(res);
+          this.user = res.data.data;
+        })
+        .catch(() => {
+          alert('Bir hata oluştu!');
+        })
   }
 }
 </script>
 
 <style scoped>
+.user_container {
+  padding: 5px 40px;
+  position: relative;
+}
+
 .user {
   display: flex;
   justify-content: flex-start;
-
   background-color: white;
   border-radius: 10px;
   padding: 20px;
@@ -113,9 +162,6 @@ export default {
   0 0px 2.5px rgba(0, 0, 0, 0.03),
   0 0px 4.6px rgba(0, 0, 0, 0.036),
   0 0px 11px rgba(0, 0, 0, 0.05);
-}
-
-.user > .image {
 }
 
 .user > .image > img {
@@ -217,10 +263,58 @@ export default {
   padding: 12px;
   margin-top: 30px;
   transition: .3s;
+
+  -webkit-box-shadow: 0px 0px 9px 0px rgba(255, 217, 216, 1);
+  -moz-box-shadow: 0px 0px 9px 0px rgba(255, 217, 216, 1);
+  box-shadow: 0px 0px 9px 0px rgba(255, 217, 216, 1);
 }
 
-.user_container {
-  padding: 5px 40px;
+.mentor > .title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--navy-red-txt-color);
+  font-size: 18px;
+}
+
+.mentor > .mentor_infos {
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.mentor_infos > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff7f7;;
+  padding: 7px 15px;
+  border-radius: 4px;
+}
+
+.mentor_infos > li > .title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mentor_infos > li > .title > i {
+  font-size: 40px;
+  color: var(--navy-red-txt-color);
+}
+
+.mentor_infos > li > .title > span {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+}
+
+.mentor_infos > li > .text {
+  font-family: 'Montserrat', 'sans-serif';
+  font-size: 16px;
+  padding: 4px 15px;
+  border-radius: 4px;
+  margin-top: 7px;
+  background-color: red;
 }
 
 .social_media_accounts {
@@ -265,5 +359,75 @@ export default {
   color: var(--navy-blue-text-color);
 }
 
+.about.empty {
+  color: var(--navy-light-black);
+  font-size: 13px;
+}
 
+@media only screen and (max-width: 768px) {
+  .user_container {
+    padding: 0;
+  }
+
+  .user {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .user > .image > img {
+    width: 80px;
+  }
+
+  .user > .infos {
+    flex-direction: column;
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .user > .infos > .name_surname {
+    font-size: 18px;
+  }
+
+  .user > .infos > .username {
+    font-size: 15px;
+  }
+
+  .user > .infos > .role {
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  .user > .infos > .cv {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .user > .right_action > .add_favorite_button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px 8px;
+  }
+
+  .user > .right_action > .me_settings_button {
+    padding: 5px 7px;
+    font-size: 11px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .user > .right_action > .me_settings_button > span {
+    display: none;
+  }
+
+  .social_media_accounts > li > a > span {
+    font-size: 13px;
+  }
+
+  .about {
+    font-size: 13px;
+  }
+}
 </style>
