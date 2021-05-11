@@ -10,6 +10,7 @@ use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
 use App\Http\Controllers\API\NewMentorResourceController;
 use App\Http\Controllers\API\UserResourceController;
+use App\Http\Controllers\API\FavoriteUserResourceController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,7 +37,8 @@ Route::group(
                 Route::resource('/mentor-programs', MentorProgramResourceController::class);
                 Route::resource('/new-mentors', NewMentorResourceController::class);
                 Route::resource('/mentors', MentorResourceController::class);
-                Route::resource('/user',UserResourceController::class);
+                Route::resource('/user', UserResourceController::class);
+                Route::resource('favorite-users', FavoriteUserResourceController::class);
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }

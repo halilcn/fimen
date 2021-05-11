@@ -8,7 +8,7 @@
           </div>
           <div class="infos">
             <div class="name_surname">
-              {{ user.name }} | işaretini kullanrak ilk harfleri büyüt
+              {{ user.name | firstLetterUppercase }}
             </div>
             <div class="username">
               @{{ user.username }}
@@ -16,9 +16,25 @@
             <div class="role">
               Mentee {{ user.mentor ? '& Mentor' : '' }}
             </div>
-            <div class="cv">
-              CV İncele
-            </div>
+            <a
+                :class="{
+              'not_visible':!user.permissions.cv_visible,
+              'not_added':user.cv_path ==='NULL'
+               }"
+                target="_blank"
+                :href="user.cv_path"
+                class="cv">
+              <template v-if="user.permissions.cv_visible && user.cv_path!=='NULL'">
+                CV İncele
+              </template>
+              <template v-else-if="!user.permissions.cv_visible">
+                CV Gizlenmiş
+              </template>
+              <template v-if="user.cv_path === 'NULL'">
+                CV eklenmemiş
+              </template>
+            </a>
+            sıkıntı
           </div>
           <div class="right_action">
             <div
@@ -32,8 +48,8 @@
             </div>
             <div
                 v-else
-                @click="favorite=!favorite"
-                :class="{selected:favorite}"
+                @click="actionFavoriteUser"
+                :class="{selected:user.is_favorite_user}"
                 class="add_favorite_button">
               <i
                   :class="{'bi-star-fill':favorite,'bi-star':!favorite}"
@@ -128,6 +144,15 @@ export default {
     checkMe() {
       return this.user.username === this.$store.state.auth.user.username;
     },
+    actionFavoriteUser() {
+      const payload = {user_id: this.user.id};
+      if (this.user.is_favorite_user) {
+        this.$store.dispatch('deleteFavoriteUser', payload);
+      } else {
+        this.$store.dispatch('postFavoriteUser', payload);
+      }
+      this.user.is_favorite_user = !this.user.is_favorite_user;
+    }
   },
   beforeCreate() {
     this.$store.dispatch('getUser')
@@ -138,7 +163,8 @@ export default {
         .catch(() => {
           alert('Bir hata oluştu!');
         })
-  }
+  },
+  filters: {}
 }
 </script>
 
@@ -210,10 +236,23 @@ export default {
   cursor: pointer;
   margin-top: auto;
   transition: .3s;
+  text-decoration: none;
 }
 
 .user > .infos > .cv:hover {
   background-color: #ff867f;
+}
+
+.user > .infos > .cv.not_visible {
+  pointer-events: none;
+  background-color: rgba(255, 115, 105, 0.7);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.user > .infos > .cv.not_added {
+  pointer-events: none;
+  background-color: #d9d9d9;
+  color: black;
 }
 
 .user > .right_action {
@@ -408,6 +447,10 @@ export default {
     top: 10px;
     right: 10px;
     padding: 6px 8px;
+  }
+
+  /*hahatagahatahataahata*/
+  .user > .right_action > .add_favorite_button:hover {
   }
 
   .user > .right_action > .me_settings_button {

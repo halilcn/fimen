@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->where('email', $email)->firstOrFail();
     }
 
+    public function permissions(): HasOne
+    {
+        return $this->hasOne(UserPermission::class);
+    }
+
     public function favoriteUsers(): HasMany
     {
         return $this->hasMany(FavoriteUser::class);
@@ -103,4 +108,8 @@ class User extends Authenticatable
         return !$this->where('email', $email)->exists();
     }
 
+    public function isFavoriteUser(int $id): bool
+    {
+        return $this->favoriteUsers()->where('favorite_user_id', $id)->exists();
+    }
 }

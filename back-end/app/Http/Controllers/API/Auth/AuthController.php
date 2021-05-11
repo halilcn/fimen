@@ -48,6 +48,7 @@ class AuthController extends Controller
                 ]
             )
         );
+        $user->permissions()->create();
         return response(['token' => $this->createToken($user)], 201);
     }
 

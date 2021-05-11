@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
+use Illuminate\Support\Facades\Auth;
+
 use function Symfony\Component\Translation\t;
 
 class UserResource extends JsonResource
@@ -23,7 +25,12 @@ class UserResource extends JsonResource
             'image' => $this->image,
             'about' => $this->about,
             'social_media' => $this->social_media,
-            'cv_path' => '',
+            'is_favorite_user' => Auth::user()->isFavoriteUser($this->id),
+            'cv_path' => $this->when(
+                $this->permissions->cv_visible,
+                $this->cv_path ?: 'sad',
+                'cv_gözükme'
+            ),
             'mentor' => $this->when(
                 $this->mentor,
                 function () {
@@ -35,7 +42,7 @@ class UserResource extends JsonResource
                 },
             ),
             'permissions' => [
-
+                'cv_visible' => $this->permissions->cv_visible
             ],
         ];
     }

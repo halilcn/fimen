@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateUsersTable extends Migration
+class CreateUserPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class UpdateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table(
-            'users',
+        Schema::create(
+            'user_permissions',
             function (Blueprint $table) {
-                $table->string('about')->default('')->after('image');
-                $table->json('social_media')->default('{}')->after('about');
-                $table->string('cv_path')->nullable()->after('social_media');
+                $table->id();
+                $table->integer('user_id')->unique();
+                $table->boolean('cv_visible')->default(0);
             }
         );
     }
@@ -30,6 +30,6 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('user_permissions');
     }
 }

@@ -32,7 +32,6 @@ export const auth = {
         setRegisterUserEmail(state, payload) {
             state.registerUser.email = payload;
         },
-
     },
     actions: {
         async postLogin({commit, dispatch}, payload) {
@@ -110,7 +109,19 @@ export const auth = {
                 .then(() => {
                     commit('removeStateAndStorage');
                 });
-        }
+        },
+        postFavoriteUser(_, payload) {
+            axios.post('/favorite-users', payload)
+                .catch(() => {
+                    alert('Bir hata oluştu')
+                })
+        },
+        deleteFavoriteUser(_, payload) {
+            axios.delete(`/favorite-users/${payload.user_id}`)
+                .catch(() =>
+                    alert('Bir hata oluştu')
+                )
+        },
     },
     getters: {
         checkAuth(state) {
