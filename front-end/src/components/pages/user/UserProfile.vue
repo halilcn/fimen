@@ -96,19 +96,11 @@
         <part title="Sosyal Medya Hesapları">
           <template slot="content">
             <ul class="social_media_accounts">
-              <li>
-                <a href="#">
-                  <img src="../../../assets/icons/socialMedia/linkedin.svg">
+              <li v-for="(url,index) in denemeSocial" :key="index">
+                <a :href="url">
+                  <img :src="$helper.getSocialMediaLogo(url)">
                   <span>
-                    https://www.facebook.com/
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <img src="../../../assets/icons/socialMedia/instagram.svg">
-                  <span>
-                    https://www.instagram.com/
+                    {{ url }}
                   </span>
                 </a>
               </li>
@@ -133,7 +125,8 @@ export default {
   data() {
     return {
       favorite: false,
-      user: []
+      user: [],
+      denemeSocial: ['facebook.com', 'instagram.com', 'https://www.linkedin.com/feed/']
     }
   },
   components: {
