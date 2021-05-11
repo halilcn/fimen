@@ -3,19 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\SearchUserResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class UserResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
+        if ($request->filled('search')) {
+            return SearchUserResource::collection(
+                User::query()
+                    ->where('name', 'LIKE', '%'.$request->input('search').'%')
+                    ->orWhere('username', 'LIKE', '%'.$request->input('search').'%')
+                    ->with('mentor.competency:name,id')
+                    ->get()
+            );
+        }
     }
 
     /**
@@ -39,12 +46,7 @@ class UserResourceController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($username)
     {
         return UserResource::make(User::where('username', $username)->first());

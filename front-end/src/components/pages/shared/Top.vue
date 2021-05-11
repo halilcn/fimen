@@ -43,9 +43,23 @@
       <label for="search_input">
         <i class="bi bi-search"></i>
       </label>
-      <input id="search_input" placeholder="Kişi ara" type="text">
+      <input
+          v-model="searchText"
+          id="search_input"
+          placeholder="Kişi ara"
+          type="text">
+      <span
+          v-show="searchText.length > 0"
+          @click="searchText=''"
+          class="remove_text_button">
+        <i class="bi bi-trash"></i>
+      </span>
+      <search-user-dropdown :searchText="searchText"/>
     </div>
     <div class="user">
+      <div class="mobile_search_user">
+        <i class="bi bi-search"></i>
+      </div>
       <div @click="isEnableDropdown=!isEnableDropdown" class="info">
         <img :src="user.image">
         <span class="username">
@@ -119,7 +133,8 @@ export default {
   name: "Head",
   data() {
     return {
-      isEnableDropdown: false
+      isEnableDropdown: false,
+      searchText: ''
     }
   },
   computed: {
@@ -136,6 +151,9 @@ export default {
           });
     }
   },
+  components: {
+    SearchUserDropdown: () => import('@/components/pages/shared/TopSearchUserDropdown')
+  }
 }
 </script>
 
@@ -144,7 +162,6 @@ export default {
   max-width: 1050px;
   margin: auto;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
   padding: 4px 0px;
 }
@@ -240,6 +257,7 @@ export default {
   display: none;
 }
 
+
 .head_content > .search_user {
   display: flex;
   justify-content: flex-start;
@@ -251,6 +269,7 @@ export default {
   padding: 3px 5px;
   color: #515151;
   margin: 0 40px;
+  position: relative;
 }
 
 .head_content > .search_user:hover {
@@ -263,6 +282,29 @@ export default {
   width: 100%;
   font-family: 'Poppins', sans-serif;
   color: #515151;
+}
+
+.head_content > .search_user > .remove_text_button > i {
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 100%;
+  color: #d72222;
+}
+
+.head_content > .search_user > .remove_text_button > i:hover {
+  background-color: #fff1f1;
+}
+
+.mobile_search_user {
+  display: none;
+  margin-right: 5px;
+}
+
+.mobile_search_user > i {
+  background-color: #f3f3f3;
+  font-size: 12px;
+  padding: 5px 6px;
+  border-radius: 100%;
 }
 
 .head_content > .user {
@@ -303,6 +345,7 @@ export default {
   margin-left: 3px;
   color: #3e4b66;
 }
+
 
 .user > .dropdown {
   position: absolute;
@@ -453,9 +496,6 @@ export default {
 }
 
 @media only screen and (max-width: 768px) {
-  .head_content {
-  }
-
   .head_content > .links {
     margin-left: 10px;
   }
@@ -480,6 +520,15 @@ export default {
     display: none;
   }
 
+  .mobile_search_user {
+    display: block;
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+  }
+
   .user > .info > .username, .user > .info > i {
     display: none;
   }
@@ -488,7 +537,6 @@ export default {
     width: 100%;
     background-color: red;
   }
-
 
 }
 </style>
