@@ -49,7 +49,11 @@ class UserResourceController extends Controller
 
     public function show($username)
     {
-        return UserResource::make(User::where('username', $username)->first());
+        $user = User::where('username', $username)->first();
+        if ($user) {
+            return UserResource::make($user);
+        }
+        return response(['status' => 'no content'], 204);
     }
 
     /**

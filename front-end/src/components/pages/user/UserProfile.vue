@@ -16,25 +16,16 @@
             <div class="role">
               Mentee {{ user.mentor ? '& Mentor' : '' }}
             </div>
-            <a
-                :class="{
-              'not_visible':!user.permissions.cv_visible,
-              'not_added':user.cv_path ==='NULL'
-               }"
-                target="_blank"
-                :href="user.cv_path"
-                class="cv">
-              <template v-if="user.permissions.cv_visible && user.cv_path!=='NULL'">
-                CV İncele
-              </template>
-              <template v-else-if="!user.permissions.cv_visible">
-                CV Gizlenmiş
-              </template>
-              <template v-if="user.cv_path === 'NULL'">
-                CV eklenmemiş
-              </template>
+            <a v-if="user.permissions.cv_visible"
+               :class="{'not_added':!user.cv_path}"
+               :href="user.cv_path"
+               target="_blank"
+               class="cv">
+              {{ user.cv_path ? 'CV Görüntüle' : 'CV Eklenmemiş' }}
             </a>
-            sıkıntı
+            <div v-else class="cv not_visible">
+              CV Gizlenmiş
+            </div>
           </div>
           <div class="right_action">
             <div
@@ -51,9 +42,7 @@
                 @click="actionFavoriteUser"
                 :class="{selected:user.is_favorite_user}"
                 class="add_favorite_button">
-              <i
-                  :class="{'bi-star-fill':favorite,'bi-star':!favorite}"
-                  class="bi"></i>
+              <i :class="{'bi-star-fill':user.is_favorite_user,'bi-star':!user.is_favorite_user}" class="bi"></i>
             </div>
           </div>
         </div>
@@ -66,7 +55,7 @@
           <ul class="mentor_infos">
             <li>
               <div class="title">
-                <i class="bi bi-archive-fill"></i>
+                <i class="fas fa-users"></i>
                 <span> bugüne kadar mentee sayısı</span>
               </div>
               <div class="text">
@@ -75,7 +64,7 @@
             </li>
             <li>
               <div class="title">
-                <i class="bi bi-archive-fill"></i>
+                <i class="fas fa-calendar-alt"></i>
                 <span>bugüne kadar toplam program sayısı</span>
               </div>
               <div class="text">
@@ -84,7 +73,7 @@
             </li>
             <li>
               <div class="title">
-                <i class="bi bi-archive-fill"></i>
+                <i class="fas fa-suitcase"></i>
                 <span>mentorluk alanı</span>
               </div>
               <div class="text">
@@ -95,8 +84,8 @@
         </div>
         <part title="Sosyal Medya Hesapları">
           <template slot="content">
-            <ul class="social_media_accounts">
-              <li v-for="(url,index) in denemeSocial" :key="index">
+            <ul v-if="user.social_media.length > 0" class="social_media_accounts">
+              <li v-for="(url,index) in user.social_media" :key="index">
                 <a :href="url">
                   <img :src="$helper.getSocialMediaLogo(url)">
                   <span>
@@ -105,6 +94,9 @@
                 </a>
               </li>
             </ul>
+            <div v-else class="empty">
+              Henüz eklenmemiş
+            </div>
           </template>
         </part>
         <part title="Kısacık Ön Yazı">
@@ -124,9 +116,7 @@ export default {
   name: "UserProfile",
   data() {
     return {
-      favorite: false,
       user: [],
-      denemeSocial: ['facebook.com', 'instagram.com', 'https://www.linkedin.com/feed/']
     }
   },
   components: {
@@ -138,26 +128,20 @@ export default {
       return this.user.username === this.$store.state.auth.user.username;
     },
     actionFavoriteUser() {
-      const payload = {user_id: this.user.id};
-      if (this.user.is_favorite_user) {
-        this.$store.dispatch('deleteFavoriteUser', payload);
-      } else {
-        this.$store.dispatch('postFavoriteUser', payload);
-      }
+      const type = this.user.is_favorite_user ? 'deleteFavoriteUser' : 'postFavoriteUser';
+      this.$store.dispatch(type, {user_id: this.user.id});
       this.user.is_favorite_user = !this.user.is_favorite_user;
     }
   },
   beforeCreate() {
     this.$store.dispatch('getUser')
         .then(res => {
-          console.log(res);
           this.user = res.data.data;
         })
         .catch(() => {
           alert('Bir hata oluştu!');
         })
-  },
-  filters: {}
+  }
 }
 </script>
 
@@ -319,7 +303,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #fff7f7;;
+  background-color: #fff7f7;
   padding: 7px 15px;
   border-radius: 4px;
 }
@@ -331,22 +315,26 @@ export default {
 }
 
 .mentor_infos > li > .title > i {
-  font-size: 40px;
+  font-size: 45px;
   color: var(--navy-red-txt-color);
 }
 
 .mentor_infos > li > .title > span {
   font-family: 'Montserrat', sans-serif;
   font-size: 15px;
+  margin-top: 10px;
+  color: var(--navy-blue-text-color);
+  text-align: center;
 }
 
 .mentor_infos > li > .text {
-  font-family: 'Montserrat', 'sans-serif';
+  font-family: 'Rubik', sans-serif;
   font-size: 16px;
   padding: 4px 15px;
   border-radius: 4px;
   margin-top: 7px;
-  background-color: red;
+  background-color: #ffecec;
+  color: var(--navy-blue-text-color);
 }
 
 .social_media_accounts {
@@ -391,7 +379,8 @@ export default {
   color: var(--navy-blue-text-color);
 }
 
-.about.empty {
+.empty {
+  font-family: 'Montserrat', 'sans-serif';
   color: var(--navy-light-black);
   font-size: 13px;
 }
@@ -456,6 +445,26 @@ export default {
 
   .user > .right_action > .me_settings_button > span {
     display: none;
+  }
+
+  .mentor > .title {
+    text-align: center;
+  }
+
+  .mentor > .mentor_infos {
+    flex-direction: column;
+  }
+
+  .mentor > .mentor_infos > li {
+    margin: 6px 0;
+  }
+
+  .mentor > .mentor_infos > li > .title > span {
+    font-size: 14px;
+  }
+
+  .mentor > .mentor_infos > li > .text {
+    font-size: 14px;
   }
 
   .social_media_accounts > li > a > span {

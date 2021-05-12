@@ -23,22 +23,28 @@ export const helper = {
         }
         return object;
     },
-    fileExists(file) {
-        var myLog = new File([""], file);
-        console.log(myLog);
-        return true;
-    },
-    getSocialMediaLogo() {
-        const hostname = new URL('https://facebook.com/questions/35664550/vue-js-redirection-to-another-page').hostname.split('.')[0];
-        const iconFullUrl = `../assets/icons/socialMedia/${hostname}.svg`;
-        let icon = '@/assets/icons/socialMedia/';
-        if (this.fileExists(iconFullUrl)) {
-            icon += hostname + '.svg';
-        } else {
-            icon += 'others.svg';
+    addHttpProtocol(url) {
+        if (url.search(/^http[s]?:\/\//) === -1) {
+            return 'https://' + url;
         }
-        console.log(require(icon)+'asdasdsad');
-        return require(icon);
-    }
+        return url;
+    },
+    fileExistsSocialMedia(socialMediaName) {
+        try {
+            require(`@/assets/icons/socialMedia/${socialMediaName}.svg`);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    },
+    getSocialMediaLogo(url) {
+        const hostname = new URL(this.addHttpProtocol(url)).host.split('.');
+        const index = hostname.indexOf('com');
+        let iconName = hostname[index - 1];
 
+        if (!this.fileExistsSocialMedia(iconName)) {
+            iconName = 'others';
+        }
+        return require(`@/assets/icons/socialMedia/${iconName}.svg`);
+    }
 }

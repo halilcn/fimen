@@ -57,6 +57,7 @@ export default {
 @media only screen and (max-width: 768px) {
   .user_part > .title {
     font-size: 17px;
+    text-align: center;
   }
 }
 
