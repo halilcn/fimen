@@ -14,7 +14,7 @@ class UserResourceController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->filled('search')) {
+        if ($request->has('search')) {
             return SearchUserResource::collection(
                 User::query()
                     ->where('name', 'LIKE', '%'.$request->input('search').'%')

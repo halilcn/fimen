@@ -11,7 +11,6 @@ export const user = {
         searchUser(_, payload) {
             return axios.get(`/user?search=${payload}`)
                 .then(res => {
-                    console.log(res.data.data);
                     return res.data.data;
                 })
         }

@@ -1,9 +1,13 @@
 <template>
   <transition name="slide-down">
     <ul v-if="searchText.length > 0" class="search_user">
-      <li
+      {{ searchText }}
+      <router-link
+          tag="li"
           v-for="(user,index) in users"
-          :key="index">
+          :key="index"
+          @click.native="$emit('clearSearchText');"
+          :to="{name:'UserProfile',params:{username:user.username}}">
         <img :src="user.image">
         <div class="info">
           <div class="name">
@@ -24,7 +28,7 @@
             </template>
           </div>
         </div>
-      </li>
+      </router-link>
       <li v-if="users.length === 0" class="not_user">
         Hiç kullanıcı yok
       </li>

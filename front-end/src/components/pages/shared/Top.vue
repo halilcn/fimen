@@ -54,7 +54,7 @@
           class="remove_text_button">
         <i class="bi bi-trash"></i>
       </span>
-      <search-user-dropdown :searchText="searchText"/>
+      <search-user-dropdown :searchText="searchText" @clearSearchText="searchText=''"/>
     </div>
     <div class="user">
       <div class="mobile_search_user">
