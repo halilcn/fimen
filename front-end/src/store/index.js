@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {auth} from "@/store/modules/auth";
+import {meSetting} from "@/store/modules/meSetting";
 import {mentor} from "@/store/modules/mentor";
 import {mentorProgram} from "@/store/modules/mentorProgram";
 import {user} from "@/store/modules/user";
@@ -34,9 +35,10 @@ const store = new Vuex.Store({
     actions: {},
     modules: {
         auth,
+        meSetting,
         mentor,
         mentorProgram,
-        user
+        user,
     }
 });
 
