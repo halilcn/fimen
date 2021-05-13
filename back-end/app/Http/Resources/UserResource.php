@@ -31,7 +31,7 @@ class UserResource extends JsonResource
                 $this->mentor,
                 function () {
                     return [
-                        'total_mentee_count' => 10, // mente mentor tabloso oluşturulmadı!
+                        'total_mentee_count' => $this->mentor->mentees()->count(),
                         'total_program_count' => $this->mentor->programs()->count(),
                         'competency' => $this->mentor->competency->name
                     ];

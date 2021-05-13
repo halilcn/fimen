@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mentor extends Model
@@ -20,6 +21,11 @@ class Mentor extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function mentees(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'mentor_user', 'mentor_id', 'user_id');
     }
 
     public function competency(): BelongsTo
