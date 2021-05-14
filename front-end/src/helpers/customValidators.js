@@ -9,7 +9,6 @@ export const customValidators =
             return store.dispatch('checkEmail', value);
         },
         checkFileSize(fileSize, maxSize) {
-            console.log(fileSize);
             return fileSize < maxSize * 1024 * 1024;
         }
     }

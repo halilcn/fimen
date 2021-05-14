@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MeSettingsRequest;
 use App\Http\Resources\MeSettingsResource;
 use Illuminate\Http\Request;
 
@@ -23,14 +24,20 @@ class MeSettingResourceController extends Controller
     {
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(MeSettingsRequest $request)
     {
+        $validated = $request->validated();
+
+        if ($request->has('image_file')) {
+        }
+
+        if ($request->has('cv_file')) {
+        }
+
+        return $validated;
+
+        $request->user()->update();
     }
 
     /**
@@ -41,7 +48,6 @@ class MeSettingResourceController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -54,16 +60,9 @@ class MeSettingResourceController extends Controller
     {
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-
     }
 
     /**
@@ -74,6 +73,5 @@ class MeSettingResourceController extends Controller
      */
     public function destroy($id)
     {
-
     }
 }

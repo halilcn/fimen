@@ -1,18 +1,25 @@
 <template>
   <bg-white-template>
+    helper error kullan
     <template slot="content">
       <div class="settings_container">
         <form id="userSettingsForm">
           <div class="user">
             <div class="main_info">
+              <error
+                  v-if="!$v.me.image_file.fileSize"
+                  message="Dosya en fazla 2mb olmalıdır."/>
               <div class="image_container">
                 <div class="input_container">
-                  <input id="user_image" type="file">
+                  <small-file-input
+                      class="file_input"
+                      id="user_image"
+                      v-model="$v.me.image_file.$model"/>
                   <label for="user_image">
                     <i class="fas fa-pencil-alt"></i>
                   </label>
                 </div>
-                <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D0&amp;color=fff&amp;size=128">
+                <img :src="imageUrl">
               </div>
               <div class="username">
                 @halilcan
@@ -38,18 +45,18 @@
                   CV yüklenmemiş.
                 </div>
                 <small-file-input
-                    v-model="$v.me.cv.$model"
+                    v-model="$v.me.cv_file.$model"
                     name="cv"
                     id="cv_file"/>
                 <error
-                    v-if="!$v.me.cv.checkFileSize"
+                    v-if="!$v.me.cv_file.fileSize"
                     message="Dosya en fazla 10mb olmalıdır."/>
               </div>
             </div>
             <div class="action">
               <router-link
                   tag="div"
-                  :to="{name:'UserProfile',params:{username:'halil'}}"
+                  :to="{name:'UserProfile',params:{username:me.username}}"
                   class="my_profile_button">
                 profile git
               </router-link>
@@ -67,17 +74,23 @@
                   <small-input
                       type="text"
                       v-model="me.social_media[index]"/>
-                  <div class="delete_button"> burda kaldın
+                  <div @click="deleteSocialMedia(index)" class="delete_button">
                     <i class="bi bi-trash"></i>
                   </div>
                 </li>
               </ul>
-              <div class="add_social_media_button">
+              <div @click="addSocialMedia" class="add_social_media_button">
                 <i class="bi bi-plus-circle-fill"></i>
                 ekle
               </div>
             </template>
           </part>
+          <div class="send_settings">
+            <standart-button
+                @click.native="postMeSettings"
+                :isDisable="$v.me.$invalid"
+                text="Kaydet"/>
+          </div>
         </form>
       </div>
     </template>
@@ -90,12 +103,20 @@ import Error from "@/components/shared/Error";
 import {customValidators} from "@/helpers/customValidators";
 
 
-const checkFileSize = (file) => {
-  if (file.size > 0) {
+const checkCvFileSize = (file) => {
+  if (file) {
     return customValidators.checkFileSize(file.size, 10);
   }
   return true;
 }
+
+const checkImageFileSize = (file) => {
+  if (file) {
+    return customValidators.checkFileSize(file.size, 2);
+  }
+  return true;
+}
+
 
 export default {
   name: "MeSettings",
@@ -103,8 +124,8 @@ export default {
     return {
       me: {},
       meDefault: {
-        cv: '',
-        image: ''
+        cv_file: '',
+        image_file: ''
       }
     }
   },
@@ -115,6 +136,7 @@ export default {
     SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea'),
     SmallInput: () => import('@/components/pages/shared/elements/SmallInput'),
     SmallFileInput: () => import('@/components/pages/shared/elements/SmallFileInput'),
+    StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
   },
   beforeCreate() {
     this.$store.dispatch('getMeSettings')
@@ -122,14 +144,38 @@ export default {
           this.me = {...res, ...this.meDefault};
         });
   },
-  methods: {},
+  methods: {
+    deleteSocialMedia(index) {
+      this.me.social_media.splice(index, 1);
+    },
+    addSocialMedia() {
+      this.me.social_media.push('');
+    },
+    postMeSettings() {
+      const formData = this.$helper.convertForm(this.me);
+      //sıkıntı. array'e çevirme yap!
+      formData.set('social_media', JSON.stringify(this.me.social_media));
+      this.$store.dispatch('postMeSettings', formData);
+    },
+  },
+  computed: {
+    imageUrl() {
+      return this.me.image_file ? URL.createObjectURL(this.me.image_file) : this.me.image;
+    }
+  },
   validations: {
     me: {
       name: {
         required
       },
-      cv: {
-        checkFileSize
+      image_file: {
+        fileSize: checkImageFileSize
+      },
+      cv_file: {
+        fileSize: checkCvFileSize
+        /* required: requiredIf(() => {
+           return this.checkFileSize;
+         })*/
       }
     }
   }
@@ -145,7 +191,6 @@ export default {
   display: flex;
   justify-content: flex-start;
 }
-
 
 .user > .infos {
   display: flex;
@@ -203,15 +248,15 @@ export default {
 .user > .action > .my_profile_button {
   padding: 6px 15px;
   cursor: pointer;
-  background-color: #ededed;
-  color: var(--navy-blue-text-color);
+  background-color: #ffebeb;
+  color: var(--navy-red-txt-color);
   border-radius: 4px;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
 }
 
 .user > .action > .my_profile_button:hover {
-  background-color: #e3e3e3;
+  background-color: #ffe4e4;
 }
 
 .user > .main_info {
@@ -228,7 +273,7 @@ export default {
   position: relative;
 }
 
-.main_info > .image_container > .input_container > input {
+.main_info > .image_container > .input_container > .file_input {
   display: none;
 }
 
@@ -248,6 +293,7 @@ export default {
 .main_info > .image_container > img {
   border-radius: var(--navy-user-profile-border-radius);
   width: 120px;
+  height: 120px;
 }
 
 .main_info > .username {
@@ -291,5 +337,11 @@ export default {
 
 .add_social_media_button:hover {
   background-color: #ffe2e0;
+}
+
+.send_settings {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 60px;
 }
 </style>

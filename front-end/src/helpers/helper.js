@@ -46,5 +46,12 @@ export const helper = {
             iconName = 'others';
         }
         return require(`@/assets/icons/socialMedia/${iconName}.svg`);
+    },
+    convertForm(jsonData) {
+        const formData = new FormData();
+        Object.keys(jsonData).forEach(function (key) {
+            formData.append(key, jsonData[key]);
+        });
+        return formData;
     }
 }
