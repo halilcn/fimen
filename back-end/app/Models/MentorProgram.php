@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\MentorProgramSaved;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -26,6 +27,10 @@ class MentorProgram extends Model
     protected $casts = [
         'deadline' => 'date',
         'questions' => 'array'
+    ];
+
+    protected $dispatchesEvents = [
+        'saved' => MentorProgramSaved::class
     ];
 
     // Filter Scope
