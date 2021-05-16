@@ -1,6 +1,5 @@
 <template>
   <bg-white-template>
-    helper error kullan
     <template slot="content">
       <div class="settings_container">
         <form id="userSettingsForm">
@@ -8,7 +7,7 @@
             <div class="main_info">
               <error
                   v-if="!$v.me.image_file.fileSize"
-                  message="Dosya en fazla 2mb olmalıdır."/>
+                  :message="$errors.maxFileSize(_,2)"/>
               <div class="image_container">
                 <div class="input_container">
                   <small-file-input
@@ -30,7 +29,7 @@
                 <input v-model.trim="$v.me.name.$model" type="text" name="name">
                 <error
                     v-if="!$v.me.name.required"
-                    message="Boş bırakılamaz"/>
+                    :message="$errors.required()"/>
               </div>
               <div class="readonly">
                 <input type="email" :value="me.email" readonly>
@@ -50,7 +49,7 @@
                     id="cv_file"/>
                 <error
                     v-if="!$v.me.cv_file.fileSize"
-                    message="Dosya en fazla 10mb olmalıdır."/>
+                    :message="$errors.maxFileSize(_,10)"/>
               </div>
             </div>
             <div class="action">
@@ -73,7 +72,7 @@
                 <li v-for="(url,index) in me.social_media" :key="index">
                   <small-input
                       type="text"
-                      v-model="me.social_media[index]"/>
+                      v-model="$v.me.social_media.$model[index]"/>
                   <div @click="deleteSocialMedia(index)" class="delete_button">
                     <i class="bi bi-trash"></i>
                   </div>
@@ -83,6 +82,9 @@
                 <i class="bi bi-plus-circle-fill"></i>
                 ekle
               </div>
+              <error
+                  v-if="$v.me.social_media.$anyError"
+                  :message="$errors.required()"/>
             </template>
           </part>
           <div class="send_settings">
@@ -152,10 +154,11 @@ export default {
       this.me.social_media.push('');
     },
     postMeSettings() {
-      const formData = this.$helper.convertForm(this.me);
-      //sıkıntı. array'e çevirme yap!
-      formData.set('social_media', JSON.stringify(this.me.social_media));
-      this.$store.dispatch('postMeSettings', formData);
+      console.log(this.$v.me.social_media);
+      this.$store.dispatch('postMeSettings', this.$helper.convertForm(this.me))
+          .then(res => {
+            console.log(res);
+          });
     },
   },
   computed: {
@@ -176,6 +179,11 @@ export default {
         /* required: requiredIf(() => {
            return this.checkFileSize;
          })*/
+      },
+      social_media: {
+        $each: {
+          required
+        }
       }
     }
   }

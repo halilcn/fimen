@@ -50,5 +50,11 @@ export const errors =
                 return `${name} alanı geçersiz tarih olamaz.`;
             }
             return 'Geçersiz tarih olamaz';
+        },
+        maxFileSize(name,size){
+            if (name) {
+                return `${name} alanı maksimum ${size}mb olmalıdır.`;
+            }
+            return `Maksimum ${size}mb olmalıdır.`;
         }
     }

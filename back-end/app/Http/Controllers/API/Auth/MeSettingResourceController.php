@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeSettingsRequest;
 use App\Http\Resources\MeSettingsResource;
+use App\Http\Resources\MeUpdatedSettingResource;
 use Illuminate\Http\Request;
 
 class MeSettingResourceController extends Controller
@@ -35,9 +36,9 @@ class MeSettingResourceController extends Controller
         if ($request->has('cv_file')) {
         }
 
-        return $validated;
+        $user = $request->user()->update($validated);
 
-        $request->user()->update();
+        return MeUpdatedSettingResource::make($user);
     }
 
     /**

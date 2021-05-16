@@ -16,6 +16,15 @@ class MeSettingsRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'social_media' => explode(',', $this->input('social_media', []))//??
+            ]
+        );
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,7 +37,9 @@ class MeSettingsRequest extends FormRequest
             'image_file' => ['nullable', 'image', 'max:2000'],
             'cv_file' => ['nullable', 'max:10000'],
             'about' => ['string'],
-            'social_media' => ['string']
+            'social_media' => ['array', 'nullable'],
+            'social_media.*' => ['string']
         ];
     }
+
 }
