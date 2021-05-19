@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorProgramRequest;
+use App\Http\Resources\MentorProgramDetailResource;
 use App\Http\Resources\MentorProgramsResource;
 use App\Models\MentorProgram;
 use Illuminate\Http\Request;
@@ -58,10 +59,13 @@ class MentorProgramResourceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        //??
+        $program = MentorProgram::where('slug',$slug)->first();
+        return new MentorProgramDetailResource($program);
     }
+
 
     /**
      * Show the form for editing the specified resource.

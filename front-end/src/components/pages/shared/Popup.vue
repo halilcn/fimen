@@ -1,21 +1,18 @@
 <template>
-  <div class="popup_container">
-    <transition name="popup-scale" mode="out-in">
-      <div
-          v-if="$store.state.isShowPopup"
-          :style="{width:popupHeight+'%'}"
-          class="popup">
-        <div class="top">
-          <div v-if="title" class="title">
-            {{ title }}
-          </div>
-          <div @click="$store.commit('setShowPopup',false)" class="close">
-            <i class="bi bi-x"></i>
-          </div>
+  <div class="popup_container" v-if="$store.state.isShowPopup">
+    <div
+        :style="{width:popupWidth+'%'}"
+        class="popup">
+      <div class="top">
+        <div v-if="title" class="title">
+          {{ title }}
         </div>
-        <slot name="popup"/>
+        <div @click="$store.commit('setShowPopup',false)" class="close">
+          <i class="bi bi-x"></i>
+        </div>
       </div>
-    </transition>
+      <slot name="popup"/>
+    </div>
     <div @click="$store.commit('setShowPopup',false)" class="filter"></div>
   </div>
 </template>
@@ -24,7 +21,7 @@
 export default {
   name: "Popup",
   props: {
-    popupHeight: {
+    width: {
       required: false,
       type: Number,
       default: 40
@@ -32,6 +29,14 @@ export default {
     title: {
       required: false,
       default: false
+    }
+  },
+  computed: {
+    popupWidth() {
+      if (window.screen.width > 768) {
+        return this.width;
+      }
+      return 90;
     }
   }
 }
@@ -68,7 +73,8 @@ export default {
   border: 1px solid #dedede;
   border-radius: 5px;
   z-index: 1;
-  height: 85%;
+  height: auto;
+  max-height: 85%;
   overflow-y: auto;
 
   box-shadow: 0 0px 0.3px rgba(0, 0, 0, 0.02),
@@ -78,6 +84,7 @@ export default {
   0 0px 4.2px rgba(0, 0, 0, 0.05),
   0 0px 10px rgba(0, 0, 0, 0.07);
 }
+
 .popup::-webkit-scrollbar {
   width: 5px;
 }
@@ -116,33 +123,5 @@ export default {
 
 .popup > .top > .close:hover {
   background-color: #f0f0f0;
-}
-
-@keyframes popup-scale-active {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes popup-scale-leave {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.popup-scale-enter-active {
-
-  animation: popup-scale-active .5s;
-  display: none;
-}
-
-.popup-scale-leave-active {
-  animation: popup-sacle-leave .5s;
 }
 </style>

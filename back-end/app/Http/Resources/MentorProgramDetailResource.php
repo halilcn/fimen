@@ -3,9 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
 
-class MentorProgramsResource extends JsonResource
+use function Symfony\Component\Translation\t;
+
+class MentorProgramDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +17,12 @@ class MentorProgramsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'user' => new MentorUserResource($this->mentorUser),
             'title' => $this->title,
-            'explanation' => Str::limit($this->explanation, 200),
-            'slug' => $this->slug,
+            'explanation' => $this->explanation,
+            'deadline' => $this->deadline,
             'mentee_count' => $this->mentee_count,
-            'deadline' => $this->deadline->isPast() ? false : $this->deadline
+            'questions' => $this->questions,
+            'user' => new MentorUserResource($this->mentorUser)
         ];
     }
 }

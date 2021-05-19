@@ -1,7 +1,7 @@
 <template>
   <popup
       v-if="$store.state.isShowPopup"
-      :popupHeight="popupHeight"
+      :width="width"
       :title="title">
     <ul slot="popup" class="new_mentor_program">
       <li>
@@ -92,7 +92,7 @@ import moment from "moment";
 
 export default {
   name: "NewProgramForm",
-  props: ['popupHeight', 'title'],
+  props: ['width', 'title'],
   data() {
     return {
       program: {

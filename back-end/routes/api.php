@@ -36,7 +36,11 @@ Route::group(
                 Route::resource('/me/settings/settings', MeSettingResourceController::class);
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
-                Route::resource('/mentor-programs', MentorProgramResourceController::class);
+                Route::resource('/mentor-programs', MentorProgramResourceController::class)->scoped(
+                    [
+                        'mentor_program' => 'slug'
+                    ]
+                );
                 Route::resource('/new-mentors', NewMentorResourceController::class);
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);

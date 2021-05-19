@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 
 export const mentorProgram = {
     state: {
@@ -39,6 +40,15 @@ export const mentorProgram = {
                     commit('setShowPopup', false);
                     dispatch('getMentorPrograms');
                 });
+        },
+        getMentorProgramDetails() {
+            return axios.get(`/mentor-programs/${router.currentRoute.params.slug}`)
+                .then(res => {
+                    return res.data.data;
+                });
+        },
+        postProgramApply() {
+            alert();
         }
     },
     getters: {

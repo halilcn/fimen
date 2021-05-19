@@ -2,7 +2,7 @@
   <div class="programs_container">
     <new-program-form
         :showPopup="isShowNewProgramPopup"
-        :popupHeight="50"
+        :width="50"
         :title="'Yeni Mentor Programı'"/>
     <div class="mentor_programs">
       <div class="filters">

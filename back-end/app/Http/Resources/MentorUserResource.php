@@ -14,6 +14,11 @@ class MentorUserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'username' => $this->user->username,
+            'name' => $this->user->name,
+            'image' => $this->user->image,
+            'competency_name' => $this->competency->name
+        ];
     }
 }

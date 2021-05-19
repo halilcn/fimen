@@ -1,56 +1,59 @@
 <template>
   <div class="mentor_program_container">
+    <questions-popup :questions="program.questions"/>
     <div class="mentor_program">
       <div class="title">
-        title title title title title title title title title
+        {{ program.title }}
       </div>
       <div class="details">
         <div>
           <i class="bi bi-people"></i>
-          15 kişi
+          {{ program.mentee_count }} kişi
         </div>
         <div>
           <i class="bi bi-clock"></i>
-          27 Temmuz 2021
+          {{ program.deadline }}
         </div>
       </div>
       <div class="text">
-        yazı adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj
-        klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das yazı
-        adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj
-        klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das yazı
-        adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj
-        klsdjasdjaksd asd adsaasdada das yazı adso aıdsoapsdıaos dkaosdja dakj klsdjasdjaksd asd adsaasdada das
+        {{ program.explanation }}
       </div>
     </div>
     <div class="others">
       <div class="mentor">
         <div class="info">
-          <img src="https://ui-avatars.com/api/?name=halil+can&amp;background=0288D0&amp;color=fff&amp;size=128">
+          <img :src="program.user.image">
           <div class="text_info">
             <div class="name">
-              Halil CAN
+              {{ program.user.name }}
             </div>
             <div class="username">
-              @hcan
+              @{{ program.user.username }}
             </div>
           </div>
         </div>
         <div class="competency_name">
-          <i class="bi bi-list"></i>
-          Yazılım
+          {{ program.user.competency_name }}
         </div>
-        <div class="go_profile">
+        <router-link
+            tag="div"
+            :to="{name:'UserProfile',params:{username:program.user.username}}"
+            class="go_profile">
           Profile Git
-        </div>
+        </router-link>
       </div>
       <div class="apply_program">
-        <div class="question_info has_question">
-          Bu program cevaplamak için 3 tane soru cevaplanması gerekiyor.
-
+        <div v-if="program.questions.length > 0" class="question_info has_question">
+          Bu programa başvurmak için {{ program.questions.length }} tane soru cevaplanması gerekiyor.
         </div>
-        <div class="applt_buttton">
-          Programa Başvur
+        <div v-else class="question_info not_question">
+          Bu programa soru cevaplamadan başvurulabilir.
+        </div>
+        <div class="apply_button">
+          <standart-button
+              @click.native="applyProgram"
+              text="Başvur"
+              :isDisable="false"/>
         </div>
       </div>
     </div>
@@ -61,9 +64,32 @@
 export default {
   name: "ProgramsDetail",
   data() {
-    return {}
+    return {
+      program: {}
+    }
   },
-  components: {}
+  components: {
+    StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
+    QuestionsPopup: () => import('@/components/pages/mentorPrograms/ProgramApplyQuestionsPopup'),
+  },
+  created() {
+    this.$store.dispatch('getMentorProgramDetails')
+        .then(res => {
+          this.program = res;
+        })
+  },
+  methods: {
+    applyProgram() {
+      if (this.program.questions.length > 0) {
+        this.$store.commit('setShowPopup', true);
+        return 0;
+      }
+      this.postProgramApply();
+    },
+    postProgramApply() {
+      this.$store.dispatch('postProgramApply');
+    }
+  }
 }
 </script>
 
@@ -80,6 +106,7 @@ export default {
 .mentor_program > .title {
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
+  font-size: 26px;
   color: var(--navy-blue-text-color);
 }
 
@@ -104,7 +131,7 @@ export default {
   color: #454545;
   letter-spacing: 1px;
   line-height: 1.6;
-  text-align: left;
+  text-align: justify;
 }
 
 .others {
@@ -124,7 +151,6 @@ export default {
   0 0px 4.2px rgba(0, 0, 0, 0.036),
   0 0px 7.9px rgba(0, 0, 0, 0.043),
   0 0px 19px rgba(0, 0, 0, 0.06);
-
 }
 
 .others > .mentor {
@@ -158,16 +184,22 @@ export default {
 }
 
 .mentor > .competency_name {
-  margin-top: 7px;
+  margin-top: 10px;
   font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  background-color: #ecf4ff;
+  color: var(--navy-mentor-mentee-text-color);
+  display: inline-block;
+  padding: 3px 20px;
+  border-radius: 4px;
 }
 
 .mentor > .go_profile {
-  padding: 8px 0;
+  padding: 10px 0;
   text-align: center;
   background-color: var(--navy-blue-bg-color);
   color: white;
-  margin-top: 10px;
+  margin-top: 15px;
   cursor: pointer;
   border-radius: 7px;
   font-family: 'Poppins', sans-serif;
@@ -181,18 +213,102 @@ export default {
 }
 
 .others > .apply_program {
-
+  margin-top: 30px;
+  position: sticky;
+  top: 30px;
 }
 
 .apply_program > .question_info {
-
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
 }
 
 .apply_program > .question_info.has_question {
-
+  color: var(--navy-blue-text-color);
 }
 
 .apply_program > .question_info.not_question {
+  color: #4e4e4e;
+}
+
+.apply_program > .apply_button {
+  margin-top: 15px;
+}
+
+@media only screen and (max-width: 768px) {
+  .mentor_program_container {
+    flex-direction: column;
+  }
+
+  .mentor_program {
+    width: 100%;
+    padding: 0;
+  }
+
+  .mentor_program > .title {
+    font-size: 20px;
+  }
+
+  .mentor_program > .details > div {
+    font-size: 11px;
+    margin-right: 10px;
+    padding: 2px 7px;
+  }
+
+  .mentor_program > .text {
+    font-size: 12px;
+    margin-top: 15px;
+    letter-spacing: 0;
+    line-height: 1.6;
+    text-align: left;
+  }
+
+  .others {
+    width: 100%;
+    padding: 0;
+    margin-top: 40px;
+  }
+
+  .others > div {
+    padding: 10px;
+  }
+
+  .others > .mentor {
+    position: relative;
+  }
+
+  .mentor > .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mentor > .info > img {
+    width: 50px;
+  }
+
+  .mentor > .info > .text_info {
+    margin-left: 0;
+    margin-top: 5px;
+    align-items: center;
+  }
+
+  .mentor > .info > .text_info > .name {
+    font-size: 15px;
+    text-align: center;
+  }
+
+  .mentor > .info > .text_info > .username {
+    font-size: 12px;
+  }
+
+  .mentor > .competency_name {
+    margin-top: 0;
+    font-size: 13px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 
 }
 </style>
