@@ -9,10 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
+        "cloudinary/cloudinary_php": "^2",
         "doctrine/dbal": "^3.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.3",
+        "intervention/image": "^2.5",
         "itsgoingd/clockwork": "^5.0",
         "laravel/framework": "^8.12",
         "laravel/sanctum": "^2.9",

@@ -14,7 +14,7 @@ class SendEmailVerification implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $information;
+    protected array $information;
 
     /**
      * SendEmailVerification constructor.

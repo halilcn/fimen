@@ -6,7 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MeSettingsRequest;
 use App\Http\Resources\MeSettingsResource;
 use App\Http\Resources\MeUpdatedSettingResource;
+
+//facade
+use App\Jobs\UploadProfileImage;
+use App\Services\ApiStorageService;
+
 use Illuminate\Http\Request;
+use Cloudinary\Configuration\Configuration;
+use Cloudinary\Api\Upload\UploadApi;
+use Intervention\Image\Facades\Image;
+
 
 class MeSettingResourceController extends Controller
 {
@@ -30,14 +39,28 @@ class MeSettingResourceController extends Controller
     {
         $validated = $request->validated();
 
+
         if ($request->has('image_file')) {
+            $file = Image::make($request->file('image_file'));
+
+            //  $file_image = Image::make($request->file('image_file'));
+            //      $file_image->resize(512, 512);
+            //         $img->resize(100, 100);
+
+            //  (new ApiStorageService)->put($request->file('image_file')->getRealPath());
+
+            //   (new ApiStorageService)->delete();
+
+            // return UploadProfileImage::dispatchNow($request->file('image_file')->getRealPath());
         }
 
         if ($request->has('cv_file')) {
+            //İş
         }
 
-        $user = $request->user()->update($validated);
+        return "ok";
 
+        $user = $request->user()->update($validated);
         return MeUpdatedSettingResource::make($user);
     }
 

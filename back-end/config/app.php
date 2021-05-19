@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -166,6 +166,10 @@ return [
          * Package Service Providers...
          */
 
+        Intervention\Image\ImageServiceProvider::class,
+        App\Providers\ApiStorageServiceProvider::class,
+
+
         /*
          * Application Service Providers...
          */
@@ -228,6 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+
+        'Image' => Intervention\Image\Facades\Image::class,
+        'ApiStorage' => App\Services\ApiStorageService::class,
     ],
 
 ];

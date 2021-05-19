@@ -109,7 +109,6 @@
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/ramsey/uuid" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/ramsey/collection" />
-      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/dnoegel/php-xdg-base-dir" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/laravel/framework" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/egulias/email-validator" />
@@ -122,6 +121,11 @@
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/event-manager" />
       <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/itsgoingd/clockwork" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/shrikeh/teapot" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/teapot/status-code" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/cloudinary/cloudinary_php" />
+      <excludeFolder url="file://$MODULE_DIR$/back-end/vendor/intervention/image" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
