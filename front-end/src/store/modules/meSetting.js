@@ -2,11 +2,17 @@ import axios from "axios";
 
 export const meSetting = {
     state: {},
-    mutations: {},
+    mutations: {
+        setUserSettings(_, payload) {
+            this.state.auth.user.name_surname = payload.get('name');
+            if (payload.get('image_file')) {
+                this.state.auth.user.image = URL.createObjectURL(payload.get('image_file'));
+            }
+        }
+    },
     actions: {
         getMeSettings() {
-            /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! api ?? */
-            return axios.get('/me/settings/settings')
+            return axios.get('/me/settings')
                 .then(res => {
                     return res.data.data;
                 })
@@ -14,18 +20,15 @@ export const meSetting = {
                     alert('Bir hata oluştu');
                 });
         },
-        postMeSettings(_, payload) {
-            axios.post('/me/settings/settings', payload, {
+        postMeSettings({commit}, payload) {
+            return axios.post('/me/settings', payload, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-                .then(res => {
-                    console.log(res)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+                .then(() => {
+                    commit('setUserSettings', payload);
+                });
         }
     },
     getters: {}

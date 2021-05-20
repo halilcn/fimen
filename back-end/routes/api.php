@@ -32,10 +32,16 @@ Route::group(
         // ----- AUTH -----
         Route::middleware('auth:sanctum')->group(
             function () {
-                Route::resource('/me', MeResourceController::class);
-                Route::resource('/me/settings/settings', MeSettingResourceController::class);
+                Route::group(
+                    ['prefix' => '/me'],
+                    function () {
+                        Route::resource('/', MeResourceController::class);
+                        Route::resource('/settings', MeSettingResourceController::class);
+                    }
+                );
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
+                /***/
                 Route::resource('/mentor-programs', MentorProgramResourceController::class)->scoped(
                     [
                         'mentor_program' => 'slug'
@@ -45,7 +51,6 @@ Route::group(
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);
                 Route::resource('/favorite-users', FavoriteUserResourceController::class);
-
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
         );

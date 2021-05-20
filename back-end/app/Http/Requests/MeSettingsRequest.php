@@ -20,7 +20,9 @@ class MeSettingsRequest extends FormRequest
     {
         $this->merge(
             [
-                'social_media' => explode(',', $this->input('social_media', []))//??
+                'social_media' => $this->input('social_media')
+                    ? explode(',', $this->input('social_media'))
+                    : []
             ]
         );
     }
@@ -38,7 +40,7 @@ class MeSettingsRequest extends FormRequest
             'cv_file' => ['nullable', 'max:10000'],
             'about' => ['string'],
             'social_media' => ['array', 'nullable'],
-            'social_media.*' => ['string']
+            'social_media.*' => ['required', 'string']
         ];
     }
 

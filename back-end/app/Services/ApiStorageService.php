@@ -16,9 +16,9 @@ class ApiStorageService implements ApiStorageInterface
         Configuration::instance(
             [
                 'cloud' => [
-                    'cloud_name' => 'dbaeatlkx',
-                    'api_key' => '319662467781978',
-                    'api_secret' => 'eZBhHBYknlMseB3pYEQzT6grJFE'
+                    'cloud_name' => config('cloudder.cloudName'),
+                    'api_key' => config('cloudder.apiKey'),
+                    'api_secret' => config('cloudder.apiSecret'),
                 ],
                 'url' => [
                     'secure' => true
@@ -27,16 +27,14 @@ class ApiStorageService implements ApiStorageInterface
         );
     }
 
-    public function put(string $file, array $options = [])
+    public function put(string $file, array $options = []): object
     {
         return (new UploadApi())->upload($file, $options);
     }
 
-    public function delete()
+    public function delete(string $publicId): object
     {
-        return (new UploadApi())->destroy(
-            "https://res.cloudinary.com/dbaeatlkx/image/upload/v1621420521/vgqzywljfs15napezf2s.jpg"
-        );
+        return (new UploadApi())->destroy($publicId);
     }
 
 }

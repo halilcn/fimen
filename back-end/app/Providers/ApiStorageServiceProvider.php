@@ -29,6 +29,5 @@ class ApiStorageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
     }
 }

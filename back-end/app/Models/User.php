@@ -28,6 +28,7 @@ class User extends Authenticatable
         'username',
         'password',
         'image',
+        'image_public_id',
         'about',
         'social_media',
         'cv_path'

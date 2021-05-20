@@ -31,7 +31,7 @@ export const auth = {
         },
         setRegisterUserEmail(state, payload) {
             state.registerUser.email = payload;
-        },
+        }
     },
     actions: {
         async postLogin({commit, dispatch}, payload) {

@@ -8,12 +8,14 @@ use App\Http\Resources\MeSettingsResource;
 use App\Http\Resources\MeUpdatedSettingResource;
 
 //facade
+use App\Jobs\DeleteProfileImage;
 use App\Jobs\UploadProfileImage;
 use App\Services\ApiStorageService;
 
 use Illuminate\Http\Request;
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
+use Illuminate\Support\Facades\Bus;
 use Intervention\Image\Facades\Image;
 
 
@@ -37,31 +39,25 @@ class MeSettingResourceController extends Controller
 
     public function store(MeSettingsRequest $request)
     {
-        $validated = $request->validated();
-
-
-        if ($request->has('image_file')) {
-            $file = Image::make($request->file('image_file'));
-
-            //  $file_image = Image::make($request->file('image_file'));
-            //      $file_image->resize(512, 512);
-            //         $img->resize(100, 100);
-
-            //  (new ApiStorageService)->put($request->file('image_file')->getRealPath());
-
-            //   (new ApiStorageService)->delete();
-
-            // return UploadProfileImage::dispatchNow($request->file('image_file')->getRealPath());
+        if ($request->hasFile('image_file')) {
+            UploadProfileImage::dispatchSync($request->user(), $request->file('image_file')->getRealPath());
+            /*  Bus::chain(
+                  [
+                      //   new DeleteProfileImage($request->user()),
+                      //new UploadProfileImage($request->file('image_file')->getRealPath())
+                  ]
+              )->dispatch();*/
         }
 
         if ($request->has('cv_file')) {
             //İş
         }
 
-        return "ok";
+        $request->user()->update(
+            collect($request->validated())->except('image_file', 'cv_file')->toArray()
+        );
 
-        $user = $request->user()->update($validated);
-        return MeUpdatedSettingResource::make($user);
+        return response(['status' => true]);
     }
 
     /**

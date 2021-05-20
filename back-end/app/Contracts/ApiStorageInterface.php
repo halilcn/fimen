@@ -6,5 +6,7 @@ namespace App\Contracts;
 
 interface ApiStorageInterface
 {
-  //  public function deneme();
+    public function put(string $file, array $options = []): object;
+
+    public function delete(string $publicId): object;
 }

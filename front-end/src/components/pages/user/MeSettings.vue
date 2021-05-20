@@ -21,7 +21,7 @@
                 <img :src="imageUrl">
               </div>
               <div class="username">
-                @halilcan
+                @{{ me.username }}
               </div>
             </div>
             <div class="infos">
@@ -101,9 +101,7 @@
 
 <script>
 import {required} from 'vuelidate/lib/validators'
-import Error from "@/components/shared/Error";
 import {customValidators} from "@/helpers/customValidators";
-
 
 const checkCvFileSize = (file) => {
   if (file) {
@@ -127,12 +125,12 @@ export default {
       me: {},
       meDefault: {
         cv_file: '',
-        image_file: ''
+        image_file: '',
       }
     }
   },
   components: {
-    Error,
+    Error: () => import( '@/components/shared/Error'),
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
     Part: () => import('@/components/pages/user/shared/Part'),
     SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea'),
@@ -154,10 +152,9 @@ export default {
       this.me.social_media.push('');
     },
     postMeSettings() {
-      console.log(this.$v.me.social_media);
       this.$store.dispatch('postMeSettings', this.$helper.convertForm(this.me))
-          .then(res => {
-            console.log(res);
+          .then(() => {
+            alert('veriler kaydedildi')
           });
     },
   },
