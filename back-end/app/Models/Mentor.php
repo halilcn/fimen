@@ -25,7 +25,7 @@ class Mentor extends Model
 
     public function mentees(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'mentor_user', 'mentor_id', 'user_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function competency(): BelongsTo

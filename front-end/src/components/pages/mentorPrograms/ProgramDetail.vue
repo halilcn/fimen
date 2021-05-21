@@ -1,6 +1,9 @@
 <template>
   <div class="mentor_program_container">
-    <questions-popup :questions="program.questions"/>
+    <questions-popup
+        @postProgramApply="postProgramApply"
+        :questions="program.questions"
+        :answers="programAppeal.answers"/>
     <div class="mentor_program">
       <div class="title">
         {{ program.title }}
@@ -12,7 +15,7 @@
         </div>
         <div>
           <i class="bi bi-clock"></i>
-          {{ program.deadline }}
+          {{ moment(program.deadline).format('LLL') }}
         </div>
       </div>
       <div class="text">
@@ -42,7 +45,11 @@
           Profile Git
         </router-link>
       </div>
-      <div class="apply_program">
+      <div v-if="program.is_applied" class="has_apply_program">
+        <i class="fas fa-check-circle"></i>
+        Zaten Başvurdun
+      </div>
+      <div v-else class="apply_program">
         <div v-if="program.questions.length > 0" class="question_info has_question">
           Bu programa başvurmak için {{ program.questions.length }} tane soru cevaplanması gerekiyor.
         </div>
@@ -61,11 +68,16 @@
 </template>
 
 <script>
+
 export default {
   name: "ProgramsDetail",
   data() {
     return {
-      program: {}
+      program: {},
+      programAppeal: {
+        program_id: 758132,
+        answers: []
+      }
     }
   },
   components: {
@@ -75,7 +87,14 @@ export default {
   created() {
     this.$store.dispatch('getMentorProgramDetails')
         .then(res => {
+          console.log(res);
           this.program = res;
+          //************************
+          // eslint-disable-next-line no-unused-vars
+          for (var index in res.questions) {
+            this.answers.push('');
+          }
+          console.log(this.answers);
         })
   },
   methods: {
@@ -87,7 +106,11 @@ export default {
       this.postProgramApply();
     },
     postProgramApply() {
-      this.$store.dispatch('postProgramApply');
+      this.$store.dispatch('postProgramApply', this.programAppeal)
+          .then(() => {
+            this.program.is_applied = true;
+            this.$store.commit('setShowPopup',false);
+          })
     }
   }
 }
@@ -210,6 +233,16 @@ export default {
 
 .mentor > .go_profile:hover {
   background-color: var(--navy-blue-bg-hover-color);
+}
+
+.others > .has_apply_program {
+  margin-top: 30px;
+  position: sticky;
+  top: 30px;
+  text-align: center;
+  color: #1d911d;
+  background-color: #e8ffe8;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .others > .apply_program {

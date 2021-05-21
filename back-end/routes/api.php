@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\Auth\MeSettingResourceController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
+use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
 use App\Http\Controllers\API\NewMentorResourceController;
@@ -41,12 +42,13 @@ Route::group(
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
-                /***/
+                /*sıkıntı ?*/
                 Route::resource('/mentor-programs', MentorProgramResourceController::class)->scoped(
                     [
                         'mentor_program' => 'slug'
                     ]
                 );
+                Route::resource('/mentor-programs-appeals', MentorProgramAppealResourceController::class);
                 Route::resource('/new-mentors', NewMentorResourceController::class);
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);

@@ -10,10 +10,17 @@
           <div class="question">
             {{ question }}
           </div>
-          <small-input/>
+          <small-input v-model.trim="answers[index]"/>
         </li>
+        {{ answers }}
+        <error-alert
+            v-if="false"
+            text="Tüm sorular cevaplanmalıdır."/>
         <li class="send_button">
-          <standart-button text="Gönder ve Başvur"/>
+          <standart-button
+              :isDisable="false /*$v.$invalid*/"
+              @click.native="$emit('postProgramApply')"
+              text="Gönder ve Başvur"/>
         </li>
       </ul>
     </template>
@@ -21,19 +28,34 @@
 </template>
 
 <script>
+//import {required} from 'vuelidate/lib/validators'
+
 export default {
   name: "ProgramApplyQuestionsPopup",
   props: {
     questions: {
       type: Array,
       defaults: [],
+    },
+    answers: {
+      type: Array,
+      defaults: []
     }
   },
+  /*  validations: {
+      answers: {
+        $each: {
+          required
+        }
+      }
+    },*/
   components: {
     Popup: () => import('@/components/pages/shared/Popup'),
     SmallInput: () => import('@/components/pages/shared/elements/SmallInput'),
     StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
-  }
+    ErrorAlert: () => import('@/components/pages/shared/ErrorAlert'),
+  },
+
 }
 </script>
 

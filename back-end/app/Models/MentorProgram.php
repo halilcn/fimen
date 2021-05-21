@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Http\Request;
 
 class MentorProgram extends Model
@@ -26,7 +27,8 @@ class MentorProgram extends Model
 
     protected $casts = [
         'deadline' => 'date',
-        'questions' => 'array'
+        'questions' => 'array',
+        'usersAppeal.appeal.answers' => 'array'
     ];
 
     protected $dispatchesEvents = [
@@ -58,9 +60,21 @@ class MentorProgram extends Model
             );
     }
 
+    public function isApplied(int $userId): bool
+    {
+        return $this->usersAppeal()->where('user_id', $userId)->exists();
+    }
+
     public function mentorUser(): BelongsTo
     {
         return $this->belongsTo(Mentor::class, 'mentor_id', 'id');
     }
 
+    public function usersAppeal(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'mentor_program_user', 'mentor_program_id', 'user_id')
+            ->as('appeal')
+            ->withPivot('answers')
+            ->withTimestamps();
+    }
 }

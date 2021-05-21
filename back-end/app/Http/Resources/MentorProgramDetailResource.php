@@ -22,6 +22,7 @@ class MentorProgramDetailResource extends JsonResource
             'deadline' => $this->deadline,
             'mentee_count' => $this->mentee_count,
             'questions' => $this->questions,
+            'is_applied' => $this->isApplied($request->user()->id),
             'user' => new MentorUserResource($this->mentorUser)
         ];
     }

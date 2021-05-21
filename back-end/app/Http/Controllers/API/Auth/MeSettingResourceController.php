@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Cloudinary\Configuration\Configuration;
 use Cloudinary\Api\Upload\UploadApi;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 
