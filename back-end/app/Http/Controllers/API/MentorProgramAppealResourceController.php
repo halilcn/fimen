@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MentorProgramAppealRequest;
 use App\Models\MentorProgram;
 use Illuminate\Auth\Access\Gate;
 use Illuminate\Http\Request;
@@ -29,23 +30,16 @@ class MentorProgramAppealResourceController extends Controller
         //
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  MentorProgramAppealRequest  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(MentorProgramAppealRequest $request)
     {
         $mentorProgram = MentorProgram::where('slug', $request->input('program_id'))->firstOrFail();
-
-
-
-        \Illuminate\Support\Facades\Gate::authorize('create', $mentorProgram);
-        //daha önce başvurmadyısa? authoritize !!
-        // return $program->usersAppeal[0]->appeal->answers;
-
-
+        $this->authorize('create-mentor-program-appeal', $mentorProgram);
         $mentorProgram->usersAppeal()->attach(
             $request->user()->id,
             ['answers' => json_encode($request->input('answers'))]

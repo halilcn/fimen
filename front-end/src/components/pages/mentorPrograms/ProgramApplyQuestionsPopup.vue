@@ -1,6 +1,6 @@
 <template>
   <popup
-      title="Soruları"
+      title="Mentor Programı Başvurusu Soruları"
       :width="40">
     <template slot="popup">
       <ul class="questions">
@@ -10,11 +10,12 @@
           <div class="question">
             {{ question }}
           </div>
-          <small-input v-model.trim="answers[index]"/>
+          <small-input
+              type="text"
+              v-model="answers[index]"/>
         </li>
-        {{ answers }}
         <error-alert
-            v-if="false"
+            v-if="false /*$error*/"
             text="Tüm sorular cevaplanmalıdır."/>
         <li class="send_button">
           <standart-button
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-//import {required} from 'vuelidate/lib/validators'
+import {required} from 'vuelidate/lib/validators'
 
 export default {
   name: "ProgramApplyQuestionsPopup",
@@ -42,13 +43,13 @@ export default {
       defaults: []
     }
   },
-  /*  validations: {
-      answers: {
-        $each: {
-          required
-        }
+  validations: {
+    answers: {
+      $each: {
+        required
       }
-    },*/
+    }
+  },
   components: {
     Popup: () => import('@/components/pages/shared/Popup'),
     SmallInput: () => import('@/components/pages/shared/elements/SmallInput'),

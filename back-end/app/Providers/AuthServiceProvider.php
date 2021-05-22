@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\MentorProgram;
+use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,6 +27,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Policies ?
+        Gate::define(
+            'create-mentor-program-appeal',
+            function (User $user, MentorProgram $mentorProgram) {
+                return !$mentorProgram->isApplied($user->id);
+            }
+        );
     }
 }

@@ -48,10 +48,7 @@ export const mentorProgram = {
                 });
         },
         postProgramApply(_, payload) {
-          return   axios.post('/mentor-programs-appeals', payload)
-                .then(res => {
-                    console.log(res);
-                })
+            return axios.post('/mentor-programs-appeals', payload);
         }
     },
     getters: {

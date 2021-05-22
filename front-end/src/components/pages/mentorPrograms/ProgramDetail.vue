@@ -47,7 +47,7 @@
       </div>
       <div v-if="program.is_applied" class="has_apply_program">
         <i class="fas fa-check-circle"></i>
-        Zaten Başvurdun
+        Başvurun İletildi
       </div>
       <div v-else class="apply_program">
         <div v-if="program.questions.length > 0" class="question_info has_question">
@@ -75,7 +75,7 @@ export default {
     return {
       program: {},
       programAppeal: {
-        program_id: 758132,
+        program_id: this.$route.params.slug,
         answers: []
       }
     }
@@ -84,17 +84,11 @@ export default {
     StandartButton: () => import('@/components/pages/shared/elements/StandartButton'),
     QuestionsPopup: () => import('@/components/pages/mentorPrograms/ProgramApplyQuestionsPopup'),
   },
-  created() {
+  beforeCreate() {
     this.$store.dispatch('getMentorProgramDetails')
         .then(res => {
-          console.log(res);
           this.program = res;
-          //************************
-          // eslint-disable-next-line no-unused-vars
-          for (var index in res.questions) {
-            this.answers.push('');
-          }
-          console.log(this.answers);
+          this.determineCountOfAnswers(res.questions);
         })
   },
   methods: {
@@ -109,8 +103,13 @@ export default {
       this.$store.dispatch('postProgramApply', this.programAppeal)
           .then(() => {
             this.program.is_applied = true;
-            this.$store.commit('setShowPopup',false);
+            this.$store.commit('setShowPopup', false);
           })
+    },
+    determineCountOfAnswers(questions) {
+      questions.forEach(() => {
+        this.programAppeal.answers.push('');
+      })
     }
   }
 }
