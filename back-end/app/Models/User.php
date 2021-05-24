@@ -113,4 +113,9 @@ class User extends Authenticatable
     {
         return $this->favoriteUsers()->where('favorite_user_id', $id)->exists();
     }
+
+    public function mentorPrograms()
+    {
+        return $this->mentor->programs();
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\API\Auth\MeResourceController;
 use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\Auth\MeSettingResourceController;
 use App\Http\Controllers\API\CompetenceResourceController;
+use App\Http\Controllers\API\MeMentorProgramResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
@@ -38,6 +39,7 @@ Route::group(
                     function () {
                         Route::resource('/', MeResourceController::class);
                         Route::resource('/settings', MeSettingResourceController::class);
+                        Route::resource('/mentor-programs', MeMentorProgramResourceController::class);
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);

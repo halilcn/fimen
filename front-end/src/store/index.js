@@ -5,6 +5,7 @@ import {meSetting} from "@/store/modules/meSetting";
 import {mentor} from "@/store/modules/mentor";
 import {mentorProgram} from "@/store/modules/mentorProgram";
 import {user} from "@/store/modules/user";
+import {meMentorProgram} from "@/store/modules/meMentorProgram";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -39,6 +40,7 @@ const store = new Vuex.Store({
         mentor,
         mentorProgram,
         user,
+        meMentorProgram
     }
 });
 

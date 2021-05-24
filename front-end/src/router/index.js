@@ -84,6 +84,11 @@ const routes = [
                 name: 'UserProfile',
                 component: () => import('@/components/pages/user/UserProfile')
             },
+            {
+                path: '/mentor-programlarim',
+                name: 'MyMentorPrograms',
+                component: () => import('@/components/pages/myMentorPrograms/Home')
+            }
         ]
     },
 ]
