@@ -99,6 +99,11 @@ class User extends Authenticatable
         return $this->create($user);
     }
 
+    /*dddd**/
+    public function isProgramOwner(){
+
+    }
+
     public function checkUniqueUsername(string $username): bool
     {
         return !$this->where('username', $username)->exists();
@@ -114,7 +119,7 @@ class User extends Authenticatable
         return $this->favoriteUsers()->where('favorite_user_id', $id)->exists();
     }
 
-    public function mentorPrograms()
+    public function mentorPrograms(): object
     {
         return $this->mentor->programs();
     }

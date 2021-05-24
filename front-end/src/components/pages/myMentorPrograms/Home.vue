@@ -2,17 +2,25 @@
   <div class="my_mentor_programs_container">
     <standart-title text="Mentor Programlarım"/>
     <div class="my_mentor_programs_list">
-      <div class="item">
+      <div
+          v-for="(program,index) in myPrograms"
+          :key="index"
+          class="item">
         <div class="row">
-          <div class="title">
-            Title Deneme Dsdsf dsDdspdad
-          </div>
+          <router-link
+              tag="div"
+              :to="program.slug"
+              class="title">
+            {{ program.title }}
+          </router-link>
           <div class="actions">
             <div class="edit_btn">
               <i class="bi bi-pencil-square"></i>
               düzenle
             </div>
-            <div class="delete_btn">
+            <div
+                @click="postDestroyMeMentorProgram(program.id)"
+                class="delete_btn">
               <i class="bi bi-trash"></i>
               sil
             </div>
@@ -24,10 +32,10 @@
           </div>
           <div class="list">
             <div>
-              7 mentee
+              {{ program.mentee_count }} Mentee
             </div>
             <div>
-              25 Mayıs
+              {{ moment(program.deadline).format('LLL') }}
             </div>
           </div>
         </div>
@@ -37,7 +45,7 @@
           </div>
           <div class="list">
             <div>
-              128 Başvuru
+              {{ program.appeal_count }} Başvuru
             </div>
           </div>
         </div>
@@ -47,12 +55,26 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+import {mapActions} from 'vuex'
+
 export default {
   name: "Home",
   components: {
     StandartTitle: () => import('@/components/pages/shared/Title')
   },
+  methods: {
+    ...mapActions({
+      postDestroyMeMentorProgram: 'postDestroyMeMentorProgram',
+    })
+  },
+  computed: {
+    ...mapState({
+      myPrograms: state => state.meMentorProgram.programs,
+    }),
+  },
   beforeCreate() {
+    //???
     this.$store.dispatch('getMeMentorPrograms');
   }
 }
@@ -67,9 +89,11 @@ export default {
 }
 
 .my_mentor_programs_list > .item {
+  margin: 20px 0;
   background-color: white;
   padding: 10px;
   border-radius: 5px;
+  border: 1px solid #ececec;
 }
 
 .item > .row {
@@ -82,6 +106,11 @@ export default {
   font-weight: 500;
   font-size: 17px;
   color: var(--navy-blue-text-color);
+  cursor: pointer;
+}
+
+.item > .row > .title:hover {
+  text-decoration: underline;
 }
 
 .item > .row > .actions {

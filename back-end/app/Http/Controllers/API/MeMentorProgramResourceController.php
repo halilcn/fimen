@@ -4,11 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MeMentorProgramsResource;
+use App\Models\MentorProgram;
 use Illuminate\Http\Request;
 
 class MeMentorProgramResourceController extends Controller
 {
 
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         return MeMentorProgramsResource::collection($request->user()->mentorPrograms);
@@ -69,14 +74,11 @@ class MeMentorProgramResourceController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(MentorProgram $mentorProgram)
     {
-        //
+        $this->authorize('destroy', $mentorProgram);
+        // gerçekten o mu açmış mentor programını ?
+        return $mentorProgram;
     }
 }

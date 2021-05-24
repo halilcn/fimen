@@ -15,9 +15,11 @@ class MeMentorProgramsResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id'=>$this->id,
             'title' => $this->title,
             'mentee_count' => $this->mentee_count,
-            'questions_count' => $this->questions()->count(),
+            'questions_count' => count($this->questions),
+            'slug' => $this->slug,
             'deadline' => $this->deadline,
             'appeal_count' => $this->usersAppeal()->count()
         ];
