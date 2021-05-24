@@ -41,7 +41,25 @@ class MeSettingResourceController extends Controller
     public function store(MeSettingsRequest $request)
     {
         if ($request->hasFile('image_file')) {
-            UploadProfileImage::dispatchSync($request->user(), $request->file('image_file')->getRealPath());
+            $path = $request->file('image_file')->store('user-profile', 'temporary');
+
+            return Storage::url($path);
+
+            $res = (new ApiStorageService)->put(
+                Storage::url($path),
+                [
+                    'folder' => 'users-profile',
+                    'resource_type' => 'image',
+                    'transformation' => [
+                        'width' => 256,
+                        'height' => 256
+                    ]
+                ]
+            );
+            return "ok";
+
+
+            return UploadProfileImage::dispatchSync($request->user(), $path);
             /*  Bus::chain(
                   [
                       //   new DeleteProfileImage($request->user()),

@@ -26,7 +26,8 @@ export const meSetting = {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-                .then(() => {
+                .then((res) => {
+                    console.log(res);
                     commit('setUserSettings', payload);
                 });
         }

@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 use function PHPUnit\Framework\fileExists;
@@ -40,12 +41,16 @@ class UploadProfileImage implements ShouldQueue
     }
 
 
-    public function handle(ApiStorageService $storageService): void
+    public function handle(ApiStorageService $storageService): string
     {
+        return "ok";
+        return $this->file;
+        return base64_decode(Storage::disk('temporary')->get($this->file));
         $res = $storageService->put(
-            $this->file,
+            base64_decode(Storage::disk('temporary')->get($this->file)),
             [
                 'folder' => 'users-profile',
+                'resource_type' => 'image',
                 'transformation' => [
                     'width' => 256,
                     'height' => 256
@@ -62,4 +67,5 @@ class UploadProfileImage implements ShouldQueue
             ]
         );
     }
+
 }
