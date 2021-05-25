@@ -37,8 +37,8 @@ return [
 
         'temporary' => [
             'driver' => 'local',
-            'root' => storage_path('app/temporary'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/public/temporary'),
+            'url' => env('APP_URL').'/storage/temporary',
             'visibility' => 'public'
         ],
 

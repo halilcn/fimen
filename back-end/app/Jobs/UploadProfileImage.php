@@ -36,18 +36,15 @@ class UploadProfileImage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $user, public $file)
+    public function __construct(public $user, public $path)
     {
     }
 
 
     public function handle(ApiStorageService $storageService): string
     {
-        return "ok";
-        return $this->file;
-        return base64_decode(Storage::disk('temporary')->get($this->file));
         $res = $storageService->put(
-            base64_decode(Storage::disk('temporary')->get($this->file)),
+            Storage::disk('temporary')->url($this->path),
             [
                 'folder' => 'users-profile',
                 'resource_type' => 'image',
@@ -60,12 +57,13 @@ class UploadProfileImage implements ShouldQueue
         //  ->only('public_id', 'secure_url')
         // ->toArray();
 
-        $this->user->update(
-            [
-                'image' => 'deneme',//$res['secure_url'],
-                'image_public_id' => 'deneme' //$res['public_id']
-            ]
-        );
+   //     Storage::disk('temporary')->delete($this->path);
+        /* $this->user->update(
+             [
+                 'image' => 'deneme',//$res['secure_url'],
+                 'image_public_id' => 'deneme' //$res['public_id']
+             ]
+         );*/
     }
 
 }

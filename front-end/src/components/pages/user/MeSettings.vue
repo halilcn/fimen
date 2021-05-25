@@ -38,6 +38,12 @@
                 <div v-if="me.cv_path" class="has_cv">
                   <i class="bi bi-check-circle"></i>
                   CV yüklenmiş.
+                  <a
+                      target="_blank"
+                      class="cv_link"
+                      :href="me.cv_path">
+                    İncele
+                  </a>
                 </div>
                 <div v-else class="no_cv">
                   <i class="bi bi-x-circle"></i>
@@ -50,6 +56,9 @@
                 <error
                     v-if="!$v.me.cv_file.fileSize"
                     :message="$errors.maxFileSize(_,10)"/>
+                <error
+                    v-if="!$v.me.cv_file.fileType"
+                    message="pdf olmalı"/>
               </div>
             </div>
             <div class="action">
@@ -117,6 +126,11 @@ const checkImageFileSize = (file) => {
   return true;
 }
 
+/*
+type'lere bakma ?
+* 'image_file' => ['nullable', 'image', 'max:2000'],
+            'cv_file' => ['nullable', 'max:10000', 'mimes:pdf'],*/
+const fileType = true;//helpers.regex('cv_file', /\.(pdf)$/)
 
 export default {
   name: "MeSettings",
@@ -153,8 +167,9 @@ export default {
     },
     postMeSettings() {
       this.$store.dispatch('postMeSettings', this.$helper.convertForm(this.me))
-          .then(() => {
-            alert('veriler kaydedildi')
+          .then((res) => {
+            //?
+            this.me = {...res, ...this.meDefault};
           });
     },
   },
@@ -172,11 +187,10 @@ export default {
         fileSize: checkImageFileSize
       },
       cv_file: {
-        fileSize: checkCvFileSize
-        /* required: requiredIf(() => {
-           return this.checkFileSize;
-         })*/
+        fileSize: checkCvFileSize,
+        fileType
       },
+      //image ??
       social_media: {
         $each: {
           required
@@ -243,6 +257,16 @@ export default {
 
 .infos > .cv > .has_cv {
   color: #10bf74;
+}
+
+.infos > .cv > .has_cv > .cv_link {
+  text-decoration: none;
+  margin-left: 4px;
+  color: #585858;
+}
+
+.infos > .cv > .has_cv > .cv_link:hover {
+  text-decoration: underline;
 }
 
 .user > .action {

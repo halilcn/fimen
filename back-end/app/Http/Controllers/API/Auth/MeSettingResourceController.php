@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
+use function PHPUnit\Framework\returnArgument;
+
 
 class MeSettingResourceController extends Controller
 {
@@ -40,13 +42,16 @@ class MeSettingResourceController extends Controller
 
     public function store(MeSettingsRequest $request)
     {
+        $validated = collect($request->validated());
+
         if ($request->hasFile('image_file')) {
+            //???
             $path = $request->file('image_file')->store('user-profile', 'temporary');
 
-            return Storage::url($path);
+            $d = base64_decode(Storage::disk('temporary')->get($path));
 
-            $res = (new ApiStorageService)->put(
-                Storage::url($path),
+            (new ApiStorageService())->put(
+                `data:application/png;base64,${d}`,
                 [
                     'folder' => 'users-profile',
                     'resource_type' => 'image',
@@ -58,7 +63,6 @@ class MeSettingResourceController extends Controller
             );
             return "ok";
 
-
             return UploadProfileImage::dispatchSync($request->user(), $path);
             /*  Bus::chain(
                   [
@@ -68,15 +72,16 @@ class MeSettingResourceController extends Controller
               )->dispatch();*/
         }
 
-        if ($request->has('cv_file')) {
-            //İş
+        if ($request->hasFile('cv_file')) {
+            Storage::delete($request->user()->cv_path);
+            $validated->put('cv_path', $request->file('cv_file')->store('cv'));
         }
 
         $request->user()->update(
-            collect($request->validated())->except('image_file', 'cv_file')->toArray()
+            $validated->except('image_file', 'cv_file')->toArray()
         );
 
-        return response(['status' => true]);
+        return MeSettingsResource::make($request->user());
     }
 
     /**

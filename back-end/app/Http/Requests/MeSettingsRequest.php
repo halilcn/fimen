@@ -37,7 +37,7 @@ class MeSettingsRequest extends FormRequest
         return [
             'name' => ['required', 'max:40'],
             'image_file' => ['nullable', 'image', 'max:2000'],
-            'cv_file' => ['nullable', 'max:10000'],
+            'cv_file' => ['nullable', 'max:10000', 'mimes:pdf'],
             'about' => ['string'],
             'social_media' => ['array', 'nullable'],
             'social_media.*' => ['required', 'string']

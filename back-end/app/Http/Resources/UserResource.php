@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 use Illuminate\Support\Facades\Auth;
 
+use Illuminate\Support\Facades\Storage;
+
 use function Symfony\Component\Translation\t;
 
 class UserResource extends JsonResource
@@ -26,7 +28,12 @@ class UserResource extends JsonResource
             'about' => $this->about,
             'social_media' => $this->social_media,
             'is_favorite_user' => $request->user()->isFavoriteUser($this->id),
-            'cv_path' => $this->when($this->permissions->cv_visible, $this->cv_path ?: false),
+            'cv_path' => $this->when(
+                $this->permissions->cv_visible,
+                $this->cv_path == null
+                    ? $this->cv_path
+                    : Storage::url($this->cv_path),
+            ),
             'mentor' => $this->when(
                 $this->mentor,
                 function () {

@@ -27,8 +27,8 @@ export const meSetting = {
                 }
             })
                 .then((res) => {
-                    console.log(res);
                     commit('setUserSettings', payload);
+                    return res.data.data;
                 });
         }
     },
