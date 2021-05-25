@@ -74,7 +74,6 @@ export default {
     }),
   },
   beforeCreate() {
-    //???
     this.$store.dispatch('getMeMentorPrograms');
   }
 }

@@ -27,8 +27,7 @@ export const meMentorProgram = {
         },
         postDestroyMeMentorProgram({commit}, payload) {
             axios.delete(`/me/mentor-programs/${payload}`)
-                .then((res) => {
-                    console.log(res);
+                .then(() => {
                     commit('destroyMeMentorProgram', payload);
                 })
         }

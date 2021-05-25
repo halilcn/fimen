@@ -78,7 +78,8 @@ class MeMentorProgramResourceController extends Controller
     public function destroy(MentorProgram $mentorProgram)
     {
         $this->authorize('destroy', $mentorProgram);
-        // gerçekten o mu açmış mentor programını ?
-        return $mentorProgram;
+        $mentorProgram->usersAppeal()->detach();
+        $mentorProgram->delete();
+        return response(['status' => true], 202);
     }
 }

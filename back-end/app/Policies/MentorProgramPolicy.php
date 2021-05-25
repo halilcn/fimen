@@ -20,8 +20,13 @@ class MentorProgramPolicy
         //
     }
 
-    public function destroy(User $user, MentorProgram $mentorProgram)
+    /**
+     * @param  User  $user
+     * @param  MentorProgram  $mentorProgram
+     * @return bool
+     */
+    public function destroy(User $user, MentorProgram $mentorProgram): bool
     {
-        return $user->id === $mentorProgram->mentor_id;
+        return $user->isProgramOwner($mentorProgram->mentor_id);
     }
 }

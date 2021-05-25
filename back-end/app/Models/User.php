@@ -99,9 +99,9 @@ class User extends Authenticatable
         return $this->create($user);
     }
 
-    /*dddd**/
-    public function isProgramOwner(){
-
+    public function isProgramOwner(int $mentorId): bool
+    {
+        return $mentorId == $this->mentor->id;
     }
 
     public function checkUniqueUsername(string $username): bool
