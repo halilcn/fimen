@@ -1,7 +1,6 @@
 <template>
   <transition name="slide-down">
     <ul v-if="searchText.length > 0" class="search_user">
-      {{ searchText }}
       <router-link
           tag="li"
           v-for="(user,index) in users"

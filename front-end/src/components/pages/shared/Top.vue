@@ -93,7 +93,9 @@
           </div>
         </div>
         <div class="links">
-          <router-link to="/" tag="div">
+          <router-link
+              :to="getMeProfileUrl"
+              tag="div">
             <i class="bi bi-person-fill"></i>
             Profile Git
           </router-link>
