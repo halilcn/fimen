@@ -58,7 +58,7 @@
                     :message="$errors.maxFileSize(_,10)"/>
                 <error
                     v-if="!$v.me.cv_file.fileType"
-                    message="pdf olmalı"/>
+                    message="Dosya sadece .pdf uzantılı olabilir."/>
               </div>
             </div>
             <div class="action">
@@ -126,11 +126,12 @@ const checkImageFileSize = (file) => {
   return true;
 }
 
-/*
-type'lere bakma ?
-* 'image_file' => ['nullable', 'image', 'max:2000'],
-            'cv_file' => ['nullable', 'max:10000', 'mimes:pdf'],*/
-const fileType = true;//helpers.regex('cv_file', /\.(pdf)$/)
+const fileType = (file) => {
+  if (file) {
+    return customValidators.checkFileType(file.type, 'application/pdf');
+  }
+  return true;
+}
 
 export default {
   name: "MeSettings",

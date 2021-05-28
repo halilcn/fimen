@@ -10,5 +10,8 @@ export const customValidators =
         },
         checkFileSize(fileSize, maxSize) {
             return fileSize < maxSize * 1024 * 1024;
+        },
+        checkFileType(fileType, requiredType) {
+            return fileType === requiredType;
         }
     }
