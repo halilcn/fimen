@@ -9,7 +9,7 @@
         <div class="row">
           <router-link
               tag="div"
-              :to="program.slug"
+              :to="{name:'MyMentorProgramDetail',params:{slug:program.slug}}"
               class="title">
             {{ program.title }}
           </router-link>
