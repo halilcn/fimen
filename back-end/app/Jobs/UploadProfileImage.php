@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\User;
 use App\Services\ApiStorageService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -36,15 +37,15 @@ class UploadProfileImage implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(public $user, public $path)
+    public function __construct(public User $user, public string $path)
     {
     }
 
 
-    public function handle(ApiStorageService $storageService): string
+    public function handle(ApiStorageService $storageService)
     {
         $res = $storageService->put(
-            Storage::disk('temporary')->url($this->path),
+            '../storage/app/public/temporary/'.$this->path,
             [
                 'folder' => 'users-profile',
                 'resource_type' => 'image',
@@ -53,17 +54,15 @@ class UploadProfileImage implements ShouldQueue
                     'height' => 256
                 ]
             ]
-        );
-        //  ->only('public_id', 'secure_url')
-        // ->toArray();
+        )->toArray();
 
-   //     Storage::disk('temporary')->delete($this->path);
-        /* $this->user->update(
-             [
-                 'image' => 'deneme',//$res['secure_url'],
-                 'image_public_id' => 'deneme' //$res['public_id']
-             ]
-         );*/
+        Storage::disk('temporary')->delete($this->path);
+        $this->user->update(
+            [
+                'image' => 'deneme',//$res['secure_url'],
+                'image_public_id' => 'deneme' //$res['public_id']
+            ]
+        );
     }
 
 }

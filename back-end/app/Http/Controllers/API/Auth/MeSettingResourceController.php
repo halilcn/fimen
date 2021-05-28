@@ -45,13 +45,10 @@ class MeSettingResourceController extends Controller
         $validated = collect($request->validated());
 
         if ($request->hasFile('image_file')) {
-            //???
             $path = $request->file('image_file')->store('user-profile', 'temporary');
-
-            $d = base64_decode(Storage::disk('temporary')->get($path));
-
+            //yanlış!
             (new ApiStorageService())->put(
-                `data:application/png;base64,${d}`,
+                '../storage/app/public/temporary/'.$path,
                 [
                     'folder' => 'users-profile',
                     'resource_type' => 'image',
@@ -61,15 +58,12 @@ class MeSettingResourceController extends Controller
                     ]
                 ]
             );
-            return "ok";
-
-            return UploadProfileImage::dispatchSync($request->user(), $path);
-            /*  Bus::chain(
-                  [
-                      //   new DeleteProfileImage($request->user()),
-                      //new UploadProfileImage($request->file('image_file')->getRealPath())
-                  ]
-              )->dispatch();*/
+            /* Bus::chain(
+                 [
+                     new DeleteProfileImage($request->user()),
+                     new UploadProfileImage($request->user(), $path)
+                 ]
+             )->dispatch();*/
         }
 
         if ($request->hasFile('cv_file')) {
