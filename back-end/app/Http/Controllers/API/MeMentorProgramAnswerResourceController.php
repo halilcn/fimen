@@ -3,21 +3,19 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\MeMentorProgramDetailResource;
-use App\Http\Resources\MeMentorProgramsResource;
 use App\Models\MentorProgram;
 use Illuminate\Http\Request;
 
-class MeMentorProgramResourceController extends Controller
+class MeMentorProgramAnswerResourceController extends Controller
 {
-
     /**
-     * @param  Request  $request
-     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return MeMentorProgramsResource::collection($request->user()->mentorPrograms);
+        //
     }
 
     /**
@@ -42,11 +40,10 @@ class MeMentorProgramResourceController extends Controller
     }
 
 
-    public function show(MentorProgram $mentorProgram)
+    public function show(MentorProgram $mentorProgram, $userId)
     {
-        $this->authorize('destroy', $mentorProgram);
-        $mentorProgram->load('usersAppeal');
-        return MeMentorProgramDetailResource::make($mentorProgram);
+        //pivot table ?
+        return $mentorProgram->usersAppeal()->appeal->where('user_id', $userId)->first();
     }
 
     /**
@@ -72,12 +69,14 @@ class MeMentorProgramResourceController extends Controller
         //
     }
 
-
-    public function destroy(MentorProgram $mentorProgram)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
     {
-        $this->authorize('destroy', $mentorProgram);
-        $mentorProgram->usersAppeal()->detach();
-        $mentorProgram->delete();
-        return response(['status' => true], 202);
+        //
     }
 }

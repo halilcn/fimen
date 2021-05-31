@@ -44,5 +44,6 @@ body, html {
   --navy-light-black: #888888;
   --navy-red-text-color: #ca2e2e;
   --navy-red-text-hover-color: #ffeded;
+  --navy-green-color: #088d08;
 }
 </style>

@@ -29,4 +29,10 @@ class MentorProgramPolicy
     {
         return $user->isProgramOwner($mentorProgram->mentor_id);
     }
+
+    public function view(User $user, MentorProgram $mentorProgram): bool
+    {
+        return $user->isProgramOwner($mentorProgram->mentor_id);
+    }
+
 }

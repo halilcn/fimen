@@ -1,7 +1,16 @@
 <template>
   <div class="program">
+    <answers-popup
+        :questions="program.questions"
+        :userId="selectedUserIdForAnswers"/>
     <div class="title">
-      Başlık başlık başlık başlık başlık
+      {{ program.title }}
+    </div>
+    <div class="program_info">
+      <div class="mentee_count">
+        <i class="fas fa-users"></i>
+        12 mentee
+      </div>
     </div>
     <div class="program_content">
       <div class="filter">
@@ -21,15 +30,66 @@
         </div>
       </div>
       <div class="program_appear_list">
-        başvuran listesi
+        <div
+            v-for="(user,index) in program.appealed_users"
+            :key="index"
+            class="item">
+          <div class="user_image">
+            <img :src="user.image">
+          </div>
+          <div class="user_username">
+            {{ user.username }}
+          </div>
+          <div
+              v-if="program.has_questions"
+              @click="showAnswers(user.id)"
+              class="show_answers_btn">
+            Cevapları Gör
+          </div>
+          <div class="action_btn accept_mentee_btn">
+            Kabul İsteği
+          </div>
+          <router-link
+              tag="div"
+              :to="{name:'UserProfile',params:{username:user.username}}"
+              class="action_btn show_profile_btn">
+            Profili Gör
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import {mapMutations} from 'vuex'
+
 export default {
-  name: "ProgramDetail"
+  name: "ProgramDetail",
+  data() {
+    return {
+      program: {},
+      selectedUserIdForAnswers: ''
+    }
+  },
+  components: {
+    AnswersPopup: () => import('@/components/pages/myMentorPrograms/AnswersPopup')
+  },
+  methods: {
+    ...mapMutations({
+      setShowPopup: 'setShowPopup'
+    }),
+    showAnswers(userId) {
+      this.setShowPopup(true);
+      this.selectedUserIdForAnswers = userId;
+    }
+  },
+  beforeCreate() {
+    this.$store.dispatch('getMeMentorProgramDetail')
+        .then(res => {
+          this.program = res;
+        })
+  }
 }
 </script>
 
@@ -44,8 +104,24 @@ export default {
   color: var(--navy-blue-text-color);
 }
 
-.program_content {
+.program_info {
   margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.program_info > div {
+  color: var(--navy-red-txt-color);
+  background-color: #ffe9e9;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 5px 12px;
+  border: 1px solid #ffdddd;;
+  border-radius: 4px;
+}
+
+.program_content {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
 }
@@ -92,5 +168,80 @@ export default {
 
 .program_content > .program_appear_list {
   width: 73%;
+  background-color: white;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.program_content > .program_appear_list > .item {
+  margin: 10px;
+  padding: 12px 18px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .2s;
+  box-shadow: 0 0px 0.4px rgba(0, 0, 0, 0.008),
+  0 0px 1.1px rgba(0, 0, 0, 0.012),
+  0 0px 2px rgba(0, 0, 0, 0.015),
+  0 0px 3.6px rgba(0, 0, 0, 0.018),
+  0 0px 6.7px rgba(0, 0, 0, 0.022),
+  0 0px 16px rgba(0, 0, 0, 0.03);
+}
+
+.program_content > .program_appear_list > .item:hover {
+  transform: scale(1.02);
+}
+
+.program_content > .program_appear_list > .item > .user_image > img {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--navy-user-profile-border-radius);
+}
+
+.program_content > .program_appear_list > .item > .user_username {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--navy-blue-text-color);
+}
+
+.program_content > .program_appear_list > .item > .show_answers_btn {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  margin-top: 4px;
+  cursor: pointer;
+}
+
+.program_content > .program_appear_list > .item > .show_answers_btn:hover {
+  color: #454545;
+  text-decoration: underline;
+}
+
+.program_content > .program_appear_list > .item > .action_btn {
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px 6px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.program_content > .program_appear_list > .item > .accept_mentee_btn {
+  color: white;
+  background-color: var(--navy-green-color);
+  margin-top: 5px;
+}
+
+.program_content > .program_appear_list > .item > .show_profile_btn {
+  text-align: center;
+  margin-top: 5px;
+  background-color: #d7d7d7;
+  color: black;
 }
 </style>

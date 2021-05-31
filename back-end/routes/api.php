@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Auth\MeSettingResourceController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MeMentorProgramResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
+use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
@@ -39,7 +40,19 @@ Route::group(
                     function () {
                         Route::resource('/', MeResourceController::class);
                         Route::resource('/settings', MeSettingResourceController::class);
-                        Route::resource('/mentor-programs', MeMentorProgramResourceController::class);
+                        Route::resource('/mentor-programs', MeMentorProgramResourceController::class)->scoped(
+                            [
+                                'mentor_program' => 'slug'
+                            ]
+                        );
+                        Route::resource(
+                            'mentor-programs.answers',
+                            MeMentorProgramAnswerResourceController::class
+                        )->scoped(
+                            [
+                                'mentor_program' => 'slug'
+                            ]
+                        );
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);

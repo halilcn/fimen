@@ -19,7 +19,7 @@
               düzenle
             </div>
             <div
-                @click="postDestroyMeMentorProgram(program.id)"
+                @click="postDestroyMeMentorProgram(program.slug)"
                 class="delete_btn">
               <i class="bi bi-trash"></i>
               sil
