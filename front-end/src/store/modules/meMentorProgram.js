@@ -39,13 +39,10 @@ export const meMentorProgram = {
                 })
         },
         getMeMentorProgramAnswers(_, payload) {
-            axios.get(`/me/mentor-programs/${router.currentRoute.params.slug}/answers/${payload}`)
+            return axios.get(`/me/mentor-programs/${router.currentRoute.params.slug}/answers/${payload}`)
                 .then(res => {
-                    console.log(res);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+                    return res.data;
+                });
         }
     },
     getters: {}

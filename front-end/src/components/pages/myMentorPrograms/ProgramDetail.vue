@@ -21,10 +21,10 @@
         <div class="filter_list">
           <div class="item">
             <div class="title">
-              filtre başlığı
+              Sadece CV yüklemiş kullanıcılar
             </div>
             <div class="content">
-              içerik
+              <standart-checkbox/>
             </div>
           </div>
         </div>
@@ -73,7 +73,8 @@ export default {
     }
   },
   components: {
-    AnswersPopup: () => import('@/components/pages/myMentorPrograms/AnswersPopup')
+    AnswersPopup: () => import('@/components/pages/myMentorPrograms/AnswersPopup'),
+    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox'),
   },
   methods: {
     ...mapMutations({
@@ -127,6 +128,7 @@ export default {
 }
 
 .program_content > .filter {
+  background-color: white;
   padding: 10px;
   width: 24%;
   border-radius: 5px;
@@ -154,16 +156,18 @@ export default {
 
 .filter > .filter_list > .item {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
 .filter > .filter_list > .item > .title {
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
+  font-size: 13px;
 }
 
 .filter > .filter_list > .item > .content {
-
+  margin-left: 5px;
 }
 
 .program_content > .program_appear_list {

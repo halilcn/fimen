@@ -40,10 +40,9 @@ class MeMentorProgramAnswerResourceController extends Controller
     }
 
 
-    public function show(MentorProgram $mentorProgram, $userId)
+    public function show(MentorProgram $mentorProgram, string $userId)
     {
-        //pivot table ?
-        return $mentorProgram->usersAppeal()->appeal->where('user_id', $userId)->first();
+        return $mentorProgram->usersAppeal()->wherePivot('user_id', $userId)->first()->appeal->answers;
     }
 
     /**

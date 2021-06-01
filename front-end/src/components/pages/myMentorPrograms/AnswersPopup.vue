@@ -2,22 +2,16 @@
   <popup title="Soru Cevapları">
     <template slot="popup">
       <div class="answer_popup_content">
-        <div class="item">
+        <div
+            v-for="(question,index) in questions"
+            :key="index"
+            class="item">
           <div class="question">
             <i class="fas fa-question-circle"></i>
-            Soru soru soru 2
+            {{ question }}
           </div>
           <div class="answer">
-            Cevabım b benim
-          </div>
-        </div>
-        <div class="item">
-          <div class="question">
-            <i class="fas fa-question-circle"></i>
-            Soru soru soru 2
-          </div>
-          <div class="answer">
-            Cevabım b benim
+            {{ answers[index] }}
           </div>
         </div>
       </div>
@@ -28,6 +22,11 @@
 <script>
 export default {
   name: "AnswersPopup",
+  data() {
+    return {
+      answers: []
+    }
+  },
   props: {
     questions: {
       required: true,
@@ -44,7 +43,7 @@ export default {
     getMentorProgramAnswers() {
       this.$store.dispatch('getMeMentorProgramAnswers', this.userId)
           .then(res => {
-            console.log(res);
+            this.answers = res;
           })
     }
   },
