@@ -43,7 +43,9 @@ body, html {
   --navy-mentor-mentee-text-color: #1e66cd;
   --navy-light-black: #888888;
   --navy-red-text-color: #ca2e2e;
+  --navy--lght-red-text-color: #ffebeb;
   --navy-red-text-hover-color: #ffeded;
   --navy-green-color: #088d08;
+  --navy-lght-green-color: #edffed;
 }
 </style>

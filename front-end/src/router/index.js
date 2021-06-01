@@ -51,7 +51,7 @@ const routes = [
             },
             {
                 path: '/bildirimler',
-                component: () => import('@/components/pages/Notification'),
+                component: () => import('@/components/pages/notifications/Home'),
             },
             {
                 path: '/mentor-basvuru',
