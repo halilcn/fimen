@@ -75,6 +75,7 @@ class MentorProgram extends Model
         return $this->belongsToMany(User::class, 'mentor_program_user', 'mentor_program_id', 'user_id')
             ->as('appeal')
             ->withPivot('answers')
-            ->withTimestamps();
+            ->withTimestamps()
+            ->using(MentorProgramAppealUser::class);
     }
 }

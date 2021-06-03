@@ -70,11 +70,6 @@ class User extends Authenticatable
         return $this->hasOne(MentorAppeal::class);
     }
 
-    public function checkEmail(string $email): User
-    {
-        return $this->where('email', $email)->firstOrFail();
-    }
-
     public function permissions(): HasOne
     {
         return $this->hasOne(UserPermission::class);
@@ -85,18 +80,23 @@ class User extends Authenticatable
         return $this->hasMany(FavoriteUser::class);
     }
 
+    public function createUser(array $user): User
+    {
+        $user['name'] = $user['name'].' '.$user['surname'];
+        return $this->create($user);
+    }
+
+    public function checkEmail(string $email): User
+    {
+        return $this->where('email', $email)->firstOrFail();
+    }
+
     public function checkPassword(string $password, string $userPassword): bool
     {
         if (Hash::check($password, $userPassword)) {
             return false;
         };
         return true;
-    }
-
-    public function createUser(array $user): User
-    {
-        $user['name'] = $user['name'].' '.$user['surname'];
-        return $this->create($user);
     }
 
     public function isProgramOwner(int $mentorId): bool

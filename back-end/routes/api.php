@@ -7,6 +7,7 @@ use App\Http\Controllers\API\Auth\RegisterCheckController;
 use App\Http\Controllers\API\Auth\MeSettingResourceController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MeMentorProgramResourceController;
+use App\Http\Controllers\API\MeMentorProgramUserResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
@@ -48,6 +49,14 @@ Route::group(
                         Route::resource(
                             'mentor-programs.answers',
                             MeMentorProgramAnswerResourceController::class
+                        )->scoped(
+                            [
+                                'mentor_program' => 'slug'
+                            ]
+                        );
+                        Route::resource(
+                            'mentor-programs.users',
+                            MeMentorProgramUserResourceController::class
                         )->scoped(
                             [
                                 'mentor_program' => 'slug'

@@ -32,6 +32,17 @@ export const meMentorProgram = {
                     return res.data.data;
                 })
         },
+        getMeMentorProgramAppliedUsers(_,payload) {
+            axios.get(`/me/mentor-programs/${router.currentRoute.params.slug}/users`, {
+                params: {...payload}
+            })
+                .then(res => {
+                    console.log(res);
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
         postDestroyMeMentorProgram({commit}, payload) {
             axios.delete(`/me/mentor-programs/${payload}`)
                 .then(() => {
@@ -43,7 +54,8 @@ export const meMentorProgram = {
                 .then(res => {
                     return res.data;
                 });
-        }
+        },
+
     },
     getters: {}
 }

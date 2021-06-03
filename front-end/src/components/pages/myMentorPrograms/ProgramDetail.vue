@@ -9,7 +9,7 @@
     <div class="program_info">
       <div class="mentee_count">
         <i class="fas fa-users"></i>
-        12 mentee
+        {{ program.mentee_count }} mentee
       </div>
     </div>
     <div class="program_content">
@@ -20,12 +20,18 @@
         </div>
         <div class="filter_list">
           <div class="item">
-            <div class="title">
-              Sadece CV yüklemiş kullanıcılar
-            </div>
-            <div class="content">
-              <standart-checkbox/>
-            </div>
+            <standart-checkbox
+                text="Sadece CV yüklemiş kullanıcılar"
+                id="cv_filter"
+                value
+                @click.native="filters.onlyUserCvUploaded=!filters.onlyUserCvUploaded"/>
+          </div>
+          <div class="item">
+            <standart-checkbox
+                text="Şuan mentee olmayan kullanıcılar"
+                id="mentee_filter"
+                value
+                @click.native="filters.onlyIsNotMentee=!filters.onlyIsNotMentee"/>
           </div>
         </div>
       </div>
@@ -69,7 +75,11 @@ export default {
   data() {
     return {
       program: {},
-      selectedUserIdForAnswers: ''
+      selectedUserIdForAnswers: '',
+      filters: {
+        onlyUserCvUploaded: false,
+        onlyIsNotMentee: false
+      }
     }
   },
   components: {
@@ -83,9 +93,21 @@ export default {
     showAnswers(userId) {
       this.setShowPopup(true);
       this.selectedUserIdForAnswers = userId;
+    },
+    getMeMentorProgramUsers() {
+      this.$store.dispatch('getMeMentorProgramAppliedUsers', this.filters);
     }
   },
-  beforeCreate() {
+  //sorgu sayısı sıkıntısı
+  watch: {
+    filters: {
+      handler() {
+        this.getMeMentorProgramUsers();
+      },
+      deep: true
+    }
+  },
+  created() {
     this.$store.dispatch('getMeMentorProgramDetail')
         .then(res => {
           this.program = res;
@@ -155,20 +177,9 @@ export default {
 }
 
 .filter > .filter_list > .item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  margin: 5px 0;
 }
 
-.filter > .filter_list > .item > .title {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 300;
-  font-size: 13px;
-}
-
-.filter > .filter_list > .item > .content {
-  margin-left: 5px;
-}
 
 .program_content > .program_appear_list {
   width: 73%;
