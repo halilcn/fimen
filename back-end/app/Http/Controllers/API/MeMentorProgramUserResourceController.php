@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MeMentorProgramDetailAppealedUserResource;
+use App\Http\Resources\MeMentorProgramUsersResource;
 use App\Models\MentorProgram;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -13,14 +15,23 @@ class MeMentorProgramUserResourceController extends Controller
     {
         $this->authorize('view', $mentorProgram);
 
-        return $mentorProgram->usersAppeal()->with('user')->get();
-        /*  ->when(
-              true,
-              function (Builder $query) {
-                  $query->where('users.cv_path', '!=', null);
-              }
-          )*/
-        // ->get();
+        //model'e aktarma ?
+        return MeMentorProgramDetailAppealedUserResource::collection(
+            $mentorProgram->usersAppeal()
+                ->when(
+                    $request->boolean('onlyUserCvUploaded', false),
+                    function (Builder $query) {
+                        $query->where('cv_path', '!=', null);
+                    }
+                )
+                ->when(
+                    $request->boolean('onlyIsNotMentee', false),
+                    function (Builder $query) {
+                        $query->doesntHave('mentee');
+                    }
+                )
+                ->get()
+        );
     }
 
     /**

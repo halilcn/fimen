@@ -23,15 +23,14 @@
             <standart-checkbox
                 text="Sadece CV yüklemiş kullanıcılar"
                 id="cv_filter"
-                value
-                @click.native="filters.onlyUserCvUploaded=!filters.onlyUserCvUploaded"/>
+                v-model="filters.onlyUserCvUploaded"
+            />
           </div>
           <div class="item">
             <standart-checkbox
                 text="Şuan mentee olmayan kullanıcılar"
                 id="mentee_filter"
-                value
-                @click.native="filters.onlyIsNotMentee=!filters.onlyIsNotMentee"/>
+                v-model="filters.onlyIsNotMentee"/>
           </div>
         </div>
       </div>
@@ -84,7 +83,7 @@ export default {
   },
   components: {
     AnswersPopup: () => import('@/components/pages/myMentorPrograms/AnswersPopup'),
-    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox'),
+    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox')
   },
   methods: {
     ...mapMutations({
@@ -95,10 +94,12 @@ export default {
       this.selectedUserIdForAnswers = userId;
     },
     getMeMentorProgramUsers() {
-      this.$store.dispatch('getMeMentorProgramAppliedUsers', this.filters);
+      this.$store.dispatch('getMeMentorProgramAppliedUsers', this.filters)
+          .then(res => {
+            this.program.appealed_users = res;
+          });
     }
   },
-  //sorgu sayısı sıkıntısı
   watch: {
     filters: {
       handler() {
