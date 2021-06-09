@@ -99,6 +99,12 @@
             <i class="bi bi-person-fill"></i>
             Profile Git
           </router-link>
+          <router-link
+              :to="{name:'MeActivePrograms'}"
+              tag="div">
+            <i class="fas fa-users"></i>
+            Aktif Programlar
+          </router-link>
           <div>
             <i class="bi bi-gear-fill"></i>
             Ayarlar

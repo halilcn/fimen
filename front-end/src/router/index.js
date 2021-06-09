@@ -80,6 +80,11 @@ const routes = [
                 component: () => import('@/components/pages/user/MeSettings')
             },
             {
+                name: 'MeActivePrograms',
+                path: '/aktif-programlarim',
+                component: () => import('@/components/pages/myActivePrograms/Home')
+            },
+            {
                 path: '/profil/:username',
                 name: 'UserProfile',
                 component: () => import('@/components/pages/user/UserProfile')
