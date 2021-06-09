@@ -65,9 +65,9 @@ class User extends Authenticatable
         return $this->hasOne(Mentor::class);
     }
 
-    public function mentee(): HasMany
+    public function menteePrograms(): HasMany
     {
-        return $this->hasMany(MentorMentee::class);
+        return $this->hasMany(MentorMenteeProgram::class);
     }
 
     public function mentorAppeal(): HasOne

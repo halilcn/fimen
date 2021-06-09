@@ -3,6 +3,11 @@
     <answers-popup
         :questions="program.questions"
         :userId="selectedUserIdForAnswers"/>
+    <confirmation-popup
+        @cancelClick="showActionConfirmationPopup"
+        @confirmationClick="postMenteeConfirmation"
+        v-if="isShowMenteeConfirmation"
+        text="Mentee olarak kabul etmek üzeresin."/>
     <div class="title">
       {{ program.title }}
     </div>
@@ -51,7 +56,7 @@
               class="show_answers_btn">
             Cevapları Gör
           </div>
-          <div class="action_btn accept_mentee_btn">
+          <div @click="menteeConfirmationClick(user.id)" class="action_btn accept_mentee_btn">
             Kabul İsteği
           </div>
           <router-link
@@ -75,6 +80,10 @@ export default {
     return {
       program: {},
       selectedUserIdForAnswers: '',
+      isShowMenteeConfirmation: false,
+      postMenteeConfirmationData: {
+        user_id: 0
+      },
       filters: {
         onlyUserCvUploaded: false,
         onlyIsNotMentee: false
@@ -83,7 +92,8 @@ export default {
   },
   components: {
     AnswersPopup: () => import('@/components/pages/myMentorPrograms/AnswersPopup'),
-    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox')
+    StandartCheckbox: () => import('@/components/pages/shared/elements/StandartCheckbox'),
+    ConfirmationPopup: () => import('@/components/pages/shared/ConfirmationPopup'),
   },
   methods: {
     ...mapMutations({
@@ -98,6 +108,17 @@ export default {
           .then(res => {
             this.program.appealed_users = res;
           });
+    },
+    showActionConfirmationPopup() {
+      this.isShowMenteeConfirmation = !this.isShowMenteeConfirmation;
+    },
+    menteeConfirmationClick(userId) {
+      this.postMenteeConfirmationData.user_id = userId;
+      this.showActionConfirmationPopup();
+    },
+    postMenteeConfirmation() {
+      this.showActionConfirmationPopup();
+      this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData);
     }
   },
   watch: {

@@ -13,12 +13,18 @@ class CreateMentorMenteeTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentor_mentee', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('mentor_id')->constrained('mentors');
-            $table->foreignId('user_id')->constrained('users');
-            $table->timestamps();
-        });
+        Schema::create(
+            'mentor_mentee',
+            function (Blueprint $table) {
+                $table->id();
+                $table->integer('mentor_id');
+                $table->integer('user_id');
+                $table->timestamps();
+
+                $table->foreign('mentor_id')->references('id')->on('mentors');
+                $table->foreign('user_id')->references('id')->on('users');
+            }
+        );
     }
 
     /**

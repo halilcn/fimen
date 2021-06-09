@@ -10,6 +10,7 @@ use App\Http\Controllers\API\MeMentorProgramResourceController;
 use App\Http\Controllers\API\MeMentorProgramUserResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
+use App\Http\Controllers\API\MentorMenteeProgramResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
@@ -77,6 +78,7 @@ Route::group(
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);
                 Route::resource('/favorite-users', FavoriteUserResourceController::class);
+                Route::resource('/mentor-mentee-programs',MentorMenteeProgramResourceController::class);
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
         );

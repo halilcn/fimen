@@ -26,7 +26,7 @@ export default {
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
-    MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/MentorProgramConfirmationNotification'),
+    MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/MenteeConfirmationNotification'),
   }
 }
 </script>

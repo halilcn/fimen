@@ -47,5 +47,6 @@ body, html {
   --navy-red-text-hover-color: #ffeded;
   --navy-green-color: #088d08;
   --navy-lght-green-color: #edffed;
+  --navy-lght-hover-green-color: #e6ffe6;
 }
 </style>

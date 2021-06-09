@@ -193,7 +193,7 @@ export default {
   border-radius: 4px;
   color: var(--navy-blue-bg-hover-color);
   position: relative;
-  z-index: 99999;
+  z-index: 100;
 }
 
 .head_content > .links > div:hover {

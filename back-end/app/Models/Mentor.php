@@ -23,9 +23,15 @@ class Mentor extends Model
         return $this->belongsTo(User::class);
     }
 
+    //?
     public function mentees(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function mentorPrograms(): HasMany
+    {
+        return $this->hasMany(MentorMenteeProgram::class);
     }
 
     public function competency(): BelongsTo
