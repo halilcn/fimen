@@ -20,6 +20,7 @@ class MeMentorProgramDetailResource extends JsonResource
             'mentee_count' => $this->mentee_count,
             'has_questions' => !empty($this->questions),
             'questions' => $this->questions,
+            'approved_mentee_count' => count($this->approvedUsers),
             'appealed_users' => MeMentorProgramDetailAppealedUserResource::collection($this->usersAppeal)
         ];
     }

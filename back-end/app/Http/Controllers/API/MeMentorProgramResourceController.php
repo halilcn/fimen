@@ -45,7 +45,14 @@ class MeMentorProgramResourceController extends Controller
     public function show(MentorProgram $mentorProgram)
     {
         $this->authorize('destroy', $mentorProgram);
-        $mentorProgram->load('usersAppeal');
+
+        $mentorProgram->load('usersAppeal', 'approvedUsers');
+        $mentorProgram->usersAppeal->map(
+            function ($item) use ($mentorProgram) {
+                $item['is_mentee_selected'] = $mentorProgram->approvedUsers->contains('id', $item['id']);
+                return $item;
+            }
+        );
         return MeMentorProgramDetailResource::make($mentorProgram);
     }
 

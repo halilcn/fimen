@@ -6,10 +6,7 @@ export const mentorMenteeProgram = {
     mutations: {},
     actions: {
         postMenteeConfirmation(_, payload) {
-            axios.post('/mentor-mentee-programs', {...payload, program_slug: router.currentRoute.params.slug})
-                .then(res => {
-                    console.log(res);
-                })
+            return axios.post('/mentor-mentee-programs', {...payload, program_slug: router.currentRoute.params.slug});
         }
     },
     getters: {}

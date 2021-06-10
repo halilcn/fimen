@@ -18,7 +18,8 @@ class MeMentorProgramDetailAppealedUserResource extends JsonResource
             'id' => $this->id,
             'username' => $this->username,
             'image' => $this->image,
-            'answers' => $this->appeal->answers
+            'answers' => $this->appeal->answers,
+            'is_mentee_selected' => $this->is_mentee_selected
         ];
     }
 }

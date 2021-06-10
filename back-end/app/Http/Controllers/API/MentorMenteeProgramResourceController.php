@@ -31,6 +31,7 @@ class MentorMenteeProgramResourceController extends Controller
 
     public function store(Request $request)
     {
+        $userId=$request->input('user_id');
         //sql olarak aynı user_id ve mentor_id kayıt olmamalı. !
 
         $mentorProgram = MentorProgram::query()
@@ -38,9 +39,15 @@ class MentorMenteeProgramResourceController extends Controller
             ->firstOrFail();
             //??
         //return $this->authorize('create', MentorMenteeProgram::class);
+        //transaction ??
+        //birdaha 2 tabloyada kayıt olmasın!!
+        // kayıt varsa kayıt olmayı engelle
+
+        $mentorProgram->approvedUsers()->attach($userId);
+
         $request->user()->mentor->mentorPrograms()->create(
             [
-                'user_id' => $request->input('user_id'),
+                'user_id' => $userId,
             ]
         );
         return response(['status' => true], 201);

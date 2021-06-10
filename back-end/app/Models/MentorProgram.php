@@ -77,4 +77,9 @@ class MentorProgram extends Model
             ->withPivot('answers')
             ->withTimestamps();
     }
+
+    public function approvedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'mentor_program_mentee', 'mentor_program_id', 'user_id');
+    }
 }

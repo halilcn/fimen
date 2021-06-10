@@ -12,9 +12,13 @@
       {{ program.title }}
     </div>
     <div class="program_info">
+      <div class="selected_mentee_count">
+        <i class="fas fa-user-check"></i>
+        {{ program.approved_mentee_count }} kişi mentee olarak seçildi
+      </div>
       <div class="mentee_count">
         <i class="fas fa-users"></i>
-        {{ program.mentee_count }} mentee
+        {{ program.mentee_count }} mentee sayısı
       </div>
     </div>
     <div class="program_content">
@@ -56,8 +60,14 @@
               class="show_answers_btn">
             Cevapları Gör
           </div>
-          <div @click="menteeConfirmationClick(user.id)" class="action_btn accept_mentee_btn">
+          <div
+              v-if="!user.is_mentee_selected"
+              @click="menteeConfirmationClick(user.id)"
+              class="action_btn accept_mentee_btn">
             Kabul İsteği
+          </div>
+          <div v-else class="action_btn already_accepted">
+            Artık mentee
           </div>
           <router-link
               tag="div"
@@ -74,6 +84,7 @@
 <script>
 import {mapMutations} from 'vuex'
 
+//code rewiew !!
 export default {
   name: "ProgramDetail",
   data() {
@@ -118,7 +129,13 @@ export default {
     },
     postMenteeConfirmation() {
       this.showActionConfirmationPopup();
-      this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData);
+      this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData)
+          .then(() => {
+            this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
+          });
+    },
+    changeSelectedMenteeInAppealedUsers(userId) {
+      this.program.appealed_users.find(item => item.id === userId).is_mentee_selected = true;
     }
   },
   watch: {
@@ -163,6 +180,7 @@ export default {
   padding: 5px 12px;
   border: 1px solid #ffdddd;;
   border-radius: 4px;
+  margin-left: 15px;
 }
 
 .program_content {
@@ -280,5 +298,10 @@ export default {
   margin-top: 5px;
   background-color: #d7d7d7;
   color: black;
+}
+
+.program_content > .program_appear_list > .item > .already_accepted {
+  font-style: italic;
+  color: var(--navy-green-color);
 }
 </style>
