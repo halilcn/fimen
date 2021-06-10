@@ -23,12 +23,11 @@ class MentorMenteeProgramPolicy
 
     /**
      * @param  User  $user
-     * @param  MentorMenteeProgram  $program
+     * @param  MentorProgram  $program
      * @return bool
      */
-    public function create(User $user): bool
+    public function create(User $user, MentorProgram $program): bool
     {
-        return true;
         return $user->isProgramOwner($program->mentor_id);
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorProgram;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MentorMenteeProgramResourceController extends Controller
 {
@@ -31,24 +32,22 @@ class MentorMenteeProgramResourceController extends Controller
 
     public function store(Request $request)
     {
-        $userId=$request->input('user_id');
-        //sql olarak aynı user_id ve mentor_id kayıt olmamalı. !
-
+        //sql olarak aynı user_id ve mentor_id kayıt olmamalı.! kayıt varsa kayıt olmayı engelle //migration ?
         $mentorProgram = MentorProgram::query()
             ->where('slug', $request->input('program_slug'))
             ->firstOrFail();
-            //??
-        //return $this->authorize('create', MentorMenteeProgram::class);
-        //transaction ??
-        //birdaha 2 tabloyada kayıt olmasın!!
-        // kayıt varsa kayıt olmayı engelle
+        $this->authorize('create', [MentorMenteeProgram::class, $mentorProgram]);
 
-        $mentorProgram->approvedUsers()->attach($userId);
-
-        $request->user()->mentor->mentorPrograms()->create(
-            [
-                'user_id' => $userId,
-            ]
+        $this->transaction(
+            function () use ($request, $mentorProgram) {
+                $userId = $request->input('user_id');
+                $mentorProgram->approvedUsers()->attach($userId);
+                $request->user()->mentor->mentorPrograms()->create(
+                    [
+                        'user_id' => $userId,
+                    ]
+                );
+            }
         );
         return response(['status' => true], 201);
     }

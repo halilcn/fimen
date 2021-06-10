@@ -130,8 +130,9 @@ export default {
     postMenteeConfirmation() {
       this.showActionConfirmationPopup();
       this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData)
-          .then(() => {
-            this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
+          .then((res) => {
+            console.log(res);
+          //  this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
           });
     },
     changeSelectedMenteeInAppealedUsers(userId) {
