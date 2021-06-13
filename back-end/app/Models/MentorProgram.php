@@ -36,7 +36,7 @@ class MentorProgram extends Model
     ];
 
     // Filter Scope
-    public function scopeWithFilters($query, Request $request): void
+    public function scopeWithFilters(Builder $query, Request $request): void
     {
         $query->when(
             $request->filled('competencies'),
@@ -72,7 +72,7 @@ class MentorProgram extends Model
 
     public function usersAppeal(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'mentor_program_user', 'mentor_program_id', 'user_id')
+        return $this->belongsToMany(User::class)
             ->as('appeal')
             ->withPivot('answers')
             ->withTimestamps();

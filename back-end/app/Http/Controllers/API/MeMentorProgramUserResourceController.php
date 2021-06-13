@@ -4,33 +4,27 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MeMentorProgramDetailAppealedUserResource;
-use App\Http\Resources\MeMentorProgramUsersResource;
 use App\Models\MentorProgram;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use App\Traits\MentorProgram as MentorProgramTrait;
 
 class MeMentorProgramUserResourceController extends Controller
 {
+    use MentorProgramTrait;
+
     public function index(Request $request, MentorProgram $mentorProgram)
     {
         $this->authorize('view', $mentorProgram);
 
-        //model'e aktarma ?
+        $mentorProgram->load('approvedUsers:id');
         return MeMentorProgramDetailAppealedUserResource::collection(
-            $mentorProgram->usersAppeal()
-                ->when(
-                    $request->boolean('onlyUserCvUploaded', false),
-                    function (Builder $query) {
-                        $query->where('cv_path', '!=', null);
-                    }
-                )
-                ->when(
-                    $request->boolean('onlyIsNotMentee', false),
-                    function (Builder $query) {
-                        $query->doesntHave('mentee');
-                    }
-                )
-                ->get()
+            $this->checkSelectedMentee(
+                $mentorProgram->usersAppeal()
+                    ->appealUsersWithFilters($request)
+                    ->get(),
+                $mentorProgram->approvedUsers
+            )
         );
     }
 

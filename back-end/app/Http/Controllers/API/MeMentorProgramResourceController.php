@@ -7,9 +7,11 @@ use App\Http\Resources\MeMentorProgramDetailResource;
 use App\Http\Resources\MeMentorProgramsResource;
 use App\Models\MentorProgram;
 use Illuminate\Http\Request;
+use \App\Traits\MentorProgram as MentorProgramTrait;
 
 class MeMentorProgramResourceController extends Controller
 {
+    use MentorProgramTrait;
 
     /**
      * @param  Request  $request
@@ -46,12 +48,10 @@ class MeMentorProgramResourceController extends Controller
     {
         $this->authorize('destroy', $mentorProgram);
 
-        $mentorProgram->load('usersAppeal', 'approvedUsers');
-        $mentorProgram->usersAppeal->map(
-            function ($item) use ($mentorProgram) {
-                $item['is_mentee_selected'] = $mentorProgram->approvedUsers->contains('id', $item['id']);
-                return $item;
-            }
+        $mentorProgram->load('usersAppeal', 'approvedUsers:id');
+        $mentorProgram->usersAppeal = $this->checkSelectedMentee(
+            $mentorProgram->usersAppeal,
+            $mentorProgram->approvedUsers
         );
         return MeMentorProgramDetailResource::make($mentorProgram);
     }

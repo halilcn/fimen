@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
@@ -58,6 +59,23 @@ class User extends Authenticatable
     public function setPasswordAttribute($password): void
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    //Me Mentor Program Appeal Users Filters Scope
+    public function scopeAppealUsersWithFilters(Builder $query, Request $request): void
+    {
+        $query->when(
+            $request->boolean('onlyUserCvUploaded', false),
+            function (Builder $query) {
+                $query->where('cv_path', '!=', null);
+            }
+        )
+            ->when(
+                $request->boolean('onlyIsNotMentee', false),
+                function (Builder $query) {
+                    $query->doesntHave('mentee');
+                }
+            );
     }
 
     public function mentor(): HasOne

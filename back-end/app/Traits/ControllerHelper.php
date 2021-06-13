@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\DB;
 trait ControllerHelper
 {
 
+    /**
+     * @param  callable  $callback
+     * @return mixed
+     */
     public function transaction(callable $callback): mixed
     {
         return DB::transaction(

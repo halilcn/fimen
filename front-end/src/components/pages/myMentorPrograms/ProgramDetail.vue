@@ -132,7 +132,7 @@ export default {
       this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData)
           .then((res) => {
             console.log(res);
-          //  this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
+            this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
           });
     },
     changeSelectedMenteeInAppealedUsers(userId) {
