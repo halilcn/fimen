@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Auth\MeSettingResourceController;
 use App\Http\Controllers\API\CompetenceResourceController;
 use App\Http\Controllers\API\MeMentorProgramResourceController;
 use App\Http\Controllers\API\MeMentorProgramUserResourceController;
+use App\Http\Controllers\API\MeNotificationResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
 use App\Http\Controllers\API\MentorMenteeProgramResourceController;
@@ -63,6 +64,7 @@ Route::group(
                                 'mentor_program' => 'slug'
                             ]
                         );
+                        Route::resource('/notifications',MeNotificationResourceController::class);
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);

@@ -1,8 +1,9 @@
 <template>
   <div class="notification">
+    {{data}}
     <div class="title">
       <i class="fas fa-check-circle"></i>
-      <a href="#" target="_blank">Halil Can</a> Tarafından Başlatılan Programa Seçildin!
+      <a href="#" target="_blank">{{data.mentor_name}}</a> Tarafından Başlatılan Programa Seçildin!
     </div>
     <div class="content">
       <div class="explanation">
@@ -14,7 +15,13 @@
 
 <script>
 export default {
-  name: "MentorProgramConfirmationNotification"
+  name: "MentorProgramConfirmationNotification",
+  props: {
+    data: {
+      required: true,
+      type: Object
+    }
+  }
 }
 </script>
 

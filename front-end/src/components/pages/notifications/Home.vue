@@ -8,9 +8,19 @@
         </div>
       </div>
       <div class="notifications_list">
-        <component
-            class="item"
-            :is="notificationComp"/>
+        <div
+            v-for="(notification,index) in notifications"
+            :key="index"
+            class="item">
+          <div class="date">
+            <i class="far fa-clock"></i>
+            {{ notification.created_at }}
+          </div>
+          <component
+              :data="notification.data"
+              :is="notificationComp"/>
+        </div>
+
       </div>
     </template>
   </bg-white-template>
@@ -21,12 +31,19 @@ export default {
   name: "Home",
   data() {
     return {
-      notificationComp: 'MentorProgramConfirmationNotification'
+      notificationComp: 'MentorProgramConfirmationNotification',
+      notifications: []
     }
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
     MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/MenteeConfirmationNotification'),
+  },
+  created() {
+    this.$store.dispatch('getNotifications')
+        .then(res => {
+          this.notifications = res.data.data;
+        })
   }
 }
 </script>
@@ -62,6 +79,7 @@ export default {
 }
 
 .notifications_list > .item {
+  position: relative;
   width: 100%;
   background-color: #ffffff;
   padding: 14px;
@@ -72,5 +90,15 @@ export default {
   0 0px 2.7px rgba(0, 0, 0, 0.03),
   0 0px 5px rgba(0, 0, 0, 0.036),
   0 0px 12px rgba(0, 0, 0, 0.05);
+}
+
+.notifications_list > .item > .date {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--navy-blue-text-color);
 }
 </style>

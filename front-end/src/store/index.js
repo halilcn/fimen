@@ -7,6 +7,7 @@ import {mentorProgram} from "@/store/modules/mentorProgram";
 import {user} from "@/store/modules/user";
 import {meMentorProgram} from "@/store/modules/meMentorProgram";
 import {mentorMenteeProgram} from "@/store/modules/mentorMenteeProgram";
+import {notification} from "@/store/modules/notification";
 import axios from "axios";
 
 Vue.use(Vuex);
@@ -42,7 +43,8 @@ const store = new Vuex.Store({
         mentorProgram,
         user,
         meMentorProgram,
-        mentorMenteeProgram
+        mentorMenteeProgram,
+        notification
     }
 });
 

@@ -43,7 +43,7 @@ class MenteeConfirmation extends Notification
     {
         return [
             'mentor_name' => $this->mentorMenteeProgram->mentor->user->name,
-            'mentor_user_id' => $this->mentorMenteeProgram->mentor->user->id,
+            'mentor_username' => $this->mentorMenteeProgram->mentor->user->username,
         ];
     }
 }
