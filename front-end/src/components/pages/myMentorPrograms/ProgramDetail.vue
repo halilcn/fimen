@@ -30,10 +30,9 @@
         <div class="filter_list">
           <div class="item">
             <standart-checkbox
-                text="Sadece CV yüklemiş kullanıcılar"
+                text="CV yüklemiş kullanıcılar"
                 id="cv_filter"
-                v-model="filters.onlyUserCvUploaded"
-            />
+                v-model="filters.onlyUserCvUploaded"/>
           </div>
           <div class="item">
             <standart-checkbox
@@ -84,7 +83,6 @@
 <script>
 import {mapMutations} from 'vuex'
 
-//code rewiew !!
 export default {
   name: "ProgramDetail",
   data() {
@@ -110,6 +108,12 @@ export default {
     ...mapMutations({
       setShowPopup: 'setShowPopup'
     }),
+    getMeMentorProgramDetail() {
+      this.$store.dispatch('getMeMentorProgramDetail')
+          .then(res => {
+            this.program = res;
+          })
+    },
     showAnswers(userId) {
       this.setShowPopup(true);
       this.selectedUserIdForAnswers = userId;
@@ -130,13 +134,16 @@ export default {
     postMenteeConfirmation() {
       this.showActionConfirmationPopup();
       this.$store.dispatch('postMenteeConfirmation', this.postMenteeConfirmationData)
-          .then((res) => {
-            console.log(res);
+          .then(() => {
             this.changeSelectedMenteeInAppealedUsers(this.postMenteeConfirmationData.user_id);
+            this.increaseSelectedMentee();
           });
     },
     changeSelectedMenteeInAppealedUsers(userId) {
       this.program.appealed_users.find(item => item.id === userId).is_mentee_selected = true;
+    },
+    increaseSelectedMentee() {
+      this.program.approved_mentee_count++;
     }
   },
   watch: {
@@ -148,10 +155,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('getMeMentorProgramDetail')
-        .then(res => {
-          this.program = res;
-        })
+    this.getMeMentorProgramDetail();
   }
 }
 </script>

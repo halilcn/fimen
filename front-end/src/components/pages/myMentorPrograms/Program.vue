@@ -55,8 +55,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 
 export default {
   name: "Home",
@@ -143,7 +142,6 @@ export default {
 .item > .row > .actions > .delete_btn:hover {
   background-color: #ffeded;
 }
-
 
 .item > .other-data {
   display: flex;

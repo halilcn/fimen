@@ -30,6 +30,10 @@ class MentorAppealResourceController extends Controller
         //
     }
 
+    /**
+     * @param  MentorAppealRequest  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(MentorAppealRequest $request)
     {
         //store file

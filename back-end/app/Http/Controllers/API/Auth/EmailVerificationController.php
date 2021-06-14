@@ -17,6 +17,10 @@ class EmailVerificationController extends Controller
         $this->emailVerification = new EmailVerification();
     }
 
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function send(Request $request)
     {
         $information = [
@@ -34,6 +38,10 @@ class EmailVerificationController extends Controller
         return response(['status' => true], 201);
     }
 
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function verify(Request $request)
     {
         try {

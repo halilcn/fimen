@@ -39,7 +39,11 @@ class MeMentorProgramAnswerResourceController extends Controller
         //
     }
 
-
+    /**
+     * @param  MentorProgram  $mentorProgram
+     * @param  string  $userId
+     * @return mixed
+     */
     public function show(MentorProgram $mentorProgram, string $userId)
     {
         return $mentorProgram->usersAppeal()->wherePivot('user_id', $userId)->first()->appeal->answers;

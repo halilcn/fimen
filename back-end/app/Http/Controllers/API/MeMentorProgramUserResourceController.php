@@ -13,6 +13,12 @@ class MeMentorProgramUserResourceController extends Controller
 {
     use MentorProgramTrait;
 
+    /**
+     * @param  Request  $request
+     * @param  MentorProgram  $mentorProgram
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function index(Request $request, MentorProgram $mentorProgram)
     {
         $this->authorize('view', $mentorProgram);

@@ -11,7 +11,10 @@ use Illuminate\Http\Request;
 
 class UserResourceController extends Controller
 {
-
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         if ($request->has('search')) {
@@ -47,6 +50,10 @@ class UserResourceController extends Controller
     }
 
 
+    /**
+     * @param $username
+     * @return UserResource|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function show($username)
     {
         $user = User::where('username', $username)->first();

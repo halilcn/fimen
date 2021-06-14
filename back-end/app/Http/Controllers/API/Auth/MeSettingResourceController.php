@@ -25,6 +25,10 @@ use function PHPUnit\Framework\returnArgument;
 class MeSettingResourceController extends Controller
 {
 
+    /**
+     * @param  Request  $request
+     * @return MeSettingsResource
+     */
     public function index(Request $request)
     {
         return new MeSettingsResource($request->user());
@@ -40,6 +44,10 @@ class MeSettingResourceController extends Controller
     }
 
 
+    /**
+     * @param  MeSettingsRequest  $request
+     * @return MeSettingsResource
+     */
     public function store(MeSettingsRequest $request)
     {
         $validated = collect($request->validated());

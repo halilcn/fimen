@@ -15,6 +15,10 @@ class RegisterCheckController extends Controller
         $this->user = new User();
     }
 
+    /**
+     * @param  Request  $request
+     * @return bool[]|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function username(Request $request)
     {
         if ($this->user->checkUniqueUsername($request->input('username'))) {
@@ -23,6 +27,10 @@ class RegisterCheckController extends Controller
         return response(['status' => false], 422);
     }
 
+    /**
+     * @param  Request  $request
+     * @return bool[]|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function email(Request $request)
     {
         if ($this->user->checkUniqueEmail($request->input('email'))) {

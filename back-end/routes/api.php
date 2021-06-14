@@ -64,12 +64,11 @@ Route::group(
                                 'mentor_program' => 'slug'
                             ]
                         );
-                        Route::resource('/notifications',MeNotificationResourceController::class);
+                        Route::resource('/notifications', MeNotificationResourceController::class);
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);
                 Route::resource('/mentor-appeal', MentorAppealResourceController::class);
-                /*sıkıntı ?*/
                 Route::resource('/mentor-programs', MentorProgramResourceController::class)->scoped(
                     [
                         'mentor_program' => 'slug'
@@ -80,7 +79,7 @@ Route::group(
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);
                 Route::resource('/favorite-users', FavoriteUserResourceController::class);
-                Route::resource('/mentor-mentee-programs',MentorMenteeProgramResourceController::class);
+                Route::resource('/mentor-mentee-programs', MentorMenteeProgramResourceController::class);
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
         );

@@ -43,7 +43,11 @@ class MeMentorProgramResourceController extends Controller
         //
     }
 
-
+    /**
+     * @param  MentorProgram  $mentorProgram
+     * @return MeMentorProgramDetailResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function show(MentorProgram $mentorProgram)
     {
         $this->authorize('destroy', $mentorProgram);
@@ -79,7 +83,11 @@ class MeMentorProgramResourceController extends Controller
         //
     }
 
-
+    /**
+     * @param  MentorProgram  $mentorProgram
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroy(MentorProgram $mentorProgram)
     {
         $this->authorize('destroy', $mentorProgram);

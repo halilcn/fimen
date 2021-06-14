@@ -30,13 +30,21 @@ class MentorMenteeProgramResourceController extends Controller
         //
     }
 
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(Request $request)
     {
-        //sql olarak aynı user_id ve mentor_id kayıt olmamalı.! kayıt varsa kayıt olmayı engelle //migration ?
         $mentorProgram = MentorProgram::query()
             ->where('slug', $request->input('program_slug'))
             ->firstOrFail();
+
         $this->authorize('create', [MentorMenteeProgram::class, $mentorProgram]);
+
+        //with sql ?
+        abort_if($mentorProgram->approvedUsers()->wherePivot('user_id', $request->input('user_id'))->exists(), 409);
 
         $this->transaction(
             function () use ($request, $mentorProgram) {

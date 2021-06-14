@@ -52,7 +52,6 @@ export const meMentorProgram = {
                     return res.data;
                 });
         },
-
     },
     getters: {}
 }

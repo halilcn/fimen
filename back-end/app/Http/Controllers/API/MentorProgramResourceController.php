@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 class MentorProgramResourceController extends Controller
 {
 
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         return MentorProgramsResource::collection(
@@ -54,16 +58,12 @@ class MentorProgramResourceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  MentorProgram  $mentorProgram
+     * @return MentorProgramDetailResource
      */
-    public function show($slug)
+    public function show(MentorProgram $mentorProgram)
     {
-        //??
-        $program = MentorProgram::where('slug',$slug)->first();
-        return new MentorProgramDetailResource($program);
+        return new MentorProgramDetailResource($mentorProgram);
     }
 
 

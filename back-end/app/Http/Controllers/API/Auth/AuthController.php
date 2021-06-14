@@ -25,6 +25,10 @@ class AuthController extends Controller
         $this->user = new User();
     }
 
+    /**
+     * @param  LoginRequest  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function login(LoginRequest $request)
     {
         try {
@@ -38,6 +42,10 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @param  RegisterRequest  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
     public function register(RegisterRequest $request)
     {
         $user = $this->user->createUser(
@@ -52,6 +60,10 @@ class AuthController extends Controller
         return response(['token' => $this->createToken($user)], 201);
     }
 
+    /**
+     * @param  Request  $request
+     * @return bool[]
+     */
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();

@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class MeNotificationResourceController extends Controller
 {
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function index(Request $request)
     {
         return MeNotificationsResource::collection($request->user()->notifications);
