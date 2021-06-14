@@ -1,9 +1,13 @@
 <template>
   <div class="notification">
-    {{data}}
     <div class="title">
       <i class="fas fa-check-circle"></i>
-      <a href="#" target="_blank">{{data.mentor_name}}</a> Tarafından Başlatılan Programa Seçildin!
+      <router-link
+          tag="a"
+          :to="{name:'UserProfile',params:{username:data.username}}">
+        {{ data.mentor_name }}
+      </router-link>
+      Tarafından Başlatılan Programa Seçildin!
     </div>
     <div class="content">
       <div class="explanation">

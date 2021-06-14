@@ -6,7 +6,10 @@ export const mentorMenteeProgram = {
     mutations: {},
     actions: {
         postMenteeConfirmation(_, payload) {
-            return axios.post('/mentor-mentee-programs', {...payload, program_slug: router.currentRoute.params.slug});
+            return axios.post('/mentor-mentee-programs', {
+                ...payload,
+                program_slug: router.currentRoute.params.slug
+            });
         }
     },
     getters: {}

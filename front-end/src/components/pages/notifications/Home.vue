@@ -1,27 +1,34 @@
 <template>
   <bg-white-template>
     <template slot="content">
-      <div class="notifications_actions">
-        <div class="all_delete-btn">
-          <i class="fas fa-trash-alt"></i>
-          Tümünü Sil
-        </div>
-      </div>
-      <div class="notifications_list">
-        <div
-            v-for="(notification,index) in notifications"
-            :key="index"
-            class="item">
-          <div class="date">
-            <i class="far fa-clock"></i>
-            {{ notification.created_at }}
+      <template v-if="notifications.length > 0">
+        <div class="notifications_actions">
+          <div @click="destroyNotifications" class="all_delete-btn">
+            <i class="fas fa-trash-alt"></i>
+            Tümünü Sil
           </div>
-          <component
-              :data="notification.data"
-              :is="notificationComp"/>
         </div>
-
-      </div>
+        <div class="notifications_list">
+          <div
+              v-for="(notification,index) in notifications"
+              :key="index"
+              class="item">
+            <div class="date">
+              <i class="far fa-clock"></i>
+              {{ moment(notification.created_at).fromNow() }}
+            </div>
+            <component
+                :data="notification.data"
+                :is="notificationComp"/>
+          </div>
+        </div>
+      </template>
+      <template v-else>
+        <div class="no_data">
+          <i class="far fa-frown"></i>
+          Hiç bildirim yok
+        </div>
+      </template>
     </template>
   </bg-white-template>
 </template>
@@ -39,11 +46,19 @@ export default {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
     MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/MenteeConfirmationNotification'),
   },
+  methods: {
+    getNotifications() {
+      this.$store.dispatch('getNotifications')
+          .then(res => {
+            this.notifications = res.data.data;
+          })
+    },
+    destroyNotifications() {
+      this.$store.dispatch('destroyNotifications');
+    }
+  },
   created() {
-    this.$store.dispatch('getNotifications')
-        .then(res => {
-          this.notifications = res.data.data;
-        })
+    this.getNotifications();
   }
 }
 </script>
@@ -72,6 +87,12 @@ export default {
 
 .notifications_actions > .all_delete-btn:hover {
   background-color: #ffe6e6;
+}
+
+.no_data {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 }
 
 .notifications_list {
