@@ -10,6 +10,12 @@ export const mentorMenteeProgram = {
                 ...payload,
                 program_slug: router.currentRoute.params.slug
             });
+        },
+        getMentorMenteePrograms() {
+            axios.get('/mentor-mentee-programs')
+                .then(res => {
+                    console.log(res);
+                })
         }
     },
     getters: {}

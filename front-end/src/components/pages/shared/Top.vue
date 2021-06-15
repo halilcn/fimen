@@ -93,6 +93,15 @@
           </div>
         </div>
         <div class="links">
+          <template v-if="isMentor">
+            <router-link
+                :to="{name:'MyMentorPrograms'}"
+                tag="div"
+                class="mentor_private">
+              <i class="bi bi-person-fill"></i>
+              Mentor Programlarım
+            </router-link>
+          </template>
           <router-link
               :to="getMeProfileUrl"
               tag="div">
@@ -480,6 +489,14 @@ export default {
 
 .dropdown > .links > .logout:hover {
   background-color: #fff1f1;
+}
+
+.dropdown > .links .mentor_private {
+  color: var(--navy-mentor-mentee-text-color);
+}
+
+.dropdown > .links .mentor_private:hover {
+  background-color: #e7f1ff;
 }
 
 .dropdown > .footer {

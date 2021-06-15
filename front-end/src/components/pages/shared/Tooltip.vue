@@ -1,6 +1,6 @@
 <template>
   <div class="tooltip">
-    <i class="bi bi-info-circle"></i>
+    <i v-html="icon"></i>
     <span class="tooltiptext">{{ text }}</span>
   </div>
 </template>
@@ -11,6 +11,12 @@ export default {
   props: {
     text: {
       required: true,
+      type: String
+    },
+    icon: {
+      required: false,
+      type: String,
+      default: '<i class="bi bi-info-circle"></i>'
     }
   }
 }
@@ -26,6 +32,7 @@ export default {
 }
 
 .tooltip .tooltiptext {
+  font-family: 'Poppins', sans-serif;
   visibility: hidden;
   width: 120px;
   background-color: var(--navy-red-bg-dark-color);

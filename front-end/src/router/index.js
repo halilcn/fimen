@@ -46,6 +46,7 @@ const routes = [
         beforeEnter: auth,
         children: [
             {
+                name: 'HomePage',
                 path: '/',
                 component: () => import('@/components/pages/MainPage'),
             },
@@ -59,6 +60,7 @@ const routes = [
                 component: () => import('@/components/pages/ApplyMentor'),
             },
             {
+                name: 'MentorPrograms',
                 path: '/mentor-programlari',
                 component: () => import('@/components/pages/mentorPrograms/Home'),
                 children: [
@@ -98,7 +100,7 @@ const routes = [
                 path: '/mentor-programlarim/:slug',
                 name: 'MyMentorProgramDetail',
                 component: () => import('@/components/pages/myMentorPrograms/ProgramDetail'),
-            }
+            },
         ]
     },
 ]

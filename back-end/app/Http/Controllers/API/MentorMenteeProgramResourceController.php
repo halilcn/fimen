@@ -10,14 +10,9 @@ use Illuminate\Support\Facades\DB;
 
 class MentorMenteeProgramResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return $request->user();
     }
 
     /**
