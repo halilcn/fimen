@@ -14,12 +14,23 @@ class MentorMenteeProgram extends Model
 
     protected $fillable = [
         'mentor_id',
-        'user_id'
+        'user_id',
+        'active'
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     public function mentor(): BelongsTo
     {
         return $this->belongsTo(Mentor::class);
+    }
+
+    //? uzun
+    public function mentee(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 

@@ -12,9 +12,9 @@ export const mentorMenteeProgram = {
             });
         },
         getMentorMenteePrograms() {
-            axios.get('/mentor-mentee-programs')
+            return axios.get('/mentor-mentee-programs')
                 .then(res => {
-                    console.log(res);
+                    return res.data.data;
                 })
         }
     },

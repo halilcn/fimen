@@ -3,16 +3,34 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MentorMenteeProgramsResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorProgram;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MentorMenteeProgramResourceController extends Controller
 {
+    /**
+     * @param  Request  $request
+     * @return MentorMenteeProgramsResource
+     */
     public function index(Request $request)
     {
-        return $request->user();
+        // bad code ?
+        return MentorMenteeProgramsResource::make(
+            MentorMenteeProgram::query()
+                ->where('user_id', $request->user()->id)
+                ->when(
+                    $request->user()->mentor,
+                    function (Builder $query) use ($request) {
+                        $query->orWhere('mentor_id', $request->user()->mentor->id);
+                    }
+                )
+                ->with('mentor', 'mentee')
+                ->get()
+        );
     }
 
     /**

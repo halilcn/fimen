@@ -3,12 +3,12 @@
     <template slot="content">
       <div class="infos">
         <div class="item">
-          <div class="info">
+          <div v-if="mentor_infos" class="info">
             <div class="title">
               Aktif Mentee Sayısı
             </div>
             <div class="value">
-              5
+              {{ mentor_infos.active_mentee_count }}
             </div>
           </div>
           <div class="icon">
@@ -17,8 +17,9 @@
         </div>
       </div>
       <ul class="mentor_mentee_programs_list">
-        <li>
-          <div class="mentor_tooltip">
+        <li v-for="(program,index) in programs" :key="index">
+          {{program.id}}
+          <div v-if="program.is_mentor" class="mentor_tooltip">
             <tooltip
                 icon='<i class="fas fa-star"></i>'
                 text="Bu programda sen mentorsun"/>
@@ -29,194 +30,30 @@
                 Mentor
               </div>
               <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
+                <img :src="program.mentor.image">
                 <div class="name">
-                  Halil Can
+                  {{ program.mentor.name }}
                 </div>
                 <div class="username">
-                  @hcan
+                  @{{ program.mentor.username }}
                 </div>
               </div>
             </div>
             <div class="time">
               <i class="fas fa-hourglass-half"></i>
-              <span>12 gün</span>
+              <span>{{ program.passing_time }} gün</span>
             </div>
             <div class="mentee">
               <div class="title">
                 Mentee
               </div>
               <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
+                <img :src="program.mentee.image">
                 <div class="name">
-                  Halil Can
+                  {{ program.mentee.name }}
                 </div>
                 <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="mentor_tooltip">
-            <tooltip
-                icon='<i class="fas fa-star"></i>'
-                text="Bu programda sen mentorsun"/>
-          </div>
-          <div class="program_info">
-            <div class="mentor">
-              <div class="title">
-                Mentor
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-            <div class="time">
-              <i class="fas fa-hourglass-half"></i>
-              <span>12 gün</span>
-            </div>
-            <div class="mentee">
-              <div class="title">
-                Mentee
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="mentor_tooltip">
-            <tooltip
-                icon='<i class="fas fa-star"></i>'
-                text="Bu programda sen mentorsun"/>
-          </div>
-          <div class="program_info">
-            <div class="mentor">
-              <div class="title">
-                Mentor
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-            <div class="time">
-              <i class="fas fa-hourglass-half"></i>
-              <span>12 gün</span>
-            </div>
-            <div class="mentee">
-              <div class="title">
-                Mentee
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="mentor_tooltip">
-            <tooltip
-                icon='<i class="fas fa-star"></i>'
-                text="Bu programda sen mentorsun"/>
-          </div>
-          <div class="program_info">
-            <div class="mentor">
-              <div class="title">
-                Mentor
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-            <div class="time">
-              <i class="fas fa-hourglass-half"></i>
-              <span>12 gün</span>
-            </div>
-            <div class="mentee">
-              <div class="title">
-                Mentee
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="mentor_tooltip">
-            <tooltip
-                icon='<i class="fas fa-star"></i>'
-                text="Bu programda sen mentorsun"/>
-          </div>
-          <div class="program_info">
-            <div class="mentor">
-              <div class="title">
-                Mentor
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
-                </div>
-              </div>
-            </div>
-            <div class="time">
-              <i class="fas fa-hourglass-half"></i>
-              <span>12 gün</span>
-            </div>
-            <div class="mentee">
-              <div class="title">
-                Mentee
-              </div>
-              <div class="user">
-                <img src="https://ui-avatars.com/api/?name=Halil+Can&background=f2f2f2&size=128">
-                <div class="name">
-                  Halil Can
-                </div>
-                <div class="username">
-                  @hcan
+                  @{{ program.mentee.username }}
                 </div>
               </div>
             </div>
@@ -231,7 +68,10 @@
 export default {
   name: "Home",
   data() {
-    return {}
+    return {
+      programs: [],
+      mentor_infos: {}
+    }
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
@@ -239,7 +79,10 @@ export default {
   },
   methods: {
     getMentorMenteePrograms() {
-      this.$store.dispatch('getMentorMenteePrograms');
+      this.$store.dispatch('getMentorMenteePrograms').then(res => {
+        this.programs = res.programs;
+        this.mentor_infos = res.mentor_infos;
+      });
     }
   },
   created() {
