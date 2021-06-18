@@ -92,7 +92,9 @@ class MeMentorProgramResourceController extends Controller
     {
         $this->authorize('destroy', $mentorProgram);
         $mentorProgram->usersAppeal()->detach();
+        $mentorProgram->approvedUsers()->detach();
         $mentorProgram->delete();
+
         return response(['status' => true], 202);
     }
 }
