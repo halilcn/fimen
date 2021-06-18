@@ -87,6 +87,11 @@ const routes = [
                 component: () => import('@/components/pages/myActivePrograms/Home')
             },
             {
+                path: '/aktif-programlarim/:id',
+                name: 'MeActiveProgramDetail',
+                component: () => import('@/components/pages/myActivePrograms/ProgramDetail')
+            },
+            {
                 path: '/profil/:username',
                 name: 'UserProfile',
                 component: () => import('@/components/pages/user/UserProfile')

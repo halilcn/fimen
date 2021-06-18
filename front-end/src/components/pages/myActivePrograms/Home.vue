@@ -17,8 +17,12 @@
         </div>
       </div>
       <ul class="mentor_mentee_programs_list">
-        <li v-for="(program,index) in programs" :key="index">
-          {{program.id}}
+        <router-link
+            tag="li"
+            :to="{name:'MeActiveProgramDetail',params:{id:program.id}}"
+            v-for="(program,index) in programs"
+            :key="index">
+          {{ program.id }}
           <div v-if="program.is_mentor" class="mentor_tooltip">
             <tooltip
                 icon='<i class="fas fa-star"></i>'
@@ -41,7 +45,8 @@
             </div>
             <div class="time">
               <i class="fas fa-hourglass-half"></i>
-              <span>{{ program.passing_time }} gün</span>
+              <span v-if="program.passing_time>0">{{ program.passing_time }} gün</span>
+              <span v-else>yeni program!</span>
             </div>
             <div class="mentee">
               <div class="title">
@@ -58,7 +63,7 @@
               </div>
             </div>
           </div>
-        </li>
+        </router-link>
       </ul>
     </template>
   </bg-white-template>
