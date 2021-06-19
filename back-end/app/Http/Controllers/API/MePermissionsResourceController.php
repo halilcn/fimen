@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
+use App\Http\Resources\MePermissionsResource;
 use Illuminate\Http\Request;
 
-class DenemeResourceController extends Controller
+class MePermissionsResourceController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @return MePermissionsResource
      */
-    public function index()
+    public function index(Request $request)
     {
-        return "ok";
+        return MePermissionsResource::make($request->user()->permissions);
     }
 
     /**

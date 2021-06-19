@@ -15,6 +15,7 @@ use App\Http\Controllers\API\MentorMenteeProgramResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
+use App\Http\Controllers\API\MePermissionsResourceController;
 use App\Http\Controllers\API\NewMentorResourceController;
 use App\Http\Controllers\API\UserResourceController;
 use App\Http\Controllers\API\FavoriteUserResourceController;
@@ -38,6 +39,7 @@ Route::group(
         // ----- AUTH -----
         Route::middleware('auth:sanctum')->group(
             function () {
+                Route::resource('/deneme', \App\Http\Controllers\DenemeResourceController::class);
                 Route::group(
                     ['prefix' => '/me'],
                     function () {
@@ -65,6 +67,8 @@ Route::group(
                             ]
                         );
                         Route::resource('/notifications', MeNotificationResourceController::class);
+                        Route::delete('/notifications', [MeNotificationResourceController::class, 'destroyAll']);
+                        Route::resource('/permissions', MePermissionsResourceController::class);
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);

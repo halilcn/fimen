@@ -45,7 +45,7 @@ class UploadProfileImage implements ShouldQueue
     public function handle(ApiStorageService $storageService)
     {
         $res = $storageService->put(
-            '../storage/app/public/temporary/'.$this->path,
+            Storage::disk('temporary')->path($this->path),
             [
                 'folder' => 'users-profile',
                 'resource_type' => 'image',
@@ -56,13 +56,13 @@ class UploadProfileImage implements ShouldQueue
             ]
         )->toArray();
 
-        Storage::disk('temporary')->delete($this->path);
-        $this->user->update(
-            [
-                'image' => 'deneme',//$res['secure_url'],
-                'image_public_id' => 'deneme' //$res['public_id']
-            ]
-        );
+        if ($res) {
+            $this->user->update(
+                [
+                    'image' => $res['secure_url'],
+                    'image_public_id' => $res['public_id']
+                ]
+            );
+        }
     }
-
 }

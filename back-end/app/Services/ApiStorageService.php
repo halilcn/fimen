@@ -27,11 +27,21 @@ class ApiStorageService implements ApiStorageInterface
         );
     }
 
+    /**
+     * @param  string  $file
+     * @param  array  $options
+     * @return object
+     * @throws \Cloudinary\Api\Exception\ApiError
+     */
     public function put(string $file, array $options = []): object
     {
         return (new UploadApi())->upload($file, $options);
     }
 
+    /**
+     * @param  string  $publicId
+     * @return object
+     */
     public function delete(string $publicId): object
     {
         return (new UploadApi())->destroy($publicId);

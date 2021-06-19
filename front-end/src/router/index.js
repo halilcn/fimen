@@ -106,6 +106,14 @@ const routes = [
                 name: 'MyMentorProgramDetail',
                 component: () => import('@/components/pages/myMentorPrograms/ProgramDetail'),
             },
+            {
+                path: '/ayarlar',
+                name: 'Settings',
+                component: () => import('@/components/pages/settings/Home'),
+                children: [
+
+                ]
+            },
         ]
     },
 ]

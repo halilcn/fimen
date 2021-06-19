@@ -80,6 +80,15 @@ class MeNotificationResourceController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+    }
+
+
+    /**
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     */
+    public function destroyAll(Request $request)
+    {
         $request->user()->notifications()->delete();
         return response(['status' => true]);
     }

@@ -36,12 +36,13 @@ class DeleteProfileImage implements ShouldQueue
     public function handle()
     {
         if ($this->user->image_public_id) {
-            (new ApiStorageService)->delete($this->user->image_public_id);
-            $this->user->update(
-                [
-                    'image_public_id' => null
-                ]
-            );
+            if ((new ApiStorageService)->delete($this->user->image_public_id)) {
+                $this->user->update(
+                    [
+                        'image_public_id' => null
+                    ]
+                );
+            }
         }
     }
 }

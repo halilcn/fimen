@@ -8,8 +8,7 @@ export const notification = {
             return axios.get('/me/notifications');
         },
         destroyNotifications() {
-            // 0 ide ne alaka ? yanlış!
-            axios.delete('/me/notifications/0');
+            return axios.delete('/me/notifications');
         }
     },
     getters: {}

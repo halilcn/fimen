@@ -54,7 +54,10 @@ export default {
           })
     },
     destroyNotifications() {
-      this.$store.dispatch('destroyNotifications');
+      this.$store.dispatch('destroyNotifications')
+          .then(() => {
+            this.notifications = [];
+          });
     }
   },
   created() {
@@ -100,6 +103,7 @@ export default {
 }
 
 .notifications_list > .item {
+  margin: 15px 0;
   position: relative;
   width: 100%;
   background-color: #ffffff;

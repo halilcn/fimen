@@ -54,24 +54,12 @@ class MeSettingResourceController extends Controller
 
         if ($request->hasFile('image_file')) {
             $path = $request->file('image_file')->store('user-profile', 'temporary');
-            //yanlış!
-            (new ApiStorageService())->put(
-                '../storage/app/public/temporary/'.$path,
+            Bus::chain(
                 [
-                    'folder' => 'users-profile',
-                    'resource_type' => 'image',
-                    'transformation' => [
-                        'width' => 256,
-                        'height' => 256
-                    ]
+                    new DeleteProfileImage($request->user()),
+                    new UploadProfileImage($request->user(), $path)
                 ]
-            );
-            /* Bus::chain(
-                 [
-                     new DeleteProfileImage($request->user()),
-                     new UploadProfileImage($request->user(), $path)
-                 ]
-             )->dispatch();*/
+            )->dispatch();
         }
 
         if ($request->hasFile('cv_file')) {
