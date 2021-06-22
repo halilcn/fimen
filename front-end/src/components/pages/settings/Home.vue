@@ -2,12 +2,13 @@
   <bg-white-template>
     <template slot="content">
       <div class="links">
-        <div class="item active">
+        <router-link
+            tag="div"
+            :to="{name:'NotificationsSettings'}"
+            exact-active-class="active"
+            class="item">
           Bildirimler & İzinler
-        </div>
-        <div class="item">
-          Deneme
-        </div>
+        </router-link>
       </div>
       <div class="setting_content">
         <component :is="activeComponent"/>

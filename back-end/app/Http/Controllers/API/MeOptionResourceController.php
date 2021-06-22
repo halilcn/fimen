@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MePermissionsResource;
 use Illuminate\Http\Request;
 
-class MePermissionsResourceController extends Controller
+class MeOptionResourceController extends Controller
 {
     /**
-     * @param  Request  $request
      * @return MePermissionsResource
      */
     public function index(Request $request)
@@ -61,15 +60,19 @@ class MePermissionsResourceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Request  $request
+     * @param $type
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $type)
     {
-        //
+        $request->user()->permissions()->update(
+            [
+                $type => $request->boolean('value')
+            ]
+        );
+
+        return response(['status' => true]);
     }
 
     /**

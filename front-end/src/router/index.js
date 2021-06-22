@@ -17,6 +17,13 @@ const guest = function (to, from, next) {
 }
 
 const routes = [
+    //Redirect
+    {
+        path: '/ayarlar',
+        redirect: {
+            name: 'NotificationsSettings'
+        }
+    },
     {
         path: '/anasayfa',
         component: () => import('@/components/others/HomePage'),
@@ -106,14 +113,21 @@ const routes = [
                 name: 'MyMentorProgramDetail',
                 component: () => import('@/components/pages/myMentorPrograms/ProgramDetail'),
             },
+
             {
                 path: '/ayarlar',
                 name: 'Settings',
                 component: () => import('@/components/pages/settings/Home'),
                 children: [
-
+                    {
+                        path: 'bildirimler',
+                        name: 'NotificationsSettings',
+                        component: () => import('@/components/pages/settings/NotificationsSettings'),
+                    },
                 ]
             },
+
+
         ]
     },
 ]

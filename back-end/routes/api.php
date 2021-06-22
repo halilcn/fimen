@@ -15,6 +15,7 @@ use App\Http\Controllers\API\MentorMenteeProgramResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
 use App\Http\Controllers\API\MentorResourceController;
+use App\Http\Controllers\API\MeOptionResourceController;
 use App\Http\Controllers\API\MePermissionsResourceController;
 use App\Http\Controllers\API\NewMentorResourceController;
 use App\Http\Controllers\API\UserResourceController;
@@ -68,7 +69,7 @@ Route::group(
                         );
                         Route::resource('/notifications', MeNotificationResourceController::class);
                         Route::delete('/notifications', [MeNotificationResourceController::class, 'destroyAll']);
-                        Route::resource('/permissions', MePermissionsResourceController::class);
+                        Route::resource('/options', MeOptionResourceController::class);
                     }
                 );
                 Route::resource('/competencies', CompetenceResourceController::class);

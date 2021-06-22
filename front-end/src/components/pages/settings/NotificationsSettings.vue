@@ -5,48 +5,33 @@
       İzinler
     </div>
     <div
-        v-for="(permission,key) in permissions"
+        v-for="(permissionStatus,key) in permissions"
         :key="key"
+        @click="updateAction('permission',key)"
         class="item">
       <div class="text">
-        {{ permissionsText.cv_visible }}
+        {{ permissionsText[key] }}
       </div>
-      <div @click="permissionAction(key)" class="check">
-        <i v-if="permission" class="fas fa-unlock-alt active"></i>
+      <div class="check">
+        <i v-if="permissionStatus" class="fas fa-unlock-alt active"></i>
         <i v-else class="fas fa-lock passive"></i>
       </div>
     </div>
-    <!--   <div class="item">
-        <div class="text">
-          asdasdasdadsa asdas
-        </div>
-        <div class="check">
-          <i class="fas fa-lock passive"></i>
-        </div>
-      </div>-->
     <div class="title">
       <i class="fas fa-bell"></i>
       Bildirimler
     </div>
     <div
-        v-for="(notification,key) in notifications"
+        v-for="(notificationStatus,key) in notifications"
         :key="key"
+        @click="updateAction('notification',key)"
         class="item">
-      <template @click="notificationAction(key)">
-        <div class="text">
-          {{ notificationsText.mentor_program_notify }}
-        </div>
-        <div class="check">
-          <i class="fas fa-bell active"></i>
-        </div>
-      </template>
-    </div>
-    <div class="item">
       <div class="text">
-        asdasd adad ad asd ada dadas
+        {{ notificationsText[key] }}
       </div>
       <div class="check">
-        <i class="fas fa-bell-slash passive"></i>
+        <i v-if="notificationStatus" class="fas fa-bell active"></i>
+        <i v-else class="fas fa-bell-slash passive"></i>
       </div>
     </div>
   </div>
@@ -58,32 +43,49 @@ export default {
   data() {
     return {
       permissionsText: {
-        cv_visible: 'CV im herkes tarafından görüntülebilsin.'
+        cv_visible: "CV'im herkese gözüksün."
       },
       notificationsText: {
-        mentor_program_notify: 'Yeni mentor programı paylaşıldığında e-mail gelsin..'
+        mentor_program_notify: 'Yeni mentor programı paylaşıldığında e-mail gelsin.'
       },
       permissions: {},
-      notifications: {}
+      notifications: {},
+      postData: {
+        type: '',
+        value: null
+      }
     }
   },
   methods: {
     getPermissions() {
       this.$store.dispatch('getPermissionsAndNotifications')
           .then(res => {
-            console.log(res);
             this.permissions = res.permissions;
+            this.notifications = res.notifications;
           })
     },
-    postUserPermissions() {
-      alert();
+    updateAction(type, key) {
+      let data;
+
+      if (type === 'permission') {
+        data = this.permissions;
+      }
+
+      if (type === 'notification') {
+        data = this.notifications;
+      }
+
+      data[key] = !data[key];
+      this.postData = {
+        value: data[key],
+        type: key
+      };
+
+      this.postPermissionsAndNotifications();
     },
-    permissionAction(key) {
-      console.log(Object.keys(this.permissions).find(itemKey => itemKey === key));
-    },
-    notificationAction(key) {
-      alert(key);
-    },
+    postPermissionsAndNotifications() {
+      this.$store.dispatch('postPermissionsAndNotifications', this.postData);
+    }
   },
   created() {
     this.getPermissions();
@@ -107,6 +109,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+.notifications_list > .item:hover {
+  background-color: #f5f5f5;
 }
 
 .notifications_list > .item > .text {
@@ -119,7 +128,6 @@ export default {
 .notifications_list > .item > .check > i {
   padding: 13px;
   border-radius: 5px;
-  cursor: pointer;
   font-size: 17px;
 }
 
