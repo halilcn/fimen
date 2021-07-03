@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MentorMenteeProgram;
+use App\Models\User;
+use App\Notifications\MenteeConfirmation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class DenemeResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
+        $user = User::find(29);
+        $program = MentorMenteeProgram::find(18);
+        $user->notify(new MenteeConfirmation($program));
         return "ok";
     }
 

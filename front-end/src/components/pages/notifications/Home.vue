@@ -30,10 +30,20 @@
         </div>
       </template>
     </template>
+    {{ echo }}
   </bg-white-template>
 </template>
 
 <script>
+import Echo from 'laravel-echo'
+
+window.io = require('socket.io-client');
+
+window.Echo = new Echo({
+  broadcaster: 'socket.io',
+  host: 'http://http://127.0.0.1:6001'
+});
+
 export default {
   name: "Home",
   data() {
@@ -62,6 +72,15 @@ export default {
   },
   created() {
     this.getNotifications();
+  },
+  computed: {
+    echo() {
+      return Echo.private(`user_notifications.29`)
+          .notification((notification) => {
+            alert();
+            console.log(notification);
+          });
+    }
   }
 }
 </script>

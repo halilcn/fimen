@@ -8,6 +8,7 @@ import {helper} from "@/helpers/helper";
 import filters from "@/filters/index";
 import moment from 'moment'
 
+
 //Set Default Locale
 moment.locale("tr");
 
@@ -23,6 +24,24 @@ Vue.mixin({
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate);
+
+
+//socketsocket
+/*import Echo from 'laravel-echo'
+
+window.io = require('socket.io-client');
+
+export var echo_instance = new Echo({
+    broadcaster: "socket.io",
+    host: 'http://127.0.0.1:6001', //http://localhost:6001
+    auth: {
+        headers: {
+            Authorization: "Bearer 67|opivFX92YmCpN8BBYx9zXwg7kWs4ytKSurbIHHns"
+        }
+    }
+})
+
+Vue.prototype.$echo = echo_instance;*/
 
 new Vue({
     router,

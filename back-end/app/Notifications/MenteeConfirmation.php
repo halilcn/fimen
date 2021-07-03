@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use App\Models\MentorMenteeProgram;
+use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -30,7 +31,7 @@ class MenteeConfirmation extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -45,5 +46,17 @@ class MenteeConfirmation extends Notification
             'mentor_name' => $this->mentorMenteeProgram->mentor->user->name,
             'mentor_username' => $this->mentorMenteeProgram->mentor->user->username,
         ];
+    }
+
+    public function toBroadcast($notifiable)
+    {
+        return [
+            'deneme' => 'asdadada daskksad ka'
+        ];
+    }
+
+    public function broadcastOn()
+    {
+        return new PrivateChannel('user_notifications.29');
     }
 }

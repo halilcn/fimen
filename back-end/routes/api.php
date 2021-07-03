@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Route;
 Route::group(
     ['prefix' => '/v1'],
     function () {
+        Route::resource('/deneme', \App\Http\Controllers\DenemeResourceController::class);
+
+
         // ----- PUBLIC -----
         Route::post('/login', [AuthController::class, 'login']);
         Route::post('/register', [AuthController::class, 'register']);
@@ -40,7 +43,6 @@ Route::group(
         // ----- AUTH -----
         Route::middleware('auth:sanctum')->group(
             function () {
-                Route::resource('/deneme', \App\Http\Controllers\DenemeResourceController::class);
                 Route::group(
                     ['prefix' => '/me'],
                     function () {
