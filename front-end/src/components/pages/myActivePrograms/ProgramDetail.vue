@@ -48,6 +48,9 @@
         </div>
       </div>
       <div class="links">
+        <div class="item active">
+          Ana Sayfa
+        </div>
         <div class="item">
           Takvim
         </div>
@@ -58,6 +61,11 @@
           Diğer
         </div>
       </div>
+      <component
+          :is="activeComponent"
+          class="dynamic_content">
+        asdads
+      </component>
     </template>
   </bg-white-template>
 </template>
@@ -65,8 +73,14 @@
 <script>
 export default {
   name: "ProgramDetail",
+  data() {
+    return {
+      activeComponent: 'MainComponent'
+    }
+  },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
+    MainComponent: () => import('@/components/pages/myActivePrograms/shared/MainComponent'),
   },
 }
 </script>
@@ -184,13 +198,31 @@ export default {
 .links {
   display: flex;
   margin-top: 30px;
+  border-bottom: 1px solid #e3e3e3;
+  padding-bottom: 7px;
 }
 
 .links > .item {
-  background-color: red;
   padding: 6px 16px;
   margin-right: 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--navy-blue-text-color);
+}
+
+.links > .item:hover {
+  background-color: #f8f8f8;
+}
+
+.links > .item.active {
+  background-color: #f1f1f1;
+}
+
+.dynamic_content {
+  margin-top: 20px;
+  padding: 13px;
 }
 </style>
