@@ -1,87 +1,89 @@
 <template>
-  <bg-white-template>
-    <template slot="content">
-      <div class="top_info">
-        <div class="mentee">
-          <div class="user">
-            <div class="title">
-              Mentee
-            </div>
-            <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
-            <div class="name">Halil Can</div>
-            <router-link
-                tag="div"
-                :to="{name:'UserProfile',params:{username:'deneme'}}"
-                class="username">@hcan
-            </router-link>
+  <div class="active_program_detail">
+    <div class="top_info">
+      <div class="mentee">
+        <div class="user">
+          <div class="title">
+            Mentee
           </div>
-        </div>
-        <div class="next_meeting">
-          <div class="text">
-            <i class="far fa-clock"></i>
-            Bir sonraki toplanma tarihi
-          </div>
-          <div class="date">
-            <div class="day">12</div>
-            <div class="month">Haziran</div>
-            <div class="hour">12:00</div>
-          </div>
-          <div class="new_meeting">
-            <i class="fas fa-user-friends"></i>
-            Yeni Toplantı
-          </div>
-        </div>
-        <div class="mentor">
-          <div class="user">
-            <div class="title mentor">
-              Mentor
-            </div>
-            <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
-            <div class="name">Mehmet Can</div>
-            <router-link
-                tag="div"
-                :to="{name:'UserProfile',params:{username:'deneme'}}"
-                class="username">
-              @mehmet
-            </router-link>
-          </div>
+          <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
+          <div class="name">Halil Can</div>
+          <router-link
+              tag="div"
+              :to="{name:'UserProfile',params:{username:'deneme'}}"
+              class="username">@hcan
+          </router-link>
         </div>
       </div>
-      <div class="links">
-        <div class="item active">
-          Ana Sayfa
+      <div class="next_meeting">
+        <div class="text">
+          <i class="far fa-clock"></i>
+          Bir sonraki toplanma tarihi
         </div>
-        <div class="item">
-          Takvim
+        <div class="date">
+          <div class="day">12</div>
+          <div class="month">Haziran</div>
+          <div class="hour">12:00</div>
         </div>
-        <div class="item">
-          Mesajlaşma
-        </div>
-        <div class="item">
-          Diğer
+        <div class="new_meeting">
+          <i class="fas fa-user-friends"></i>
+          Yeni Toplantı
         </div>
       </div>
-      <component
-          :is="activeComponent"
-          class="dynamic_content">
-        asdads
-      </component>
-    </template>
-  </bg-white-template>
+      <div class="mentor">
+        <div class="user">
+          <div class="title mentor">
+            Mentor
+          </div>
+          <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
+          <div class="name">Mehmet Can</div>
+          <router-link
+              tag="div"
+              :to="{name:'UserProfile',params:{username:'deneme'}}"
+              class="username">
+            @mehmet
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="links">
+      <router-link
+          exact-active-class="active"
+          tag="div"
+          :to="{name:'MeActiveProgramDetailMain'}"
+          class="item">
+        Ana Sayfa
+      </router-link>
+      <router-link
+          exact-active-class="active"
+          tag="div"
+          :to="{name:'MeActiveProgramDetailCalendar'}"
+          class="item">
+        Takvim
+      </router-link>
+      <router-link
+          exact-active-class="active"
+          tag="div"
+          :to="{name:'MeActiveProgramChatComponent'}"
+          class="item">
+        Mesajlaşma
+      </router-link>
+      <div class="item">
+        Diğer
+      </div>
+    </div>
+    <router-view/>
+  </div>
 </template>
 
 <script>
 export default {
   name: "ProgramDetail",
   data() {
-    return {
-      activeComponent: 'MainComponent'
-    }
+    return {}
   },
-  components: {
-    BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
-    MainComponent: () => import('@/components/pages/myActivePrograms/shared/MainComponent'),
-  },
+
+
 }
 </script>
 
@@ -200,6 +202,7 @@ export default {
   margin-top: 30px;
   border-bottom: 1px solid #e3e3e3;
   padding-bottom: 7px;
+  margin-bottom: 10px;
 }
 
 .links > .item {

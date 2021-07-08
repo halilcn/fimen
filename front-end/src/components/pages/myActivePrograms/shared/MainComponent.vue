@@ -2,7 +2,6 @@
   <div class="main_component">
     <div class="infos">
       <div class="item">
-        <i class="fas fa-history"></i>
         <div class="title">
           Geçirilen gün sayısı
         </div>
@@ -12,11 +11,21 @@
       </div>
     </div>
     <ul class="information_log_list">
-      <li>
-        bilgi
+      <li class="title">
+        <i class="fas fa-history"></i>
+        Son Hareketler
       </li>
       <li>
-        bilgi aasdasd adaşpopooık lk lkmoıoı ş
+        bildgi bilgi bildgi bilgibildgi bilgi
+      </li>
+      <li>
+        bildgi bilgi bildgi bilgibildgi bilgi
+      </li>
+      <li>
+        bildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgi
+      </li>
+      <li>
+        bildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgi
       </li>
     </ul>
   </div>
@@ -31,13 +40,21 @@ export default {
 <style scoped>
 .main_component {
   display: flex;
-  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .main_component > .infos {
   width: 600px;
   display: flex;
   align-items: flex-start;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 0px 0.2px rgba(0, 0, 0, 0.011),
+  0 0px 0.6px rgba(0, 0, 0, 0.016),
+  0 0px 1.1px rgba(0, 0, 0, 0.02),
+  0 0px 2px rgba(0, 0, 0, 0.024),
+  0 0px 3.8px rgba(0, 0, 0, 0.029),
+  0 0px 9px rgba(0, 0, 0, 0.04);
 }
 
 .infos > .item {
@@ -50,11 +67,6 @@ export default {
   padding: 7px;
   border-radius: 5px;
   color: #1771c1;
-}
-
-.infos > .item > i {
-  position: absolute;
-  left: -10px;
 }
 
 .infos > .item > .title {
@@ -70,6 +82,14 @@ export default {
   padding: 0;
   list-style-type: none;
   margin-top: 0;
+  margin-left: 20px;
+}
+
+.information_log_list > .title {
+  padding: 10px;
+  background-color: #f5f8ff;
+  color: #436bc6;
+  font-family: 'Rubik', sans-serif;
 }
 
 .information_log_list > li {

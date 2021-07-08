@@ -91,12 +91,36 @@ const routes = [
             {
                 path: '/aktif-programlarim',
                 name: 'MeActivePrograms',
-                component: () => import('@/components/pages/myActivePrograms/Home')
-            },
-            {
-                path: '/aktif-programlarim/:id',
-                name: 'MeActiveProgramDetail',
-                component: () => import('@/components/pages/myActivePrograms/ProgramDetail')
+                component: () => import('@/components/pages/myActivePrograms/Home'),
+                children: [
+                    {
+                        path: '/',
+                        name: 'MeActivePrograms',
+                        component: () => import('@/components/pages/myActivePrograms/Programs'),
+                    },
+                    {
+                        path: ':id',
+                        name: 'MeActiveProgramDetail',
+                        component: () => import('@/components/pages/myActivePrograms/ProgramDetail'),
+                        children: [
+                            {
+                                path: '/',
+                                name: 'MeActiveProgramDetailMain',
+                                component: () => import('@/components/pages/myActivePrograms/shared/MainComponent'),
+                            },
+                            {
+                                path: 'takvim',
+                                name: 'MeActiveProgramDetailCalendar',
+                                component: () => import('@/components/pages/myActivePrograms/shared/CalendarComponent'),
+                            },
+                            {
+                                path: 'chat',
+                                name: 'MeActiveProgramChatComponent',
+                                component: () => import('@/components/pages/myActivePrograms/shared/ChatComponent'),
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 path: '/profil/:username',
@@ -113,7 +137,6 @@ const routes = [
                 name: 'MyMentorProgramDetail',
                 component: () => import('@/components/pages/myMentorPrograms/ProgramDetail'),
             },
-
             {
                 path: '/ayarlar',
                 name: 'Settings',
@@ -126,8 +149,6 @@ const routes = [
                     },
                 ]
             },
-
-
         ]
     },
 ]
