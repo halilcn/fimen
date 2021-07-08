@@ -3,13 +3,17 @@
 namespace App\Notifications;
 
 use App\Models\MentorMenteeProgram;
+use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class MenteeConfirmation extends Notification
+
+class MenteeConfirmation extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -18,8 +22,10 @@ class MenteeConfirmation extends Notification
      *
      * @return void
      */
-    public function __construct(public MentorMenteeProgram $mentorMenteeProgram)
-    {
+    public
+    function __construct(
+        public MentorMenteeProgram $mentorMenteeProgram
+    ) {
         //
     }
 
@@ -29,8 +35,10 @@ class MenteeConfirmation extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable)
-    {
+    public
+    function via(
+        $notifiable
+    ) {
         return ['database', 'broadcast'];
     }
 
@@ -40,23 +48,31 @@ class MenteeConfirmation extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
-    {
+    public
+    function toArray(
+        $notifiable
+    ) {
         return [
             'mentor_name' => $this->mentorMenteeProgram->mentor->user->name,
             'mentor_username' => $this->mentorMenteeProgram->mentor->user->username,
         ];
     }
 
-    public function toBroadcast($notifiable)
-    {
-        return [
-            'deneme' => 'asdadada daskksad ka'
-        ];
+    public
+    function toBroadcast(
+        $notifiable
+    ) {
+        return new BroadcastMessage(
+            [
+                'deneme' => 'dsadad adsad sa',
+                'deneme2' => 'deneme de ned',
+            ]
+        );
     }
 
-    public function broadcastOn()
+    public
+    function broadcastOn()
     {
-        return new PrivateChannel('user_notifications.29');
+        return new Channel('user_notifications.29'); //private
     }
 }

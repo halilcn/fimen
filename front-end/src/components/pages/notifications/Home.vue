@@ -41,7 +41,7 @@ window.io = require('socket.io-client');
 
 window.Echo = new Echo({
   broadcaster: 'socket.io',
-  host: 'http://http://127.0.0.1:6001'
+  host: 'http://127.0.0.1:6001'
 });
 
 export default {
@@ -75,7 +75,7 @@ export default {
   },
   computed: {
     echo() {
-      return Echo.private(`user_notifications.29`)
+      return Echo.channel(`user_notifications.29`)
           .notification((notification) => {
             alert();
             console.log(notification);

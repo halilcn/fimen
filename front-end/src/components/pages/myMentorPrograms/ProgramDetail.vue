@@ -231,8 +231,6 @@ export default {
   background-color: white;
   padding: 20px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 
 .program_content > .program_appear_list > .item {

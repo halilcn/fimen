@@ -20,10 +20,10 @@ Broadcast::channel(
     }
 );
 
-Broadcast::channel(
+/*Broadcast::channel(
     'user_notifications.{user_id}',
     function ($user, $userId) {
         return true;
         //   return $user->id == $userId;
     }
-);
+);*/

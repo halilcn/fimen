@@ -22,7 +22,6 @@
             :to="{name:'MeActiveProgramDetail',params:{id:program.id}}"
             v-for="(program,index) in programs"
             :key="index">
-          {{ program.id }}
           <div v-if="program.is_mentor" class="mentor_tooltip">
             <tooltip
                 icon='<i class="fas fa-star"></i>'
