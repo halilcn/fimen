@@ -10,7 +10,6 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 
-
 export default {
   name: "Calendar",
   data() {
@@ -20,17 +19,18 @@ export default {
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
         events: [
-          {title: 'event 1', date: '2019-04-01'},
+          {title: 'etkinliğim benim', date: '2021-07-10'},
           {title: 'event 2', date: '2019-04-02'}
         ]
       }
     }
   },
   components: {
-    FullCalendar // make the <FullCalendar> tag available
+    FullCalendar
   },
   methods: {
     handleDateClick: function (arg) {
+      console.log(arg);
       alert('date click! ' + arg.dateStr)
     }
   }
@@ -38,5 +38,11 @@ export default {
 </script>
 
 <style scoped>
+.fc {
+  font-family: 'Rubik', sans-serif;
+}
 
+td.fc-day, td.fc-day-number {
+  cursor: pointer !important;
+}
 </style>
