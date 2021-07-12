@@ -127,6 +127,11 @@ class User extends Authenticatable
         return $mentorId == $this->mentor->id;
     }
 
+    public function isProgramMentee(int $userId): bool
+    {
+        return $userId == $this->id;
+    }
+
     public function checkUniqueUsername(string $username): bool
     {
         return !$this->where('username', $username)->exists();

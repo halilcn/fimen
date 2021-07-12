@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MentorMenteeProgramDetailInformationResource;
+use App\Http\Resources\MentorMenteeProgramDetailResource;
 use App\Http\Resources\MentorMenteeProgramsResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorProgram;
@@ -73,15 +75,12 @@ class MentorMenteeProgramResourceController extends Controller
         return response(['status' => true], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //
+        $this->authorize('show', $mentorMenteeProgram);
+        $mentorMenteeProgram->load('mentee', 'mentor.user');
+
+        return MentorMenteeProgramDetailResource::make($mentorMenteeProgram);
     }
 
     /**
@@ -116,5 +115,11 @@ class MentorMenteeProgramResourceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getInformation(MentorMenteeProgram $mentorMenteeProgram)
+    {
+        $mentorMenteeProgram->load('notifications');
+        return MentorMenteeProgramDetailInformationResource::make($mentorMenteeProgram);
     }
 }

@@ -16,7 +16,21 @@ export const mentorMenteeProgram = {
                 .then(res => {
                     return res.data.data;
                 })
-        }
+        },
+        getMentorMenteeProgramDetail() {
+            return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}`)
+                .then(res => {
+                    return res.data.data;
+                });
+        },
+        getMentorMenteeProgramDetailInfo() {
+            return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}/information`)
+                .then(res => {
+                    console.log(res)
+                    return res.data.data;
+                });
+        },
+
     },
     getters: {}
 }

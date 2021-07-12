@@ -6,7 +6,7 @@
           Geçirilen gün sayısı
         </div>
         <div class="value">
-          12
+          {{ detailInfo.info.number_of_days_spent }}
         </div>
       </div>
     </div>
@@ -15,6 +15,7 @@
         <i class="fas fa-history"></i>
         Son Hareketler
       </li>
+      {{ detailInfo.notifications }}
       <li>
         bildgi bilgi bildgi bilgibildgi bilgi
       </li>
@@ -33,7 +34,23 @@
 
 <script>
 export default {
-  name: "MainPage"
+  name: "MainPage",
+  data() {
+    return {
+      'detailInfo': []
+    }
+  },
+  methods: {
+    getMentorMenteeProgramDetailInfo() {
+      this.$store.dispatch('getMentorMenteeProgramDetailInfo')
+          .then(res => {
+            this.detailInfo = res;
+          })
+    }
+  },
+  created() {
+    this.getMentorMenteeProgramDetailInfo();
+  }
 }
 </script>
 

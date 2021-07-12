@@ -1,17 +1,21 @@
 <template>
   <div class="active_program_detail">
+    <new-meeting/>
     <div class="top_info">
       <div class="mentee">
         <div class="user">
           <div class="title">
             Mentee
           </div>
-          <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
-          <div class="name">Halil Can</div>
+          <img :src="programDetail.mentee.image">
+          <div class="name">
+            {{ programDetail.mentee.name }}
+          </div>
           <router-link
               tag="div"
-              :to="{name:'UserProfile',params:{username:'deneme'}}"
-              class="username">@hcan
+              :to="{name:'UserProfile',params:{username:programDetail.mentee.username}}"
+              class="username">
+            @{{ programDetail.mentee.username }}
           </router-link>
         </div>
       </div>
@@ -25,7 +29,7 @@
           <div class="month">Haziran</div>
           <div class="hour">12:00</div>
         </div>
-        <div class="new_meeting">
+        <div @click="$store.commit('setShowPopup',true)" class="new_meeting">
           <i class="fas fa-user-friends"></i>
           Yeni Toplantı
         </div>
@@ -35,13 +39,15 @@
           <div class="title mentor">
             Mentor
           </div>
-          <img src="https://ui-avatars.com/api/?name=Halil+Can&amp;background=f2f2f2&amp;size=128">
-          <div class="name">Mehmet Can</div>
+          <img :src="programDetail.mentor.image">
+          <div class="name">
+            {{ programDetail.mentor.name }}
+          </div>
           <router-link
               tag="div"
-              :to="{name:'UserProfile',params:{username:'deneme'}}"
+              :to="{name:'UserProfile',params:{username:programDetail.mentor.username}}"
               class="username">
-            @mehmet
+            @{{ programDetail.mentor.username }}
           </router-link>
         </div>
       </div>
@@ -80,10 +86,24 @@
 export default {
   name: "ProgramDetail",
   data() {
-    return {}
+    return {
+      programDetail: []
+    }
   },
-
-
+  components: {
+    NewMeeting: () => import('@/components/pages/myActivePrograms/shared/NewMeeting')
+  },
+  methods: {
+    getMentorMenteeProgramDetail() {
+      this.$store.dispatch('getMentorMenteeProgramDetail')
+          .then(res => {
+            this.programDetail = res;
+          });
+    }
+  },
+  created() {
+    this.getMentorMenteeProgramDetail();
+  }
 }
 </script>
 

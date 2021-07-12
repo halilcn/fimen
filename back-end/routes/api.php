@@ -11,6 +11,7 @@ use App\Http\Controllers\API\MeMentorProgramUserResourceController;
 use App\Http\Controllers\API\MeNotificationResourceController;
 use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
+use App\Http\Controllers\API\MentorMenteeProgramInfoController;
 use App\Http\Controllers\API\MentorMenteeProgramResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
@@ -86,7 +87,18 @@ Route::group(
                 Route::resource('/mentors', MentorResourceController::class);
                 Route::resource('/user', UserResourceController::class);
                 Route::resource('/favorite-users', FavoriteUserResourceController::class);
+
+                Route::get(
+                    '/mentor-mentee-programs/{mentor_mentee_program}/information',
+                    [MentorMenteeProgramResourceController::class, 'getInformation']
+                );
                 Route::resource('/mentor-mentee-programs', MentorMenteeProgramResourceController::class);
+
+
+                //  Route::resource('/mentor-mentee-programs/meeting',);
+                //  Route::resource('/mentor-mentee-programs/messages',);
+                //  Route::resource('/mentor-mentee-programs/settings',);
+
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
         );
