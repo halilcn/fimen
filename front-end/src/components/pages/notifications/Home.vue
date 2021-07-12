@@ -30,7 +30,6 @@
         </div>
       </template>
     </template>
-    {{ echo }}
   </bg-white-template>
 </template>
 
@@ -43,6 +42,13 @@ window.Echo = new Echo({
   broadcaster: 'socket.io',
   host: 'http://127.0.0.1:6001'
 });
+
+// "keyPrefix": "app_database_"
+window.Echo.channel('user_notifications.29')
+    .listen('.listen-deneme', (notification) => {
+      alert();
+      console.log(notification);
+    });
 
 export default {
   name: "Home",
@@ -73,15 +79,7 @@ export default {
   created() {
     this.getNotifications();
   },
-  computed: {
-    echo() {
-      return Echo.channel(`user_notifications.29`)
-          .notification((notification) => {
-            alert();
-            console.log(notification);
-          });
-    }
-  }
+  computed: {}
 }
 </script>
 

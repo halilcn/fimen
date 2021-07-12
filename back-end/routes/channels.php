@@ -27,3 +27,10 @@ Broadcast::channel(
         //   return $user->id == $userId;
     }
 );*/
+
+Broadcast::channel(
+    'user_notifications.29',
+    function () {
+        return true;
+    }
+);

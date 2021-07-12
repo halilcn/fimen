@@ -10,10 +10,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 
-class MenteeConfirmation extends Notification implements ShouldBroadcast
+class MenteeConfirmation extends Notification
 {
     use Queueable;
 
@@ -58,10 +57,8 @@ class MenteeConfirmation extends Notification implements ShouldBroadcast
         ];
     }
 
-    public
-    function toBroadcast(
-        $notifiable
-    ) {
+    public function toBroadcast($notifiable)
+    {
         return new BroadcastMessage(
             [
                 'deneme' => 'dsadad adsad sa',
@@ -70,8 +67,7 @@ class MenteeConfirmation extends Notification implements ShouldBroadcast
         );
     }
 
-    public
-    function broadcastOn()
+    public function broadcastOn()
     {
         return new Channel('user_notifications.29'); //private
     }

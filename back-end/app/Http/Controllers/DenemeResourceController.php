@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\denemeEvent;
 use App\Models\MentorMenteeProgram;
 use App\Models\User;
 use App\Notifications\MenteeConfirmation;
@@ -13,6 +14,9 @@ class DenemeResourceController extends Controller
 
     public function index()
     {
+        event(new denemeEvent());
+        return "ok";
+
         $user = User::find(29);
         $program = MentorMenteeProgram::find(18);
         $user->notify(new MenteeConfirmation($program));
