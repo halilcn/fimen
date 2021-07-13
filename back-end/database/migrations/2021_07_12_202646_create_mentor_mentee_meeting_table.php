@@ -13,10 +13,17 @@ class CreateMentorMenteeMeetingTable extends Migration
      */
     public function up()
     {
-        Schema::create('mentor_mentee_meeting', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        Schema::create(
+            'mentor_mentee_meeting',
+            function (Blueprint $table) {
+                $table->id();
+                $table->integer('mentor_mentee_program_id')->references('id')->on('mentor_mentee');
+                $table->string('address');
+                $table->string('explanation');
+                $table->dateTime('date');
+                $table->timestamps();
+            }
+        );
     }
 
     /**

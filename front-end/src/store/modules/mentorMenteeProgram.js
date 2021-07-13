@@ -20,6 +20,7 @@ export const mentorMenteeProgram = {
         getMentorMenteeProgramDetail() {
             return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}`)
                 .then(res => {
+                    console.log(res);
                     return res.data.data;
                 });
         },
@@ -30,7 +31,9 @@ export const mentorMenteeProgram = {
                     return res.data.data;
                 });
         },
-
+        postMentorMenteeProgramMeeting(_, payload) {
+            return axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/meetings`, payload)
+        }
     },
     getters: {}
 }

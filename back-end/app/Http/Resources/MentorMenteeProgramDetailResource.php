@@ -25,7 +25,16 @@ class MentorMenteeProgramDetailResource extends JsonResource
                 'name' => $this->mentor->user->name,
                 'image' => $this->mentor->user->image,
             ],
-            'next meeting' => null
+            'next_meeting' => $this->when(
+                $this->meetings->count() != 0,
+                function () {
+                    return $this->meetings[0];
+                },
+                function () {
+                    return false;
+                }
+            )
+
         ];
     }
 }

@@ -19,20 +19,30 @@
           </router-link>
         </div>
       </div>
-      <div class="next_meeting">
+      <div v-if="programDetail.next_meeting" class="next_meeting">
         <div class="text">
           <i class="far fa-clock"></i>
           Bir sonraki toplanma tarihi
         </div>
         <div class="date">
-          <div class="day">12</div>
-          <div class="month">Haziran</div>
-          <div class="hour">12:00</div>
+          <div class="day">
+            {{ moment(programDetail.next_meeting.date).format('D') }}
+          </div>
+          <div class="month">
+            {{ moment(programDetail.next_meeting.date).format('MMMM') }}
+          </div>
+          <div class="hour">
+            {{ moment(programDetail.next_meeting.date).format('H:mm') }}
+          </div>
         </div>
         <div @click="$store.commit('setShowPopup',true)" class="new_meeting">
           <i class="fas fa-user-friends"></i>
           Yeni Toplantı
         </div>
+      </div>
+      <div v-else class="no_meeting">
+        <i class="fas fa-info-circle"></i>
+        Şu an planlanmış bir toplantı yok.
       </div>
       <div class="mentor">
         <div class="user">
@@ -211,6 +221,20 @@ export default {
   cursor: pointer;
   background-color: #2cae2c;
   color: white;
+}
+
+.top_info > .no_meeting {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--navy-blue-text-color);
+}
+
+.top_info > .no_meeting > i {
+  margin-right: 5px;
 }
 
 .top_info > .mentor {

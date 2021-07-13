@@ -9,6 +9,7 @@ use App\Http\Resources\MentorMenteeProgramsResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorProgram;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -78,7 +79,18 @@ class MentorMenteeProgramResourceController extends Controller
     public function show(MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('show', $mentorMenteeProgram);
-        $mentorMenteeProgram->load('mentee', 'mentor.user');
+        $mentorMenteeProgram->load(
+            [
+                'mentee',
+                'mentor.user',
+                'meetings' => function (HasMany $query) {
+                    $query->orderBy('date')
+                        ->where('date', '>', now())
+                        ->select('address', 'date', 'mentor_mentee_program_id')
+                        ->first();
+                }
+            ]
+        );
 
         return MentorMenteeProgramDetailResource::make($mentorMenteeProgram);
     }
