@@ -19,30 +19,41 @@
           </router-link>
         </div>
       </div>
-      <div v-if="programDetail.next_meeting" class="next_meeting">
-        <div class="text">
-          <i class="far fa-clock"></i>
-          Bir sonraki toplanma tarihi
+      <div class="middle-info">
+        <div v-if="programDetail.next_meeting" class="next_meeting">
+          <div class="text">
+            <i class="far fa-clock"></i>
+            Bir sonraki toplanma tarihi
+          </div>
+          <div class="date">
+            <div class="day">
+              {{ moment(programDetail.next_meeting.date).format('D') }}
+            </div>
+            <div class="month">
+              {{ moment(programDetail.next_meeting.date).format('MMMM') }}
+            </div>
+            <div class="hour">
+              {{ moment(programDetail.next_meeting.date).format('H:mm') }}
+            </div>
+          </div>
+          <a
+              target="_blank"
+              class="go_meeting"
+              :href="programDetail.next_meeting.address">
+            Toplantıya Git
+          </a>
         </div>
-        <div class="date">
-          <div class="day">
-            {{ moment(programDetail.next_meeting.date).format('D') }}
-          </div>
-          <div class="month">
-            {{ moment(programDetail.next_meeting.date).format('MMMM') }}
-          </div>
-          <div class="hour">
-            {{ moment(programDetail.next_meeting.date).format('H:mm') }}
-          </div>
+        <div v-else class="no_meeting">
+          <i class="fas fa-info-circle"></i>
+          Şu an planlanmış bir toplantı yok.
         </div>
-        <div @click="$store.commit('setShowPopup',true)" class="new_meeting">
+        <div
+            v-if="programDetail.is_mentor"
+            @click="$store.commit('setShowPopup',true)"
+            class="new_meeting">
           <i class="fas fa-user-friends"></i>
           Yeni Toplantı
         </div>
-      </div>
-      <div v-else class="no_meeting">
-        <i class="fas fa-info-circle"></i>
-        Şu an planlanmış bir toplantı yok.
       </div>
       <div class="mentor">
         <div class="user">
@@ -121,6 +132,7 @@ export default {
 .top_info {
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   padding: 10px;
   border-radius: 5px;
   box-shadow: 0 0px 0.6px rgba(0, 0, 0, 0.011),
@@ -176,7 +188,14 @@ export default {
   width: 50%;
 }
 
-.top_info > .next_meeting {
+.top_info > .middle-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top_info > .middle-info > .next_meeting {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,14 +203,15 @@ export default {
   width: 100%;
 }
 
-.top_info > .next_meeting > .text {
+.top_info > .middle-info > .next_meeting > .text {
   font-family: 'Rubik', sans-serif;
   font-weight: 300;
   font-size: 14px;
   font-style: italic;
+  text-align: center;
 }
 
-.top_info > .next_meeting > .date {
+.top_info > .middle-info > .next_meeting > .date {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -204,15 +224,27 @@ export default {
   color: var(--navy-blue-text-color);
 }
 
-.top_info > .next_meeting > .date > .day {
+.top_info > .middle-info > .next_meeting > .date > .day {
   font-size: 25px;
 }
 
-.top_info > .next_meeting > .date > .month {
+.top_info > .middle-info > .next_meeting > .date > .month {
   font-size: 15px;
 }
 
-.top_info > .next_meeting > .new_meeting {
+.top_info > .middle-info > .next_meeting > .go_meeting {
+  text-decoration: none;
+  color: #292929;
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.top_info > .middle-info > .next_meeting > .go_meeting:hover {
+  text-decoration: underline;
+}
+
+.top_info > .middle-info > .new_meeting {
   margin-top: 15px;
   font-family: 'Rubik', sans-serif;
   padding: 6px 15px;
@@ -223,17 +255,15 @@ export default {
   color: white;
 }
 
-.top_info > .no_meeting {
+.top_info > .middle-info > .no_meeting {
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: var(--navy-blue-text-color);
+  text-align: center;
 }
 
-.top_info > .no_meeting > i {
+.top_info > .middle-info > .no_meeting > i {
   margin-right: 5px;
 }
 

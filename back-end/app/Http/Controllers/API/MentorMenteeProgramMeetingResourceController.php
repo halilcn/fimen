@@ -4,19 +4,18 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorMenteeProgramMeetingRequest;
+use App\Http\Resources\MentorMenteeProgramDetailMeetingResource;
+use App\Jobs\CreateMentorMenteeProgramNotification;
 use App\Models\MentorMenteeProgram;
 use Illuminate\Http\Request;
 
 class MentorMenteeProgramMeetingResourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //
+        $mentorMenteeProgram->load('meetings');
+        return MentorMenteeProgramDetailMeetingResource::collection($mentorMenteeProgram->meetings);
     }
 
     /**
@@ -36,7 +35,18 @@ class MentorMenteeProgramMeetingResourceController extends Controller
      */
     public function store(MentorMenteeProgram $mentorMenteeProgram, MentorMenteeProgramMeetingRequest $request)
     {
-        $mentorMenteeProgram->meetings()->create($request->validated());
+        $this->transaction(
+            function () use ($mentorMenteeProgram, $request) {
+                $mentorMenteeProgram->meetings()->create($request->validated());
+                CreateMentorMenteeProgramNotification::dispatch(
+                    $mentorMenteeProgram,
+                    'CreatedNewMeeting',
+                    [
+                        'meeting_date' => $request->input('date')
+                    ]
+                );
+            }
+        );
 
         return response()->json(['status' => true], 201);
     }

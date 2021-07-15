@@ -20,19 +20,24 @@ export const mentorMenteeProgram = {
         getMentorMenteeProgramDetail() {
             return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}`)
                 .then(res => {
-                    console.log(res);
                     return res.data.data;
                 });
         },
         getMentorMenteeProgramDetailInfo() {
             return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}/information`)
                 .then(res => {
-                    console.log(res)
                     return res.data.data;
                 });
         },
         postMentorMenteeProgramMeeting(_, payload) {
             return axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/meetings`, payload)
+        },
+        getMentorMenteeProgramMeetings() {
+            return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}/meetings`)
+                .then(res => {
+                    console.log(res);
+                    return res.data.data;
+                });
         }
     },
     getters: {}

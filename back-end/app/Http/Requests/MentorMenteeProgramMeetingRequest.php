@@ -26,7 +26,7 @@ class MentorMenteeProgramMeetingRequest extends FormRequest
         return [
             'address' => ['required'],
             'explanation' => ['required'],
-            'date' => ['required', 'date'],
+            'date' => ['required', 'date', 'after:today'],
         ];
     }
 }

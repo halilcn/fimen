@@ -18,7 +18,9 @@ class MentorMenteeProgramDetailInformationResource extends JsonResource
             'info' => [
                 'number_of_days_spent' => $this->created_at->diffInDays(now()),
             ],
-            'notifications' => $this->notifications
+            'notifications' => MentorMenteeProgramDetailInformationNotificationResource::collection(
+                $this->notifications
+            )
         ];
     }
 }

@@ -111,7 +111,7 @@ const routes = [
                             {
                                 path: 'takvim',
                                 name: 'MeActiveProgramDetailCalendar',
-                                component: () => import('@/components/pages/myActivePrograms/shared/CalendarComponent'),
+                                component: () => import('@/components/pages/myActivePrograms/shared/calendarFile/CalendarComponent'),
                             },
                             {
                                 path: 'chat',

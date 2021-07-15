@@ -11,28 +11,28 @@
       </div>
     </div>
     <ul class="information_log_list">
-      <li class="title">
-        <i class="fas fa-history"></i>
-        Son Hareketler
-      </li>
-      {{ detailInfo.notifications }}
-      <li>
-        bildgi bilgi bildgi bilgibildgi bilgi
-      </li>
-      <li>
-        bildgi bilgi bildgi bilgibildgi bilgi
-      </li>
-      <li>
-        bildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgi
-      </li>
-      <li>
-        bildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgibildgi bilgi
-      </li>
+      <template v-if="detailInfo.notifications.length > 0">
+        <li class="title">
+          <i class="fas fa-bell"></i>
+          Bildirimler
+        </li>
+        <component
+            v-for="(notification,index) in detailInfo.notifications"
+            :key="index"
+            :is="notification.notification_type"
+            :data="notification.data"/>
+      </template>
+      <template v-else>
+        <div class="no_notifications">
+          Hiç bildirim yok
+        </div>
+      </template>
     </ul>
   </div>
 </template>
 
 <script>
+
 export default {
   name: "MainPage",
   data() {
@@ -40,10 +40,14 @@ export default {
       'detailInfo': []
     }
   },
+  components: {
+    CreatedNewMeeting: () => import("@/components/pages/myActivePrograms/shared/notifications/CreatedNewMeeting")
+  },
   methods: {
     getMentorMenteeProgramDetailInfo() {
       this.$store.dispatch('getMentorMenteeProgramDetailInfo')
           .then(res => {
+            console.log(res);
             this.detailInfo = res;
           })
     }
@@ -100,6 +104,15 @@ export default {
   list-style-type: none;
   margin-top: 0;
   margin-left: 20px;
+}
+
+.main_component > .information_log_list > .no_notifications {
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  padding: 10px;
+  background-color: #f5f8ff;
+  color: #436bc6;
 }
 
 .information_log_list > .title {

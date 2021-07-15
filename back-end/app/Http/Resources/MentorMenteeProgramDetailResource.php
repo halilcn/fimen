@@ -33,8 +33,8 @@ class MentorMenteeProgramDetailResource extends JsonResource
                 function () {
                     return false;
                 }
-            )
-
+            ),
+            'is_mentor' => $request->user()->id === $this->mentor->user->id
         ];
     }
 }

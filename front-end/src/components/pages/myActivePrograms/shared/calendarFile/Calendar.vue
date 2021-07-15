@@ -1,5 +1,8 @@
 <template>
   <div>
+    {{ this.meetings }}
+    <calendar-detail-popup/>
+    çift popup sorunu
     <FullCalendar :options="calendarOptions"/>
   </div>
 </template>
@@ -18,22 +21,30 @@ export default {
         plugins: [dayGridPlugin, interactionPlugin],
         initialView: 'dayGridMonth',
         dateClick: this.handleDateClick,
-        events: [
-          {title: 'etkinliğim benim', date: '2021-07-10'},
-          {title: 'event 2', date: '2019-04-02'}
-        ]
+        events: this.meetings
       }
     }
   },
+  props: ['meetings'],
   components: {
-    FullCalendar
+    FullCalendar,
+    CalendarDetailPopup: () => import('@/components/pages/myActivePrograms/shared/calendarFile/CalendarDetailPopup')
   },
   methods: {
-    handleDateClick: function (arg) {
-      console.log(arg);
-      alert('date click! ' + arg.dateStr)
+    handleDateClick(arg) {
+      this.$store.commit('setShowPopup', true);
+      console.log(arg.address);
+      //  alert('date click! ' + arg.event)
     }
-  }
+  },
+  watch: {
+    meetings() {
+      this.meetings.forEach((item) => {
+        console.log(item);
+        item.title = 'Toplantı'
+      });
+    }
+  },
 }
 </script>
 

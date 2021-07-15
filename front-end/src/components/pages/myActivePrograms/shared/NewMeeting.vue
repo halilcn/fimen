@@ -30,6 +30,7 @@
           </div>
           <div class="content meeting_address">
             <small-input
+                :min="moment().format('YYYY-MM-DDT00:00:00')"
                 type="datetime-local"
                 v-model.trim="$v.meet.date.$model"/>
           </div>
@@ -87,8 +88,13 @@ export default {
           .then(() => {
             this.isLoading = false;
             this.$store.commit('setShowPopup', false)
-            //tüm objeyi temizle !!
+            this.clearMeetObject();
           });
+    },
+    clearMeetObject() {
+      Object.keys(this.meet).forEach(key => {
+        this.meet[key] = ''
+      });
     }
   }
 }
