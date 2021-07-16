@@ -60,7 +60,7 @@ export default {
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
-    MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/MenteeConfirmationNotification'),
+    MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/type/MenteeConfirmationNotification'),
   },
   methods: {
     getNotifications() {

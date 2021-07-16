@@ -118,19 +118,22 @@ class MentorMenteeProgramResourceController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function destroy(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //
+        //mesaj silinmesi
+        $this->authorize('delete', $mentorMenteeProgram);
+
+        $mentorMenteeProgram->notifications()->delete();
+        $mentorMenteeProgram->meetings()->delete();
+        $mentorMenteeProgram->delete();
+
+        return response()->json(['status' => true]);
     }
 
     public function getInformation(MentorMenteeProgram $mentorMenteeProgram)
     {
+        //authorize hepsine bak !
         $mentorMenteeProgram->load('notifications');
         return MentorMenteeProgramDetailInformationResource::make($mentorMenteeProgram);
     }

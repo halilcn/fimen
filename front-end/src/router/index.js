@@ -114,9 +114,14 @@ const routes = [
                                 component: () => import('@/components/pages/myActivePrograms/shared/calendarFile/CalendarComponent'),
                             },
                             {
-                                path: 'chat',
-                                name: 'MeActiveProgramChatComponent',
+                                path: 'mesaj',
+                                name: 'MeActiveProgramChat',
                                 component: () => import('@/components/pages/myActivePrograms/shared/ChatComponent'),
+                            },
+                            {
+                                path: 'diger',
+                                name: 'MeActiveProgramOthers',
+                                component: () => import('@/components/pages/myActivePrograms/shared/OthersComponent'),
                             }
                         ]
                     }

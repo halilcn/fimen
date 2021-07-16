@@ -1,7 +1,6 @@
 <template>
   <div class="confirmation_popup_container">
     <div class="confirmation_popup_filter">
-
     </div>
     <div class="confirmation_popup_content">
       <div class="text">

@@ -2,8 +2,14 @@ import axios from "axios";
 import router from "@/router";
 
 export const mentorMenteeProgram = {
-    state: {},
-    mutations: {},
+    state: {
+        isMentor: false
+    },
+    mutations: {
+        setMentorStatus(state, payload) {
+            state.isMentor = payload;
+        }
+    },
     actions: {
         postMenteeConfirmation(_, payload) {
             return axios.post('/mentor-mentee-programs', {
@@ -17,9 +23,10 @@ export const mentorMenteeProgram = {
                     return res.data.data;
                 })
         },
-        getMentorMenteeProgramDetail() {
+        getMentorMenteeProgramDetail({commit}) {
             return axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}`)
                 .then(res => {
+                    commit('setMentorStatus', res.data.data.is_mentor);
                     return res.data.data;
                 });
         },
@@ -38,6 +45,9 @@ export const mentorMenteeProgram = {
                     console.log(res);
                     return res.data.data;
                 });
+        },
+        destroyMentorMenteeProgram() {
+            return axios.delete(`/mentor-mentee-programs/${router.currentRoute.params.id}`);
         }
     },
     getters: {}

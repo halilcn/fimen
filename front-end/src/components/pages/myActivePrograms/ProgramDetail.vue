@@ -91,13 +91,17 @@
       <router-link
           exact-active-class="active"
           tag="div"
-          :to="{name:'MeActiveProgramChatComponent'}"
+          :to="{name:'MeActiveProgramChat'}"
           class="item">
         Mesajlaşma
       </router-link>
-      <div class="item">
+      <router-link
+          exact-active-class="active"
+          tag="div"
+          :to="{name:'MeActiveProgramOthers'}"
+          class="item">
         Diğer
-      </div>
+      </router-link>
     </div>
     <router-view/>
   </div>

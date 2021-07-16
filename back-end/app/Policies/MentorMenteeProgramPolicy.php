@@ -35,4 +35,9 @@ class MentorMenteeProgramPolicy
     {
         return $user->isProgramOwner($program->mentor_id) || $user->isProgramMentee($program->user_id);
     }
+
+    public function delete(User $user, MentorMenteeProgram $program): bool
+    {
+        return $user->isProgramOwner($program->mentor_id);
+    }
 }

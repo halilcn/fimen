@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\MentorMenteeProgram;
 use App\Models\User;
+use App\Notifications\DestroyMentorMenteeProgram;
 use App\Notifications\MenteeConfirmation;
 
 class MentorMenteeProgramObserver
@@ -39,7 +40,8 @@ class MentorMenteeProgramObserver
      */
     public function deleted(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //
+        $user = User::find($mentorMenteeProgram->user_id);
+        $user->notifyNow(new DestroyMentorMenteeProgram($mentorMenteeProgram));
     }
 
     /**
