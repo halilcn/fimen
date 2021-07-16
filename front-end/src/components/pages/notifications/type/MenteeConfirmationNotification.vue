@@ -33,7 +33,6 @@ export default {
 .title {
   display: flex;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
   font-size: 18px;
   color: var(--navy-green-color);
 }
@@ -56,7 +55,6 @@ export default {
 }
 
 .content > .explanation {
-  font-family: 'Poppins', sans-serif;
   font-weight: 300;
   font-size: 13px;
   margin-top: 5px;

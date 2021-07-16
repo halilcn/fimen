@@ -19,7 +19,7 @@
             </div>
             <component
                 :data="notification.data"
-                :is="notificationComp"/>
+                :is="notificationType(notification.type)"/>
           </div>
         </div>
       </template>
@@ -54,13 +54,13 @@ export default {
   name: "Home",
   data() {
     return {
-      notificationComp: 'MentorProgramConfirmationNotification',
       notifications: []
     }
   },
   components: {
     BgWhiteTemplate: () => import('@/components/pages/shared/BgWhiteTemplate'),
-    MentorProgramConfirmationNotification: () => import('@/components/pages/notifications/type/MenteeConfirmationNotification'),
+    MenteeConfirmation: () => import('@/components/pages/notifications/type/MenteeConfirmationNotification'),
+    DestroyMentorMenteeProgram: () => import('@/components/pages/notifications/type/DestroyMentorMenteeProgramNotification'),
   },
   methods: {
     getNotifications() {
@@ -74,6 +74,9 @@ export default {
           .then(() => {
             this.notifications = [];
           });
+    },
+    notificationType(type) {
+      return type.split("\\")[2];
     }
   },
   created() {
@@ -126,6 +129,7 @@ export default {
   background-color: #ffffff;
   padding: 14px;
   border-radius: 5px;
+  font-family: 'Poppins', sans-serif;
   box-shadow: 0 0px 0.3px rgba(0, 0, 0, 0.014),
   0 0px 0.8px rgba(0, 0, 0, 0.02),
   0 0px 1.5px rgba(0, 0, 0, 0.025),

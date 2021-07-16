@@ -53,5 +53,6 @@ export const helper = {
             formData.append(key, jsonData[key]);
         });
         return formData;
-    }
+    },
+
 }
