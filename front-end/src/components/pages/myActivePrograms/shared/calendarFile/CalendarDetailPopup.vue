@@ -8,7 +8,7 @@
             Toplantı Zamanı
           </div>
           <div class="content">
-            12 Haziran 2020 15:40
+            {{ moment(data.meeting_date).format('D MMMM H:m') }}
           </div>
         </li>
         <li class="item">
@@ -17,7 +17,7 @@
             Toplantı Adresi
           </div>
           <div class="content">
-            <a href="#" target="_blank" class="go_meeting">
+            <a :href="data.meeting_address" target="_blank" class="go_meeting">
               Toplantıya Git
             </a>
           </div>
@@ -28,9 +28,7 @@
             Toplantı Açıklaması
           </div>
           <div class="content">
-            asdasd askdıajs dashd uasdukasd usdasyd asd astdyagsh dasdgasjdaskjdhas djasdkasdsa
-            asdlasodıw ıweruw ıorwrwer powrwclsdkfj sfıousıufı sufuo ısdd snf ner jerhjter tertb ertnmrb
-            cöskdfjıou rıwer wer ıjwer jwtnwjenrw rbwen rwrb
+            {{ data.meeting_explanation }}
           </div>
         </li>
       </ul>
@@ -41,10 +39,10 @@
 <script>
 export default {
   name: "CalendarDetail",
+  props: ['data'],
   components: {
     Popup: () => import('@/components/pages/shared/Popup')
   }
-
 }
 </script>
 
