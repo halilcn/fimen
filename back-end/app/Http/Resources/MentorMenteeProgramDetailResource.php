@@ -15,16 +15,9 @@ class MentorMenteeProgramDetailResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'mentee' => [
-                'username' => $this->mentee->username,
-                'name' => $this->mentee->name,
-                'image' => $this->mentee->image
-            ],
-            'mentor' => [
-                'username' => $this->mentor->user->username,
-                'name' => $this->mentor->user->name,
-                'image' => $this->mentor->user->image,
-            ],
+            'mentee' => MentorMenteeProgramDetailUserResource::make($this->mentee),
+            'mentor' => MentorMenteeProgramDetailUserResource::make($this->mentor->user),
+            'is_mentor' => $request->user()->isProgramMentor($this->mentor->user->id),
             'next_meeting' => $this->when(
                 $this->meetings->count() != 0,
                 function () {
@@ -34,7 +27,6 @@ class MentorMenteeProgramDetailResource extends JsonResource
                     return false;
                 }
             ),
-            'is_mentor' => $request->user()->id === $this->mentor->user->id
         ];
     }
 }

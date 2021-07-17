@@ -127,9 +127,19 @@ class User extends Authenticatable
         return $mentorId == $this->mentor->id;
     }
 
+    public function checkUserId(int $userId): bool
+    {
+        return $this->id == $userId;
+    }
+
     public function isProgramMentee(int $userId): bool
     {
-        return $userId == $this->id;
+        return $this->checkUserId($userId);
+    }
+
+    public function isProgramMentor(int $userId): bool
+    {
+        return $this->checkUserId($userId);
     }
 
     public function checkUniqueUsername(string $username): bool

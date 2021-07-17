@@ -3,11 +3,10 @@
 namespace App\Policies;
 
 use App\Models\MentorMenteeProgram;
-use App\Models\MentorProgram;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MentorMenteeProgramPolicy
+class MentorMenteeProgramMeetingPolicy
 {
     use HandlesAuthorization;
 
@@ -23,17 +22,7 @@ class MentorMenteeProgramPolicy
 
     /**
      * @param  User  $user
-     * @param  MentorProgram  $program
-     * @return bool
-     */
-    public function create(User $user, MentorProgram $mentorProgram): bool
-    {
-        return $user->isProgramOwner($mentorProgram->mentor_id);
-    }
-
-    /**
-     * @param  User  $user
-     * @param  MentorMenteeProgram  $program
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
      * @return bool
      */
     public function show(User $user, MentorMenteeProgram $mentorMenteeProgram): bool
@@ -46,11 +35,12 @@ class MentorMenteeProgramPolicy
 
     /**
      * @param  User  $user
-     * @param  MentorMenteeProgram  $program
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
      * @return bool
      */
-    public function delete(User $user, MentorMenteeProgram $mentorMenteeProgram): bool
+    public function create(User $user, MentorMenteeProgram $mentorMenteeProgram): bool
     {
         return $user->isProgramOwner($mentorMenteeProgram->mentor_id);
     }
+
 }

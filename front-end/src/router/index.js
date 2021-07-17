@@ -115,12 +115,12 @@ const routes = [
                             },
                             {
                                 path: 'mesaj',
-                                name: 'MeActiveProgramChat',
+                                name: 'MeActiveProgramDetailChat',
                                 component: () => import('@/components/pages/myActivePrograms/shared/ChatComponent'),
                             },
                             {
                                 path: 'diger',
-                                name: 'MeActiveProgramOthers',
+                                name: 'MeActiveProgramDetailOthers',
                                 component: () => import('@/components/pages/myActivePrograms/shared/OthersComponent'),
                             }
                         ]

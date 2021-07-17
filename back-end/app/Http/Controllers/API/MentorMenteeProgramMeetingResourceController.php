@@ -7,6 +7,7 @@ use App\Http\Requests\MentorMenteeProgramMeetingRequest;
 use App\Http\Resources\MentorMenteeProgramDetailMeetingResource;
 use App\Jobs\CreateMentorMenteeProgramNotification;
 use App\Models\MentorMenteeProgram;
+use App\Models\MentorMenteeProgramMeeting;
 use Illuminate\Http\Request;
 
 class MentorMenteeProgramMeetingResourceController extends Controller
@@ -14,6 +15,7 @@ class MentorMenteeProgramMeetingResourceController extends Controller
 
     public function index(MentorMenteeProgram $mentorMenteeProgram)
     {
+        $this->authorize('show', [MentorMenteeProgramMeeting::class, $mentorMenteeProgram]);
         $mentorMenteeProgram->load('meetings');
         return MentorMenteeProgramDetailMeetingResource::collection($mentorMenteeProgram->meetings);
     }
@@ -35,6 +37,8 @@ class MentorMenteeProgramMeetingResourceController extends Controller
      */
     public function store(MentorMenteeProgram $mentorMenteeProgram, MentorMenteeProgramMeetingRequest $request)
     {
+        $this->authorize('create', [MentorMenteeProgramMeeting::class, $mentorMenteeProgram]);
+
         $this->transaction(
             function () use ($mentorMenteeProgram, $request) {
                 $mentorMenteeProgram->meetings()->create($request->validated());

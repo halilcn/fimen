@@ -91,14 +91,14 @@
       <router-link
           exact-active-class="active"
           tag="div"
-          :to="{name:'MeActiveProgramChat'}"
+          :to="{name:'MeActiveProgramDetailChat'}"
           class="item">
         Mesajlaşma
       </router-link>
       <router-link
           exact-active-class="active"
           tag="div"
-          :to="{name:'MeActiveProgramOthers'}"
+          :to="{name:'MeActiveProgramDetailOthers'}"
           class="item">
         Diğer
       </router-link>

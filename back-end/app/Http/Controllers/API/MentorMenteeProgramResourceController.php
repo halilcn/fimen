@@ -60,7 +60,10 @@ class MentorMenteeProgramResourceController extends Controller
         $this->authorize('create', [MentorMenteeProgram::class, $mentorProgram]);
 
         //with sql ?
-        abort_if($mentorProgram->approvedUsers()->wherePivot('user_id', $request->input('user_id'))->exists(), 409);
+        abort_if(
+            $mentorProgram->approvedUsers()->wherePivot('user_id', $request->input('user_id'))->exists(),
+            409
+        );
 
         $this->transaction(
             function () use ($request, $mentorProgram) {
@@ -73,12 +76,14 @@ class MentorMenteeProgramResourceController extends Controller
                 );
             }
         );
+
         return response(['status' => true], 201);
     }
 
     public function show(MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('show', $mentorMenteeProgram);
+
         $mentorMenteeProgram->load(
             [
                 'mentee',
@@ -121,7 +126,7 @@ class MentorMenteeProgramResourceController extends Controller
 
     public function destroy(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //mesaj silinmesi
+        //mesajların silinmesi ?
         $this->authorize('delete', $mentorMenteeProgram);
 
         $mentorMenteeProgram->notifications()->delete();
@@ -133,8 +138,10 @@ class MentorMenteeProgramResourceController extends Controller
 
     public function getInformation(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //authorize hepsine bak !
+        $this->authorize('show', $mentorMenteeProgram);
+
         $mentorMenteeProgram->load('notifications');
+
         return MentorMenteeProgramDetailInformationResource::make($mentorMenteeProgram);
     }
 }

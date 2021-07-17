@@ -36,12 +36,12 @@ class MentorMenteeProgram extends Model
 
     public function notifications(): HasMany
     {
-        return $this->hasMany(MentorMenteeNotification::class, 'mentor_mentee_id', 'id');
+        return $this->hasMany(MentorMenteeProgramNotification::class, 'mentor_mentee_id', 'id');
     }
 
     public function meetings(): HasMany
     {
-        return $this->hasMany(MentorMenteeMeeting::class);
+        return $this->hasMany(MentorMenteeProgramMeeting::class);
     }
 
 

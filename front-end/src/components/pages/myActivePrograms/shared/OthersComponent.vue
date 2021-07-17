@@ -19,7 +19,7 @@
         </li>
       </template>
       <template v-else>
-        mentee olanlar görebilecek
+        mentee olanlar görebilecek seçenekler
       </template>
     </template>
   </ul>

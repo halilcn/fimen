@@ -16,6 +16,7 @@
           <i class="fas fa-bell"></i>
           Bildirimler
         </li>
+        //notification type henüz yapılmadı
         <component
             v-for="(notification,index) in detailInfo.notifications"
             :key="index"
@@ -47,7 +48,6 @@ export default {
     getMentorMenteeProgramDetailInfo() {
       this.$store.dispatch('getMentorMenteeProgramDetailInfo')
           .then(res => {
-            console.log(res);
             this.detailInfo = res;
           })
     }
