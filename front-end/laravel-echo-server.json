@@ -12,7 +12,7 @@
     "redis": {
       "port": "6379",
       "host": "127.0.0.1",
-      "keyPrefix": "fimen_database_"
+      "keyPrefix": "fimen_database"
     },
     "sqlite": {
       "databasePath": "/database/laravel-echo-server.sqlite"

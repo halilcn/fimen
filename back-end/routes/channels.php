@@ -29,7 +29,7 @@ Broadcast::channel(
 );*/
 
 Broadcast::channel(
-    'user_notifications.29',
+    'deneme',
     function () {
         return true;
     }

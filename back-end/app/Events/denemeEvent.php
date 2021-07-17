@@ -8,6 +8,7 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Queue\SerializesModels;
 
 class denemeEvent implements ShouldBroadcastNow
@@ -25,12 +26,14 @@ class denemeEvent implements ShouldBroadcastNow
     }
 
 
-    public function broadcastWith()
+    public function toBroadcast($notifiable)
     {
-        return [
-            'id' => 'dedee',
-            'deneme' => 'sasada das',
-        ];
+        return new BroadcastMessage(
+            [
+                'deneme' => 'dasdas dasd a',
+                'denem2' => 'dddeed',
+            ]
+        );
     }
 
 
@@ -41,7 +44,8 @@ class denemeEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new Channel('user_notifications.29');
+        //return new Channel('user_notifications.29');
+        return new Channel('deneme');
     }
 
     public function broadcastAs()

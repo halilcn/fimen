@@ -40,11 +40,19 @@ window.io = require('socket.io-client');
 
 window.Echo = new Echo({
   broadcaster: 'socket.io',
-  host: 'http://127.0.0.1:6001'
+  host: 'http://127.0.0.1:6001',
+  authEndpoint: '/broadcasting/auth',
+  auth: {
+    headers: {
+      'Authorization': 'Bearer 67|opivFX92YmCpN8BBYx9zXwg7kWs4ytKSurbIHHns',
+      'X-CSRF-Token': "CSRF_TOKEN"
+    }
+  }
 });
 
 // "keyPrefix": "app_database_"
-window.Echo.channel('user_notifications.29')
+
+window.Echo.private('fimen_database_deneme')
     .listen('.listen-deneme', (notification) => {
       alert();
       console.log(notification);
