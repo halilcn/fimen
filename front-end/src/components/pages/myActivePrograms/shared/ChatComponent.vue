@@ -1,5 +1,15 @@
 <template>
   <div class="message">
+    {{ message }}
+    <popup title="Fotoğraf Veya Video Seç">
+      <template slot="popup">
+        <div class="message_media_popup_content">
+          <standart-file-input
+              id="message_media"
+              v-model="message.content"/>
+        </div>
+      </template>
+    </popup>
     <ul class="message_actions_list">
       <li class="item setting">
         <ul @focusin="settingDropdownAction" v-if="isShowSettingDropdown" class="setting_dropdown">
@@ -14,7 +24,7 @@
       </li>
     </ul>
     <ul class="message_list">
-      <li class="item date">
+      <li class="date">
         12 Haziran
       </li>
       <li class="item friend_message">
@@ -56,6 +66,19 @@
           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
+      <li class="date">
+        16 Haziran
+      </li>
+      <li class="item my_message">
+        <div class="message_txt">
+          bu benim mesajım dır asdıjaısd jıasda
+        </div>
+      </li>
+      <li class="item my_message">
+        <div class="message_txt">
+          bu benim mesajım dır asdıjaısd jıasda
+        </div>
+      </li>
       <li class="item my_message">
         <div class="message_txt">
           bu benim mesajım dır asdıjaısd jıasda
@@ -73,24 +96,45 @@
           jıasda
         </div>
       </li>
+      <li class="item my_message">
+        <div class="message_txt">
+          bu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
+          jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
+          jıasda
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="message_txt">
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="message_txt">
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
+        </div>
+      </li>
     </ul>
     <div class="send_message_container">
-      <small-textarea v-model="message"/>
+      <small-textarea v-model="message.content"/>
       <div class="message_actions">
         <div v-if="isMessageEmpty" class="media">
           <div @click="isShowMediaDropdown=!isShowMediaDropdown" class="media_btn">
-            <i class="fas fa-photo-video"></i>
+            <i class="fas fa-paperclip"></i>
           </div>
           <ul v-if="isShowMediaDropdown" class="media_dropdown">
-            <li>
-              <i class="fas fa-image"></i>
-            </li>
-            <li>
-              <i class="fas fa-video"></i>
+            <li @click="$store.commit('setShowPopup',true)">
+              <i class="fas fa-photo-video"></i>
             </li>
           </ul>
         </div>
-        <div v-else class="send_message">
+        <div
+            v-else
+            @click="postMessage"
+            class="send_message">
           <i class="bi bi-caret-right-fill"></i>
         </div>
       </div>
@@ -99,26 +143,35 @@
 </template>
 
 <script>
+
 export default {
   name: "ChatComponent",
   data() {
     return {
       isShowSettingDropdown: false,
       isShowMediaDropdown: false,
-      message: ''
+      message: {
+        type: '',
+        content: ''
+      }
     }
   },
   components: {
+    Popup: () => import('@/components/pages/shared/Popup'),
+    StandartFileInput: () => import('@/components/pages/shared/elements/StandartFileInput'),
     SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea')
   },
   methods: {
     settingDropdownAction() {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
+    },
+    postMessage() {
+      this.$store.dispatch('postMentorMenteeProgramMessage', this.message);
     }
   },
   computed: {
     isMessageEmpty() {
-      return this.message === '';
+      return this.message.content === '';
     }
   }
 }
@@ -189,6 +242,7 @@ export default {
 }
 
 .message_list {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -216,9 +270,18 @@ export default {
 }
 
 .message_list > .date {
+  align-self: center;
   font-family: 'Poppins', sans-serif;
-  background-color: red;
-  width: 100% !important;
+  font-weight: 300;
+  background-color: var(--navy-red-bg-dark-color);
+  color: white;
+  position: sticky;
+  top: 0;
+  margin: 10px 0;
+  z-index: 2;
+  padding: 3px 10px;
+  font-size: 11px;
+  border-radius: 5px;
 }
 
 .message_list > .item {
@@ -267,7 +330,7 @@ export default {
 
 .send_message_container {
   display: flex;
-  justify-content: flex-start;
+  align-items: center;
   padding: 13px;
   border-radius: 4px;
   box-shadow: 0 0px 0.7px rgba(0, 0, 0, 0.011),
@@ -280,9 +343,11 @@ export default {
 
 .send_message_container > textarea {
   resize: none;
+  overflow: hidden;
   height: 35px;
   border-radius: 15px;
-  max-height: 100px;
+  min-height: 35px;
+  max-height: 150px;
 }
 
 .send_message_container > .message_actions {
@@ -348,5 +413,9 @@ export default {
 
 .send_message_container > .message_actions > .send_message:hover {
   background-color: #e6eaee;
+}
+
+.message_media_popup_content {
+  margin-top: 10px;
 }
 </style>
