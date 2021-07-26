@@ -14,6 +14,18 @@
       </li>
     </ul>
     <ul class="message_list">
+      <li class="item date">
+        12 Haziran
+      </li>
+      <li class="item friend_message">
+        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="message_txt">
+          selmal asdad sadslalsdlas das
+          <div class="date_hours">
+            12:32
+          </div>
+        </div>
+      </li>
       <li class="item friend_message">
         <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
         <div class="message_txt">
@@ -30,6 +42,25 @@
           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
+      <li class="item friend_message">
+        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="message_txt">
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="message_txt">
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
+        </div>
+      </li>
+      <li class="item my_message">
+        <div class="message_txt">
+          bu benim mesajım dır asdıjaısd jıasda
+        </div>
+      </li>
       <li class="item my_message">
         <div class="message_txt">
           bu benim mesajım dır asdıjaısd jıasda
@@ -44,7 +75,25 @@
       </li>
     </ul>
     <div class="send_message_container">
-      messaje send container
+      <small-textarea v-model="message"/>
+      <div class="message_actions">
+        <div v-if="isMessageEmpty" class="media">
+          <div @click="isShowMediaDropdown=!isShowMediaDropdown" class="media_btn">
+            <i class="fas fa-photo-video"></i>
+          </div>
+          <ul v-if="isShowMediaDropdown" class="media_dropdown">
+            <li>
+              <i class="fas fa-image"></i>
+            </li>
+            <li>
+              <i class="fas fa-video"></i>
+            </li>
+          </ul>
+        </div>
+        <div v-else class="send_message">
+          <i class="bi bi-caret-right-fill"></i>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -54,12 +103,22 @@ export default {
   name: "ChatComponent",
   data() {
     return {
-      isShowSettingDropdown: false
+      isShowSettingDropdown: false,
+      isShowMediaDropdown: false,
+      message: ''
     }
+  },
+  components: {
+    SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea')
   },
   methods: {
     settingDropdownAction() {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
+    }
+  },
+  computed: {
+    isMessageEmpty() {
+      return this.message === '';
     }
   }
 }
@@ -137,12 +196,29 @@ export default {
   background-color: white;
   padding: 13px;
   border-radius: 4px;
+  overflow-y: auto;
+  max-height: 500px;
   box-shadow: 0 0px 0.7px rgba(0, 0, 0, 0.011),
   0 0px 1.6px rgba(0, 0, 0, 0.016),
   0 0px 3px rgba(0, 0, 0, 0.02),
   0 0px 5.4px rgba(0, 0, 0, 0.024),
   0 0px 10px rgba(0, 0, 0, 0.029),
   0 0px 24px rgba(0, 0, 0, 0.04);
+}
+
+.message_list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.message_list::-webkit-scrollbar-thumb {
+  background: #d7d7d7;
+  border-radius: 5px;
+}
+
+.message_list > .date {
+  font-family: 'Poppins', sans-serif;
+  background-color: red;
+  width: 100% !important;
 }
 
 .message_list > .item {
@@ -187,5 +263,90 @@ export default {
 
 .message_list > .item.my_message > .message_txt {
   background-color: #ecf6ff;
+}
+
+.send_message_container {
+  display: flex;
+  justify-content: flex-start;
+  padding: 13px;
+  border-radius: 4px;
+  box-shadow: 0 0px 0.7px rgba(0, 0, 0, 0.011),
+  0 0px 1.6px rgba(0, 0, 0, 0.016),
+  0 0px 3px rgba(0, 0, 0, 0.02),
+  0 0px 5.4px rgba(0, 0, 0, 0.024),
+  0 0px 10px rgba(0, 0, 0, 0.029),
+  0 0px 24px rgba(0, 0, 0, 0.04);
+}
+
+.send_message_container > textarea {
+  resize: none;
+  height: 35px;
+  border-radius: 15px;
+  max-height: 100px;
+}
+
+.send_message_container > .message_actions {
+  margin-left: 20px;
+  width: 70px;
+}
+
+.send_message_container > .message_actions > .media {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.send_message_container > .message_actions > .media > .media_btn {
+  padding: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: var(--navy-blue-text-color);
+  background-color: #f7f8fa;
+}
+
+.send_message_container > .message_actions > .media > .media_dropdown {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin: 0;
+  position: absolute;
+  bottom: 40px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 20px;
+  background-color: white;
+  box-shadow: 0 0px 0.5px rgba(0, 0, 0, 0.008),
+  0 0px 1.1px rgba(0, 0, 0, 0.012),
+  0 0px 2.1px rgba(0, 0, 0, 0.015),
+  0 0px 3.8px rgba(0, 0, 0, 0.018),
+  0 0px 7.1px rgba(0, 0, 0, 0.022),
+  0 0px 17px rgba(0, 0, 0, 0.03);
+}
+
+.send_message_container > .message_actions > .media > .media_dropdown > li {
+  padding: 12px 15px 12px 12px;
+  border: 1px solid #f5f5f5;
+  border-radius: 4px;
+  width: 45%;
+  cursor: pointer;
+}
+
+.send_message_container > .message_actions > .media > .media_dropdown > li:hover {
+  background-color: #f5f5f5;
+}
+
+.send_message_container > .message_actions > .send_message {
+  width: 50px;
+  background-color: #f2f4f6;
+  border-radius: 40%;
+  font-size: 25px;
+  cursor: pointer;
+  color: var(--navy-blue-text-color);
+  padding: 4px 10px;
+  text-align: center;
+}
+
+.send_message_container > .message_actions > .send_message:hover {
+  background-color: #e6eaee;
 }
 </style>
