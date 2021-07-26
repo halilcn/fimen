@@ -13,6 +13,7 @@ use App\Http\Controllers\API\MentorAppealResourceController;
 use App\Http\Controllers\API\MeMentorProgramAnswerResourceController;
 use App\Http\Controllers\API\MentorMenteeProgramInfoController;
 use App\Http\Controllers\API\MentorMenteeProgramMeetingResourceController;
+use App\Http\Controllers\API\MentorMenteeProgramMessageResourceController;
 use App\Http\Controllers\API\MentorMenteeProgramResourceController;
 use App\Http\Controllers\API\MentorProgramAppealResourceController;
 use App\Http\Controllers\API\MentorProgramResourceController;
@@ -95,7 +96,7 @@ Route::group(
                 );
                 Route::resource('mentor-mentee-programs', MentorMenteeProgramResourceController::class);
                 Route::resource('mentor-mentee-programs.meetings', MentorMenteeProgramMeetingResourceController::class);
-                //  Route::resource('/mentor-mentee-programs/messages',);
+                Route::resource('mentor-mentee-programs.messages', MentorMenteeProgramMessageResourceController::class);
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }
