@@ -1,11 +1,12 @@
 <template>
   <div class="message">
-    {{ message }}
-    <popup title="Fotoğraf Veya Video Seç">
+    <popup title="Dosya Seç">
       <template slot="popup">
         <div class="message_media_popup_content">
           <standart-file-input
+              :multiple="true"
               id="message_media"
+              name="media_files[]"
               v-model="message.content"/>
         </div>
       </template>
@@ -118,8 +119,28 @@
         </div>
       </li>
     </ul>
+
+    {{ message }}
+    ---{{ mediaList }}
     <div class="send_message_container">
-      <small-textarea v-model="message.content"/>
+      <small-textarea v-if="!mediaList" v-model="message.content"/>
+      <div v-else class="media_list">
+        <div
+            v-for="(media,index) in mediaList"
+            :key="index"
+            class="item">
+          <div class="delete_media">
+            <i class="far fa-trash-alt"></i>
+          </div>
+          <div class="content">
+            {{ media.count }} {{ index }}
+          </div>
+        </div>
+        <div @click="$store.commit('setShowPopup',true)" class="add_media">
+          <i class="fas fa-plus-circle"></i>
+          ekle
+        </div>
+      </div>
       <div class="message_actions">
         <div v-if="isMessageEmpty" class="media">
           <div @click="isShowMediaDropdown=!isShowMediaDropdown" class="media_btn">
@@ -143,7 +164,6 @@
 </template>
 
 <script>
-
 export default {
   name: "ChatComponent",
   data() {
@@ -151,8 +171,8 @@ export default {
       isShowSettingDropdown: false,
       isShowMediaDropdown: false,
       message: {
-        type: '',
-        content: ''
+        type: 'message',
+        content: '',
       }
     }
   },
@@ -167,11 +187,47 @@ export default {
     },
     postMessage() {
       this.$store.dispatch('postMentorMenteeProgramMessage', this.message);
+    },
+    disableMediaPopup() {
+      this.$store.commit('setShowPopup', false);
     }
   },
   computed: {
     isMessageEmpty() {
       return this.message.content === '';
+    },
+    mediaList() {
+      if (this.message.type !== 'media') {
+        return false;
+      }
+
+      const result = {};
+      this.message.content.forEach(item => {
+        if (!result[item.type]) {
+          result[item.type] = {
+            'count': 1,
+          };
+          return 0;
+        }
+        result[item.type].count += 1;
+      })
+
+      return result;
+    }
+  },
+  watch: {
+    message: {
+      handler(val) {
+        //If Type Media
+        if (typeof val.content === 'object') {
+          val.type = 'media';
+          this.disableMediaPopup();
+          return 0;
+        }
+
+        val.type = 'message';
+      },
+      deep: true
     }
   }
 }
@@ -348,6 +404,49 @@ export default {
   border-radius: 15px;
   min-height: 35px;
   max-height: 150px;
+}
+
+.send_message_container > .media_list {
+  width: 100%;
+  display: flex;
+}
+
+.send_message_container > .media_list > div {
+  margin: 0 5px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+}
+
+.send_message_container > .media_list > .item {
+  display: flex;
+  align-items: center;
+}
+
+.send_message_container > .media_list > .item > .content {
+  background-color: #f3f3f3;
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+
+.send_message_container > .media_list > .item > .delete_media {
+  margin-right: 2px;
+  color: var(--navy-red-text-color);
+  background-color: #ffeded;
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.send_message_container > .media_list > .add_media {
+  padding: 2px 7px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #fff1f1;
+  color: var(--navy-red-txt-color);
+}
+
+.send_message_container > .media_list > .add_media:hover {
+  background-color: #ffebeb;
 }
 
 .send_message_container > .message_actions {

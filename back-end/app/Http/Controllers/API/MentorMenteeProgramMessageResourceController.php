@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MentorMenteeProgramMessageRequest;
+use App\Models\MentorMenteeProgram;
 use Illuminate\Http\Request;
 
 class MentorMenteeProgramMessageResourceController extends Controller
@@ -28,9 +30,30 @@ class MentorMenteeProgramMessageResourceController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
-        return 'ok';
+        //tabloya message type eklenecek , authorization, request validated
+
+        if ($request->input('type') === 'media') {
+            foreach ($request->input('content') as $media) {
+                //verileri kaydet, path'leri al
+            }
+
+            return 'media';
+        }
+
+        //return $mentorMenteeProgram;
+
+        $mentorMenteeProgram->messages()->create(
+            [
+                'from_user_id' => $request->user()->id,
+                'to_user_id' => '?',
+                'message_type' => $request->input('type'),
+                'message' => '?',
+            ]
+        );
+
+        return $request->input('type');
     }
 
     /**

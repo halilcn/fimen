@@ -11,7 +11,9 @@
       Dosya Seç
       </span>
     </label>
+    <!-- Duplicate Code ! :(  -->
     <input
+        :multiple="multiple"
         @change="uploadFile"
         :name="name"
         :id="id"
@@ -32,6 +34,11 @@ export default {
       type: String,
       default: ''
     },
+    multiple: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
     value: {
       required: true
     }
@@ -43,9 +50,8 @@ export default {
   },
   methods: {
     uploadFile(event) {
-      const file = event.target.files[0];
-      this.selectedFile = true;
-      this.$emit('input', file);
+      // For Multiple Medias
+      this.$emit('input', event.target.files)
     }
   },
   computed: {
@@ -56,7 +62,7 @@ export default {
       set(value) {
         this.$emit('input', value);
       }
-    }
+    },
   }
 }
 </script>

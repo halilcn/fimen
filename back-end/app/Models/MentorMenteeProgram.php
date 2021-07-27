@@ -44,5 +44,9 @@ class MentorMenteeProgram extends Model
         return $this->hasMany(MentorMenteeProgramMeeting::class);
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(MentorMenteeProgramMessage::class, 'mentor_mentee_id', 'id');
+    }
 
 }
