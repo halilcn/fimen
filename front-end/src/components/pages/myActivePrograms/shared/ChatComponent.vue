@@ -187,7 +187,26 @@ export default {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
     },
     postMessage() {
-      this.$store.dispatch('postMentorMenteeProgramMessage', this.message);
+      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
+    },
+    convertFormMessage() {
+      let messageForm = new FormData(), message = this.message;
+
+      messageForm.append('type', message.type);
+
+      //Message Type
+      if (message.type === 'media') {
+        Object.keys(message).forEach(index => {
+          console.log(message.content[index]);
+
+          messageForm.append('content', message.content[index]);
+        })
+      } else {
+        messageForm.append('content', message.content);
+      }
+
+
+      return messageForm
     },
     disableMediaPopup() {
       this.$store.commit('setShowPopup', false);
@@ -212,7 +231,7 @@ export default {
       const result = {};
 
       const mediaMessageContent = this.message.content;
-      Object.keys(mediaMessageContent).forEach((index) => {
+      Object.keys(mediaMessageContent).forEach(index => {
         if (!result[mediaMessageContent[index].type]) {
           result[mediaMessageContent[index].type] = {
             'count': 1,

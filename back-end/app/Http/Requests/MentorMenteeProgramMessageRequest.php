@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class MentorMenteeProgramMessageRequest extends FormRequest
 {
@@ -23,8 +24,11 @@ class MentorMenteeProgramMessageRequest extends FormRequest
      */
     public function rules()
     {
+        $types = ['message', 'media'];
+
         return [
-            //
+            'type' => ['required', Rule::in($types),],
+            'content' => ['required']
         ];
     }
 }

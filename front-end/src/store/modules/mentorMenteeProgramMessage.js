@@ -8,8 +8,9 @@ export const mentorMenteeProgramMessage = {
     mutations: {},
     actions: {
         postMentorMenteeProgramMessage(_, payload) {
-            console.log(payload);
-            axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`, payload)
+            axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`, payload, {
+                headers: {"Content-Type": "multipart/form-data"}
+            })
                 .then(res => {
                     console.log(res);
                 })

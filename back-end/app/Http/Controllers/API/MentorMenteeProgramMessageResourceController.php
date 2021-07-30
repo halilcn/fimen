@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorMenteeProgramMessageRequest;
 use App\Models\MentorMenteeProgram;
+use App\Models\MentorMenteeProgramMessage;
 use Illuminate\Http\Request;
 
 class MentorMenteeProgramMessageResourceController extends Controller
@@ -32,22 +33,38 @@ class MentorMenteeProgramMessageResourceController extends Controller
 
     public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
-        //tabloya message type eklenecek , authorization, request validated
+        //TODO:
+
+        $this->authorize('create', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
+
+        if ($request->hasFile('content')) {
+            return "dosya";
+        }
+        return "mesaj";
+
+
+        return json_decode($request->input('content'));
 
         if ($request->input('type') === 'media') {
-            foreach ($request->input('content') as $media) {
-                //verileri kaydet, path'leri al
+            foreach (collect($request->input('content')) as $media) {
+                return $media->store('deneme');
             }
 
             return 'media';
         }
 
-        //return $mentorMenteeProgram;
+
+        //Message Define toUserId
+        $mentorUserId = $mentorMenteeProgram->mentor->user->id;
+        $menteeUserId = $mentorMenteeProgram->user_id;
+        $toUserId = $request->user()->id === $menteeUserId ? $mentorUserId : $menteeUserId;
+
+        return $toUserId;
 
         $mentorMenteeProgram->messages()->create(
             [
                 'from_user_id' => $request->user()->id,
-                'to_user_id' => '?',
+                'to_user_id' => $toUserId,
                 'message_type' => $request->input('type'),
                 'message' => '?',
             ]
