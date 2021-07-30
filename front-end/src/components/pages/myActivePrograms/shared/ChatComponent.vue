@@ -7,7 +7,7 @@
               :multiple="true"
               id="message_media"
               name="media_files[]"
-              v-model="message.content"/>
+              v-model="mediaMessageTransfer"/>
         </div>
       </template>
     </popup>
@@ -129,7 +129,7 @@
             v-for="(media,index) in mediaList"
             :key="index"
             class="item">
-          <div class="delete_media">
+          <div @click="deleteMessageMedia(index)" class="delete_media">
             <i class="far fa-trash-alt"></i>
           </div>
           <div class="content">
@@ -170,6 +170,7 @@ export default {
     return {
       isShowSettingDropdown: false,
       isShowMediaDropdown: false,
+      mediaMessageTransfer: [],
       message: {
         type: 'message',
         content: '',
@@ -190,6 +191,13 @@ export default {
     },
     disableMediaPopup() {
       this.$store.commit('setShowPopup', false);
+    },
+    deleteMessageMedia(type) {
+      for (let key in this.message.content) {
+        if (this.message.content[key].type === type) {
+          this.message.content.splice(0, key);
+        }
+      }
     }
   },
   computed: {
@@ -202,32 +210,34 @@ export default {
       }
 
       const result = {};
-      this.message.content.forEach(item => {
-        if (!result[item.type]) {
-          result[item.type] = {
+
+      const mediaMessageContent = this.message.content;
+      Object.keys(mediaMessageContent).forEach((index) => {
+        if (!result[mediaMessageContent[index].type]) {
+          result[mediaMessageContent[index].type] = {
             'count': 1,
           };
           return 0;
         }
-        result[item.type].count += 1;
-      })
+        result[mediaMessageContent[index].type].count += 1;
+      });
 
       return result;
-    }
+    },
   },
   watch: {
-    message: {
-      handler(val) {
-        //If Type Media
-        if (typeof val.content === 'object') {
-          val.type = 'media';
-          this.disableMediaPopup();
-          return 0;
-        }
+    mediaMessageTransfer(newVal) {
+      this.disableMediaPopup();
+      this.message.content = [...newVal, ...this.message.content];
+    },
+    'message.content': function (newVal) {
+      //If Type Media
+      if (typeof newVal == 'object') {
+        this.message.type = 'media';
+        return 0;
+      }
 
-        val.type = 'message';
-      },
-      deep: true
+      this.message.type = 'message';
     }
   }
 }
@@ -465,7 +475,6 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   color: var(--navy-blue-text-color);
-  background-color: #f7f8fa;
 }
 
 .send_message_container > .message_actions > .media > .media_dropdown {
@@ -491,7 +500,6 @@ export default {
   padding: 12px 15px 12px 12px;
   border: 1px solid #f5f5f5;
   border-radius: 4px;
-  width: 45%;
   cursor: pointer;
 }
 
