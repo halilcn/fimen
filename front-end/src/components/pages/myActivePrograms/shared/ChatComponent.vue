@@ -28,40 +28,18 @@
       <li class="date">
         12 Haziran
       </li>
+
       <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-        <div class="message_txt">
-          selmal asdad sadslalsdlas das
-          <div class="date_hours">
-            12:32
-          </div>
-        </div>
-      </li>
-      <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-        <div class="message_txt">
-          selmal asdad sadslalsdlas das
-          <div class="date_hours">
-            12:32
-          </div>
-        </div>
-      </li>
-      <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
         <div class="message_txt">
           selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
       <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-        <div class="message_txt">
-          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
-        </div>
-      </li>
-      <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
         <div class="message_txt">
           selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
@@ -70,24 +48,57 @@
       <li class="date">
         16 Haziran
       </li>
-      <li class="item my_message">
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
         <div class="message_txt">
-          bu benim mesajım dır asdıjaısd jıasda
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
-      <li class="item my_message">
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
         <div class="message_txt">
-          bu benim mesajım dır asdıjaısd jıasda
+          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
+          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
-      <li class="item my_message">
-        <div class="message_txt">
-          bu benim mesajım dır asdıjaısd jıasda
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="media">
+          <img src="../../../../assets/images/deneme/deneme-mesaj.jpg"/>
         </div>
       </li>
-      <li class="item my_message">
-        <div class="message_txt">
-          bu benim mesajım dır asdıjaısd jıasda
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="media">
+          <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="media">
+          <img src="../../../../assets/images/deneme/deneme-mesaj-3.jpg"/>
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="media">
+          <img src="../../../../assets/images/deneme/deneme-mesaj-4.png"/>
+        </div>
+      </li>
+      <li class="item friend_message">
+        <img class="user_profile_img"
+             src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+        <div class="media">
+          <video width="320" height="240" controls>
+            <source src="../../../../assets/images/deneme/deneme-video.mp4" type="video/mp4">
+          </video>
         </div>
       </li>
       <li class="item my_message">
@@ -95,27 +106,6 @@
           bu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
           jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
           jıasda
-        </div>
-      </li>
-      <li class="item my_message">
-        <div class="message_txt">
-          bu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
-          jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
-          jıasda
-        </div>
-      </li>
-      <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-        <div class="message_txt">
-          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
-        </div>
-      </li>
-      <li class="item friend_message">
-        <img src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-        <div class="message_txt">
-          selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-          sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
         </div>
       </li>
     </ul>
@@ -196,10 +186,9 @@ export default {
 
       //Message Type
       if (message.type === 'media') {
-        Object.keys(message).forEach(index => {
-          console.log(message.content[index]);
-
-          messageForm.append('content', message.content[index]);
+        Object.keys(message.content).forEach(index => {
+          console.log(index);
+          messageForm.append('content[]', message.content[index]);
         })
       } else {
         messageForm.append('content', message.content);
@@ -258,6 +247,9 @@ export default {
 
       this.message.type = 'message';
     }
+  },
+  async beforeCreate() {
+    await this.$store.dispatch('getMentorMenteeProgramMessages');
   }
 }
 </script>
@@ -383,6 +375,17 @@ export default {
   border-radius: 4px;
 }
 
+.message_list > .item > .media {
+  padding: 7px 14px 14px 10px;
+}
+
+.message_list > .item > .media > img, .message_list > .item > .media > video {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 10px;
+}
+
 .message_list > .item > .message_txt > .date_hours {
   position: absolute;
   font-size: 11px;
@@ -395,7 +398,7 @@ export default {
   align-items: center;
 }
 
-.message_list > .item.friend_message img {
+.message_list > .item.friend_message > .user_profile_img {
   width: 30px;
   height: 30px;
   border-radius: var(--navy-user-profile-border-radius);

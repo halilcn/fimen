@@ -14,6 +14,9 @@ class MentorMenteeProgramMessage extends Model
         'mentor_mentee_id',
         'from_user_id',
         'to_user_id',
+        'message_type',
         'message'
     ];
+
+
 }

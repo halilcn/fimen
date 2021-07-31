@@ -7,6 +7,12 @@ export const mentorMenteeProgramMessage = {
     },
     mutations: {},
     actions: {
+        getMentorMenteeProgramMessages() {
+            axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`)
+                .then(res => {
+                    console.log(res);
+                })
+        },
         postMentorMenteeProgramMessage(_, payload) {
             axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`, payload, {
                 headers: {"Content-Type": "multipart/form-data"}
@@ -14,7 +20,7 @@ export const mentorMenteeProgramMessage = {
                 .then(res => {
                     console.log(res);
                 })
-        }
+        },
     },
     getters: {}
 }
