@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorMenteeProgramMessageRequest;
+use App\Http\Resources\MentorMenteeProgramDetailMessageResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorMenteeProgramMessage;
 use Illuminate\Database\Query\Builder;
@@ -18,14 +19,18 @@ class MentorMenteeProgramMessageResourceController extends Controller
         $mentorMenteeProgram->load(
             [
                 'messages',
-                /*->groupBy(functiron($date) {
-    return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-    //return Carbon::parse($date->created_at)->format('m'); // grouping by months
-});*/
+                'mentor.user',
+                'mentee'
             ]
         );
 
-        return collect($mentorMenteeProgram->messages)->groupBy('created_at');
+        $mentorMenteeProgram->processedMessages = $mentorMenteeProgram->messages->groupBy(function ($message) {
+            return $message->created_at->format('d M Y');
+        });
+
+        return new MentorMenteeProgramDetailMessageResource(
+            $mentorMenteeProgram
+        );
     }
 
     /**

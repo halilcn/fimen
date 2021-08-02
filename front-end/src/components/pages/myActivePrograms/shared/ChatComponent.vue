@@ -24,11 +24,15 @@
         </div>
       </li>
     </ul>
+    {{ messages }}
     <ul class="message_list">
-      <li class="date">
-        12 Haziran
-      </li>
+      <template v-for="(messsage,date) in messages">
+        <li class="date">
+          {{ date }}
+        </li>
 
+
+      </template>
       <li class="item friend_message">
         <img class="user_profile_img"
              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
@@ -154,6 +158,8 @@
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
   name: "ChatComponent",
   data() {
@@ -209,6 +215,10 @@ export default {
     }
   },
   computed: {
+    ...mapState({
+      messages: state => state.mentorMenteeProgramMessage.messages,
+      user: state => state.mentorMenteeProgramMessage.user,
+    }),
     isMessageEmpty() {
       return this.message.content === '';
     },
