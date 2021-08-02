@@ -18,6 +18,7 @@ class MeResource extends JsonResource
             'name_surname' => $this->name,
             'username' => $this->username,
             'image' => $this->image,
+            'user_id' => $this->id,
             'mentor' => $this->when(
                 $this->mentor()->exists(),
                 function () {

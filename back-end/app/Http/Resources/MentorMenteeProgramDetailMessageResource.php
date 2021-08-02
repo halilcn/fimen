@@ -16,10 +16,11 @@ class MentorMenteeProgramDetailMessageResource extends JsonResource
     {
         return [
             'messages' => MentorMenteeProgramDetailMessageContentResource::collection($this->processedMessages),
-            'user' => [
-                'mentor' => new MentorMenteeProgramDetailMessageUserResource($this->mentor->user),
-                'mentee' => new MentorMenteeProgramDetailMessageUserResource($this->mentee),
-            ]
+            'from_user_information' => new MentorMenteeProgramDetailMessageUserResource(
+                $request->user()->isProgramMentee($this->user_id)
+                    ? $this->mentee
+                    : $this->mentor->user
+            ),
         ];
     }
 }

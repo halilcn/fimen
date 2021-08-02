@@ -4,14 +4,14 @@ import router from "@/router";
 export const mentorMenteeProgramMessage = {
     state: {
         messages: [],
-        user: {}
+        from_user_information: {}
     },
     mutations: {
         setMessages(state, payload) {
             state.messages = payload;
         },
-        setUser(state, payload) {
-            state.user = payload;
+        setFromUserInformation(state, payload) {
+            state.from_user_information = payload;
         }
     },
     actions: {
@@ -20,7 +20,7 @@ export const mentorMenteeProgramMessage = {
                 .then(res => {
                     console.log(res);
                     commit('setMessages', res.data.data.messages);
-                    commit('setUser', res.data.data.user);
+                    commit('setFromUserInformation', res.data.data.from_user_information);
                 })
         },
         postMentorMenteeProgramMessage(_, payload) {

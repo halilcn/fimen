@@ -21,6 +21,7 @@ class MentorMenteeProgramDetailMessageContentResource extends JsonResource
                     'to_user_id' => $message->to_user_id,
                     'message' => $message->message,
                     'message_type' => $message->message_type,
+                    'is_my_message' => true,
                     'created_at' => $message->created_at
                 ];
             })
