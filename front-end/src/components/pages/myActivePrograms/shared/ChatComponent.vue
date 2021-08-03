@@ -26,132 +26,143 @@
     </ul>
     {{ from_user_information }}
     <ul class="message_list">
-      <li v-for="(messagesContent,date) in messages"
+      <li v-for="(dataOfMessages,date) in messageList"
           :key="date">
         <div class="date">
           {{ date }}
         </div>
-        <div
-            v-for="(content,index) in messagesContent[0]"
-            :key="index"
-            class="item"
-            :class="content.is_my_message ? 'my_message':'friend_message'">
-          <img v-if="!content.is_my_message" class="user_profile_img"
+
+        <div v-for="(data,index) in dataOfMessages"
+             :key="index"
+             class="item"
+             :class="data.is_my_message ? 'my_message':'friend_message'">
+
+
+          <img v-if="!data.is_my_message" class="user_profile_img"
                :src="from_user_information.image">
-          <div class="message_txt">
-            {{ content }}
+          <div v-if="data.message_type == 'message'" class="message_txt">
+            {{ data.message }}
+          </div>
+          <div v-else
+               v-for="(media,index) in data.message"
+               :key="index"
+               class="media">
+            <video v-if="$helper.getUrlMediaType(media) === 'mp4'" width="320" height="240" controls>
+              <source :src="media" type="video/mp4">
+            </video>
+            <img v-else :src="media"/>
           </div>
         </div>
       </li>
 
 
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            sadada d sadada d sadada d sadada d sadada d sadada d
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as
-          </div>
-        </div>
-        <div class="item my_message">
-          <div class="message_txt">
-            asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item friend_message">
-          <img class="user_profile_img"
-               src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-          <div class="media">
-            <img class="user_profile_img"
-                 src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item friend_message">
-          <img class="user_profile_img"
-               src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-          <div class="media">
-            <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div class="date">
-          12 haziraa
-        </div>
-        <div class="item friend_message">
-          <img class="user_profile_img"
-               src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-          <div class="media">
-            <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
-          </div>
-        </div>
-      </li>
+      <!-- <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+       </li>
+       <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             sadada d sadada d sadada d sadada d sadada d sadada d
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+       </li>
+       <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as
+           </div>
+         </div>
+         <div class="item my_message">
+           <div class="message_txt">
+             asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
+           </div>
+         </div>
+       </li>
+       <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item friend_message">
+           <img class="user_profile_img"
+                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+           <div class="media">
+             <img class="user_profile_img"
+                  src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+           </div>
+         </div>
+       </li>
+       <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item friend_message">
+           <img class="user_profile_img"
+                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+           <div class="media">
+             <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
+           </div>
+         </div>
+       </li>
+       <li>
+         <div class="date">
+           12 haziraa
+         </div>
+         <div class="item friend_message">
+           <img class="user_profile_img"
+                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
+           <div class="media">
+             <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
+           </div>
+         </div>
+       </li> -->
 
 
       <!--  <li class="item friend_message">
@@ -224,8 +235,6 @@
        </li>-->
     </ul>
 
-    {{ message }}
-    ---{{ mediaList }}
     <div class="send_message_container">
       <small-textarea v-if="!mediaList" v-model="message.content"/>
       <div v-else class="media_list">
@@ -268,7 +277,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapMutations} from 'vuex'
 
 export default {
   name: "ChatComponent",
@@ -289,11 +298,20 @@ export default {
     SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea')
   },
   methods: {
+    ...mapMutations([
+      'setMyTextMessage'
+    ]),
     settingDropdownAction() {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
     },
     postMessage() {
-      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
+      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage())
+          .then(() => {
+            if (this.message.type === 'message') {
+              this.setMyTextMessage(this.message.content);
+            }
+
+          });
     },
     convertFormMessage() {
       let messageForm = new FormData(), message = this.message;
@@ -326,7 +344,7 @@ export default {
   },
   computed: {
     ...mapState({
-      messages: state => state.mentorMenteeProgramMessage.messages,
+      messageList: state => state.mentorMenteeProgramMessage.messageList,
       from_user_information: state => state.mentorMenteeProgramMessage.from_user_information,
     }),
     isMessageEmpty() {

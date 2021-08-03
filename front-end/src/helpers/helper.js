@@ -54,5 +54,8 @@ export const helper = {
         });
         return formData;
     },
-
+    getUrlMediaType(url) {
+        const splitUrl = url.split('.');
+        return splitUrl[splitUrl.length - 1];
+    }
 }

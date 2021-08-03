@@ -4,11 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MentorMenteeProgramMessageRequest;
+use App\Http\Resources\MentorMenteeProgramDetailCreatedMessageResource;
 use App\Http\Resources\MentorMenteeProgramDetailMessageResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorMenteeProgramMessage;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use phpDocumentor\Reflection\Types\Collection;
 
 class MentorMenteeProgramMessageResourceController extends Controller
 {
@@ -18,15 +22,11 @@ class MentorMenteeProgramMessageResourceController extends Controller
 
         $mentorMenteeProgram->load(
             [
-                'messages',
+                'messages:mentor_mentee_id,message,message_type,from_user_id,to_user_id,created_at',
                 'mentor.user',
                 'mentee'
             ]
         );
-
-        $mentorMenteeProgram->processedMessages = $mentorMenteeProgram->messages->groupBy(function ($message) {
-            return $message->created_at->format('d M Y');
-        });
 
         return new MentorMenteeProgramDetailMessageResource(
             $mentorMenteeProgram
@@ -69,7 +69,7 @@ class MentorMenteeProgramMessageResourceController extends Controller
         $toUserId = $request->user()->id === $menteeUserId ? $mentorUserId : $menteeUserId;
 
 
-        $mentorMenteeProgram->messages()->create(
+        $createdMessage = $mentorMenteeProgram->messages()->create(
             [
                 'from_user_id' => $request->user()->id,
                 'to_user_id' => $toUserId,
@@ -78,7 +78,13 @@ class MentorMenteeProgramMessageResourceController extends Controller
             ]
         );
 
-        return response()->json(['status' => true], 201);
+        return response()->json(
+            [
+                'status' => true,
+                'data' => collect($createdMessage)->except('id', 'updated_at')
+            ],
+            201
+        );
     }
 
     /**

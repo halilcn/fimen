@@ -18,5 +18,4 @@ class MentorMenteeProgramMessage extends Model
         'message'
     ];
 
-
 }
