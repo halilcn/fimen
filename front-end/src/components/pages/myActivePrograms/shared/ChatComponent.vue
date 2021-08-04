@@ -148,12 +148,14 @@ export default {
       this.$store.commit('setShowPopup', false);
     },
     deleteMessageMedia(type) {
-      for (let key in this.message.content) {
-        console.log(this.message.content.length);
+      console.log(type);
+      console.log(this.message.content);
+      /* for (const key in 2) {
         if (this.message.content[key].type === type) {
-          this.message.content.splice(0, key);
+          this.message.content.splice(key, 1);
         }
-      }
+      }*/
+      console.log(this.message.content);
     },
   },
   computed: {
