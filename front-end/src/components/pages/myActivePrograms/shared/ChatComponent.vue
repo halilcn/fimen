@@ -31,15 +31,11 @@
         <div class="date">
           {{ date }}
         </div>
-
         <div v-for="(data,index) in dataOfMessages"
              :key="index"
              class="item"
              :class="data.is_my_message ? 'my_message':'friend_message'">
-
-
-          <img v-if="!data.is_my_message" class="user_profile_img"
-               :src="from_user_information.image">
+          <img v-if="!data.is_my_message" class="user_profile_img" :src="from_user_information.image">
           <div v-if="data.message_type == 'message'" class="message_txt">
             {{ data.message }}
           </div>
@@ -54,189 +50,11 @@
           </div>
         </div>
       </li>
-
-
-      <!-- <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-       </li>
-       <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             sadada d sadada d sadada d sadada d sadada d sadada d
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-       </li>
-       <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as
-           </div>
-         </div>
-         <div class="item my_message">
-           <div class="message_txt">
-             asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as asdasda dsad as
-           </div>
-         </div>
-       </li>
-       <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item friend_message">
-           <img class="user_profile_img"
-                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-           <div class="media">
-             <img class="user_profile_img"
-                  src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-           </div>
-         </div>
-       </li>
-       <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item friend_message">
-           <img class="user_profile_img"
-                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-           <div class="media">
-             <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
-           </div>
-         </div>
-       </li>
-       <li>
-         <div class="date">
-           12 haziraa
-         </div>
-         <div class="item friend_message">
-           <img class="user_profile_img"
-                src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-           <div class="media">
-             <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
-           </div>
-         </div>
-       </li> -->
-
-
-      <!--  <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="message_txt">
-           selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="message_txt">
-           selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="message_txt">
-           selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad
-           sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das selmal asdad sadslalsdlas das
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="media">
-           <img src="../../../../assets/images/deneme/deneme-mesaj.jpg"/>
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="media">
-           <img src="../../../../assets/images/deneme/deneme-mesaj-2.jpg"/>
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="media">
-           <img src="../../../../assets/images/deneme/deneme-mesaj-3.jpg"/>
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="media">
-           <img src="../../../../assets/images/deneme/deneme-mesaj-4.png"/>
-         </div>
-       </li>
-       <li class="item friend_message">
-         <img class="user_profile_img"
-              src="https://ui-avatars.com/api/?name=halil+can&background=0288D0&color=fff&size=128">
-         <div class="media">
-           <video width="320" height="240" controls>
-             <source src="../../../../assets/images/deneme/deneme-video.mp4" type="video/mp4">
-           </video>
-         </div>
-       </li>
-       <li class="item my_message">
-         <div class="message_txt">
-           bu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
-           jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd jıasdabu benim mesajım dır asdıjaısd
-           jıasda
-         </div>
-       </li>-->
     </ul>
-
     <div class="send_message_container">
-      <small-textarea v-if="!mediaList" v-model="message.content"/>
+      <small-textarea v-if="!mediaList"
+                      v-model="message.content"
+                      @keyup.enter.native="postMessage"/>
       <div v-else class="media_list">
         <div
             v-for="(media,index) in mediaList"
@@ -265,10 +83,9 @@
             </li>
           </ul>
         </div>
-        <div
-            v-else
-            @click="postMessage"
-            class="send_message">
+        <div v-else
+             @click="postMessage"
+             class="send_message">
           <i class="bi bi-caret-right-fill"></i>
         </div>
       </div>
@@ -305,13 +122,9 @@ export default {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
     },
     postMessage() {
-      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage())
-          .then(() => {
-            if (this.message.type === 'message') {
-              this.setMyTextMessage(this.message.content);
-            }
-
-          });
+      this.message.type = 'message';
+      this.message.content = '';
+      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
     },
     convertFormMessage() {
       let messageForm = new FormData(), message = this.message;
@@ -336,6 +149,7 @@ export default {
     },
     deleteMessageMedia(type) {
       for (let key in this.message.content) {
+        console.log(this.message.content.length);
         if (this.message.content[key].type === type) {
           this.message.content.splice(0, key);
         }
@@ -508,7 +322,7 @@ export default {
 
 .message_list .item {
   width: 48%;
-  margin: 3px 0;
+  margin: 5px 0;
 }
 
 .message_list .item > .message_txt {
@@ -521,7 +335,7 @@ export default {
 }
 
 .message_list .item > .media {
-  padding: 7px 14px 14px 10px;
+  margin: 5px 0;
 }
 
 .message_list .item > .media > img, .message_list .item > .media > video {
@@ -539,18 +353,14 @@ export default {
 }
 
 .message_list .item.friend_message {
-  display: flex;
-  align-items: center;
+  align-self: flex-start;
 }
 
 .message_list .item.friend_message > .user_profile_img {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   border-radius: var(--navy-user-profile-border-radius);
-}
-
-.message_list .item.friend_message > .message_txt {
-  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 .message_list .item.my_message {

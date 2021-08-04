@@ -43,12 +43,6 @@ class MentorMenteeProgramMessageResourceController extends Controller
         //
     }
 
-    /**
-     * @param  MentorMenteeProgramMessageRequest  $request
-     * @param  MentorMenteeProgram  $mentorMenteeProgram
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Illuminate\Auth\Access\AuthorizationException
-     */
     public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('create', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
@@ -68,7 +62,6 @@ class MentorMenteeProgramMessageResourceController extends Controller
         $menteeUserId = $mentorMenteeProgram->user_id;
         $toUserId = $request->user()->id === $menteeUserId ? $mentorUserId : $menteeUserId;
 
-
         $createdMessage = $mentorMenteeProgram->messages()->create(
             [
                 'from_user_id' => $request->user()->id,
@@ -78,13 +71,9 @@ class MentorMenteeProgramMessageResourceController extends Controller
             ]
         );
 
-        return response()->json(
-            [
-                'status' => true,
-                'data' => collect($createdMessage)->except('id', 'updated_at')
-            ],
-            201
-        );
+        return (new MentorMenteeProgramDetailCreatedMessageResource($createdMessage))
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
