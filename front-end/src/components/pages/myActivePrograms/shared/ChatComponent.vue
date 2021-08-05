@@ -24,31 +24,39 @@
         </div>
       </li>
     </ul>
-    {{ from_user_information }}
     <ul class="message_list">
-      <li v-for="(dataOfMessages,date) in messageList"
-          :key="date">
-        <div class="date">
-          {{ date }}
-        </div>
-        <div v-for="(data,index) in dataOfMessages"
-             :key="index"
-             class="item"
-             :class="data.is_my_message ? 'my_message':'friend_message'">
-          <img v-if="!data.is_my_message" class="user_profile_img" :src="from_user_information.image">
-          <div v-if="data.message_type == 'message'" class="message_txt">
-            {{ data.message }}
+      <template v-if="messageList.length !== 0">
+        <li v-for="(dataOfMessages,date) in messageList"
+            :key="date">
+          <div class="date">
+            {{ date }}
           </div>
-          <div v-else
-               v-for="(media,index) in data.message"
+          <div v-for="(data,index) in dataOfMessages"
                :key="index"
-               class="media">
-            <video v-if="$helper.getUrlMediaType(media) === 'mp4'" width="320" height="240" controls>
-              <source :src="media" type="video/mp4">
-            </video>
-            <img v-else :src="media"/>
+               class="item"
+               :class="data.is_my_message ? 'my_message':'friend_message'">
+            <img v-if="!data.is_my_message" class="user_profile_img" :src="from_user_information.image">
+            <div v-if="data.message_type == 'message'" class="message_txt">
+              {{ data.message }}
+              <span class="date_hour">
+                12:43
+              </span>
+            </div>
+            <div v-else
+                 v-for="(media,index) in data.message"
+                 :key="index"
+                 class="media">
+              <video v-if="$helper.getUrlMediaType(media) === 'mp4'" width="320" height="240" controls>
+                <source :src="media" type="video/mp4">
+              </video>
+              <img v-else :src="media"/>
+            </div>
           </div>
-        </div>
+        </li>
+      </template>
+      <li v-else class="no_message">
+        <i class="far fa-laugh-wink"></i>
+        İlk mesajı sen gönder
       </li>
     </ul>
     <div class="send_message_container">
@@ -122,9 +130,9 @@ export default {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
     },
     postMessage() {
+      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
       this.message.type = 'message';
       this.message.content = '';
-      this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
     },
     convertFormMessage() {
       let messageForm = new FormData(), message = this.message;
@@ -282,7 +290,7 @@ export default {
   padding: 13px;
   border-radius: 4px;
   overflow-y: auto;
-  max-height: 500px;
+  height: 500px;
   box-shadow: 0 0px 0.7px rgba(0, 0, 0, 0.011),
   0 0px 1.6px rgba(0, 0, 0, 0.016),
   0 0px 3px rgba(0, 0, 0, 0.02),
@@ -307,12 +315,24 @@ export default {
   align-items: flex-start;
 }
 
+.message_list > li.no_message {
+  flex-direction: row;
+  align-items: center;
+  font-family: 'Montserrat', 'sans-serif';
+  font-size: 14px;
+  color: #6d6d6d;
+}
+
+.message_list > li.no_message > i {
+  margin-right: 4px;
+}
+
 .message_list .date {
   align-self: center;
   font-family: 'Poppins', sans-serif;
   font-weight: 300;
-  background-color: var(--navy-red-bg-dark-color);
-  color: white;
+  color: var(--navy-red-bg-dark-color);
+  background-color: #ffefee;
   position: sticky;
   top: 0;
   margin: 10px 0;
@@ -330,10 +350,20 @@ export default {
 .message_list .item > .message_txt {
   position: relative;
   padding: 7px 14px 14px 10px;
-  background-color: #ececec;
+  background-color: #f5f5f5;
+  border: 1px solid #f0f0f0;
   font-family: 'Poppins', sans-serif;
   font-size: 13px;
   border-radius: 4px;
+}
+
+.message_list .item > .message_txt > .date_hour {
+  position: absolute;
+  bottom: 0;
+  right: 4px;
+  font-size: 11px;
+  font-weight: 300;
+  color: #9e9e9e;
 }
 
 .message_list .item > .media {
@@ -345,13 +375,6 @@ export default {
   max-width: 400px;
   height: auto;
   border-radius: 10px;
-}
-
-.message_list .item > .message_txt > .date_hours {
-  position: absolute;
-  font-size: 11px;
-  right: 2px;
-  bottom: 2px;
 }
 
 .message_list .item.friend_message {
@@ -370,7 +393,8 @@ export default {
 }
 
 .message_list .item.my_message > .message_txt {
-  background-color: #ecf6ff;
+  background-color: #edf8ff;
+  border: 1px solid #ebf7ff;
 }
 
 .send_message_container {

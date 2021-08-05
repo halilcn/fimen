@@ -45,6 +45,7 @@ class MentorMenteeProgramMessageResourceController extends Controller
 
     public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
+
         $this->authorize('create', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
 
