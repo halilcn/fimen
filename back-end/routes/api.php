@@ -97,6 +97,10 @@ Route::group(
                 Route::resource('mentor-mentee-programs', MentorMenteeProgramResourceController::class);
                 Route::resource('mentor-mentee-programs.meetings', MentorMenteeProgramMeetingResourceController::class);
                 Route::resource('mentor-mentee-programs.messages', MentorMenteeProgramMessageResourceController::class);
+                Route::delete(
+                    'mentor-mentee-programs/{mentor_mentee_program}/messages',
+                    [MentorMenteeProgramMessageResourceController::class, 'destroyAll']
+                );
 
                 Route::post('/logout', [AuthController::class, 'logout']);
             }

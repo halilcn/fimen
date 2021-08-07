@@ -8,11 +8,14 @@ const NOW_TIME = moment().format('DD MMMM Y');
 export const mentorMenteeProgramMessage = {
     state: {
         messageList: [],
-        from_user_information: {}
+        fromUserInformation: {}
     },
     mutations: {
         setMessageList(state, payload) {
             state.messageList = payload;
+        },
+        destroyMessageList(state) {
+            state.messageList = [];
         },
         setMyMessage(state, payload) {
             if (state.messageList[NOW_TIME]) {
@@ -22,26 +25,31 @@ export const mentorMenteeProgramMessage = {
             }
         },
         setFromUserInformation(state, payload) {
-            state.from_user_information = payload;
-        }
+            state.fromUserInformation = payload;
+        },
     },
     actions: {
         getMentorMenteeProgramMessages({commit}) {
             axios.get(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`)
                 .then(res => {
-                    console.log(res);
                     commit('setMessageList', res.data.data.messages);
-                    commit('setFromUserInformation', res.data.data.from_user_information);
+                    commit('setFromUserInformation', res.data.data.fromUserInformation);
                 })
         },
         postMentorMenteeProgramMessage({commit}, payload) {
-            return axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`, payload, {
+            axios.post(`/mentor-mentee-programs/${router.currentRoute.params.id}/messages`, payload, {
                 headers: {"Content-Type": "multipart/form-data"}
             })
                 .then(res => {
                     commit('setMyMessage', res.data.data);
                 })
         },
+        deleteMentorMenteeProgramMessages({commit}) {
+            return axios.delete(`mentor-mentee-programs/${router.currentRoute.params.id}/messages`)
+                .then(() => {
+                    commit('destroyMessageList');
+                });
+        }
     },
     getters: {}
 }

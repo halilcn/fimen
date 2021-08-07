@@ -14,15 +14,22 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use phpDocumentor\Reflection\Types\Collection;
 
+use function GuzzleHttp\Psr7\str;
+
 class MentorMenteeProgramMessageResourceController extends Controller
 {
-    public function index(MentorMenteeProgram $mentorMenteeProgram)
+    public function index(MentorMenteeProgram $mentorMenteeProgram, Request $request)
     {
         $this->authorize('show', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
         $mentorMenteeProgram->load(
             [
-                'messages:mentor_mentee_id,message,message_type,from_user_id,to_user_id,created_at',
+                //Builder
+                'messages' => function ($query) use ($request) {
+                    ////()->whereNotIn('deleted_by_users_id', $request->user()->id)->get();
+                    //->select('mentor_mentee_id,message,message_type,from_user_id,to_user_id,created_at') !!
+                    //  $query->whereNotIn('deleted_by_users_id', [$request->user()->id])->get();
+                },
                 'mentor.user',
                 'mentee'
             ]
@@ -45,7 +52,6 @@ class MentorMenteeProgramMessageResourceController extends Controller
 
     public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
-
         $this->authorize('create', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
 
@@ -120,5 +126,27 @@ class MentorMenteeProgramMessageResourceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function destroyAll(MentorMenteeProgram $mentorMenteeProgram, Request $request)
+    {
+        $this->authorize('deleteAll', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
+
+        $messages = $mentorMenteeProgram->messages; //()->whereNotIn('deleted_by_users_id', $request->user()->id)->get();
+
+        //Bad Code! Too Many Queries!
+        foreach ($messages as $message) {
+            $deletedByUsersId = collect($message->deleted_by_users_id);
+
+            if (!$deletedByUsersId->contains($request->user()->id)) {
+                $deletedByUsersId->push($request->user()->id);
+            }
+
+            $message->update([
+                                 'deleted_by_users_id' => $deletedByUsersId
+                             ]);
+        }
+
+        return response()->json(['status' => true]);
     }
 }

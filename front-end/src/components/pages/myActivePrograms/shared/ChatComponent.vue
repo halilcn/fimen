@@ -1,5 +1,10 @@
 <template>
   <div class="message">
+    <confirmation-popup
+        v-if="isShowDeleteMessageConfirmationPopup"
+        text="Mesajların sadece senden silinir. Emin misin ?"
+        @cancelClick="deleteMessageConfirmationPopupAction"
+        @confirmationClick="deleteMessages"/>
     <popup title="Dosya Seç">
       <template slot="popup">
         <div class="message_media_popup_content">
@@ -14,7 +19,7 @@
     <ul class="message_actions_list">
       <li class="item setting">
         <ul @focusin="settingDropdownAction" v-if="isShowSettingDropdown" class="setting_dropdown">
-          <li class="delete_messages_btn">
+          <li @click="deleteMessageConfirmationPopupAction" class="delete_messages_btn">
             <i class="fas fa-trash-alt"></i>
             Mesajları Sil
           </li>
@@ -24,10 +29,9 @@
         </div>
       </li>
     </ul>
-    <ul class="message_list">
-      <template v-if="messageList.length !== 0">
-        <li v-for="(dataOfMessages,date) in messageList"
-            :key="date">
+    <ul class="message_list" :class="{'has_messages':hasMessages}">
+      <template v-if="hasMessages">
+        <li v-for="(dataOfMessages,date) in messageList" :key="date">
           <div class="date">
             {{ date }}
           </div>
@@ -35,11 +39,11 @@
                :key="index"
                class="item"
                :class="data.is_my_message ? 'my_message':'friend_message'">
-            <img v-if="!data.is_my_message" class="user_profile_img" :src="from_user_information.image">
+            <img v-if="!data.is_my_message" class="user_profile_img" :src="fromUserInformation.image">
             <div v-if="data.message_type == 'message'" class="message_txt">
               {{ data.message }}
               <span class="date_hour">
-                12:43
+                {{ moment(data.created_at).format('HH:mm') }}
               </span>
             </div>
             <div v-else
@@ -64,10 +68,9 @@
                       v-model="message.content"
                       @keyup.enter.native="postMessage"/>
       <div v-else class="media_list">
-        <div
-            v-for="(media,index) in mediaList"
-            :key="index"
-            class="item">
+        <div v-for="(media,index) in mediaList"
+             :key="index"
+             class="item">
           <div @click="deleteMessageMedia(index)" class="delete_media">
             <i class="far fa-trash-alt"></i>
           </div>
@@ -108,6 +111,7 @@ export default {
   name: "ChatComponent",
   data() {
     return {
+      isShowDeleteMessageConfirmationPopup: false,
       isShowSettingDropdown: false,
       isShowMediaDropdown: false,
       mediaMessageTransfer: [],
@@ -120,35 +124,44 @@ export default {
   components: {
     Popup: () => import('@/components/pages/shared/Popup'),
     StandartFileInput: () => import('@/components/pages/shared/elements/StandartFileInput'),
-    SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea')
+    SmallTextarea: () => import('@/components/pages/shared/elements/SmallTextarea'),
+    ConfirmationPopup: () => import('@/components/pages/shared/ConfirmationPopup')
   },
   methods: {
-    ...mapMutations([
-      'setMyTextMessage'
-    ]),
+    ...mapMutations(['setMyTextMessage']),
     settingDropdownAction() {
       this.isShowSettingDropdown = !this.isShowSettingDropdown;
     },
+    deleteMessageConfirmationPopupAction() {
+      this.isShowDeleteMessageConfirmationPopup = !this.isShowDeleteMessageConfirmationPopup;
+    },
     postMessage() {
       this.$store.dispatch('postMentorMenteeProgramMessage', this.convertFormMessage());
+      this.clearMessageObject();
+    },
+    deleteMessages() {
+      this.$store.dispatch('deleteMentorMenteeProgramMessages')
+          .finally(() => {
+            this.deleteMessageConfirmationPopupAction();
+          });
+    },
+    clearMessageObject() {
       this.message.type = 'message';
       this.message.content = '';
     },
     convertFormMessage() {
-      let messageForm = new FormData(), message = this.message;
+      const messageForm = new FormData(), message = this.message;
 
       messageForm.append('type', message.type);
 
       //Message Type
       if (message.type === 'media') {
         Object.keys(message.content).forEach(index => {
-          console.log(index);
           messageForm.append('content[]', message.content[index]);
         })
       } else {
         messageForm.append('content', message.content);
       }
-
 
       return messageForm
     },
@@ -156,32 +169,31 @@ export default {
       this.$store.commit('setShowPopup', false);
     },
     deleteMessageMedia(type) {
-      console.log(type);
-      console.log(this.message.content);
-      /* for (const key in 2) {
-        if (this.message.content[key].type === type) {
-          this.message.content.splice(key, 1);
-        }
-      }*/
-      console.log(this.message.content);
+      this.message.content = this.message.content.filter((item) => {
+        return item.type !== type;
+      })
+
+      if (this.message.content.length === 0) {
+        this.clearMessageObject();
+      }
     },
   },
   computed: {
     ...mapState({
       messageList: state => state.mentorMenteeProgramMessage.messageList,
-      from_user_information: state => state.mentorMenteeProgramMessage.from_user_information,
+      fromUserInformation: state => state.mentorMenteeProgramMessage.fromUserInformation,
     }),
     isMessageEmpty() {
       return this.message.content === '';
     },
     mediaList() {
+      const mediaMessageContent = this.message.content;
+      let result = {};
+
       if (this.message.type !== 'media') {
         return false;
       }
 
-      const result = {};
-
-      const mediaMessageContent = this.message.content;
       Object.keys(mediaMessageContent).forEach(index => {
         if (!result[mediaMessageContent[index].type]) {
           result[mediaMessageContent[index].type] = {
@@ -189,11 +201,15 @@ export default {
           };
           return 0;
         }
+
         result[mediaMessageContent[index].type].count += 1;
       });
 
       return result;
     },
+    hasMessages() {
+      return this.messageList.length !== 0;
+    }
   },
   watch: {
     mediaMessageTransfer(newVal) {
@@ -201,6 +217,7 @@ export default {
       this.message.content = [...newVal, ...this.message.content];
     },
     'message.content': function (newVal) {
+
       //If Type Media
       if (typeof newVal == 'object') {
         this.message.type = 'media';
@@ -211,7 +228,11 @@ export default {
     }
   },
   async beforeCreate() {
-    await this.$store.dispatch('getMentorMenteeProgramMessages');
+    await this.$store.dispatch('getMentorMenteeProgramMessages')
+        .catch(() => {
+          alert('Bir hata oluştu!');
+          this.$router.go(-1);
+        });
   }
 }
 </script>
@@ -290,7 +311,6 @@ export default {
   padding: 13px;
   border-radius: 4px;
   overflow-y: auto;
-  height: 500px;
   box-shadow: 0 0px 0.7px rgba(0, 0, 0, 0.011),
   0 0px 1.6px rgba(0, 0, 0, 0.016),
   0 0px 3px rgba(0, 0, 0, 0.02),
@@ -298,6 +318,11 @@ export default {
   0 0px 10px rgba(0, 0, 0, 0.029),
   0 0px 24px rgba(0, 0, 0, 0.04);
 }
+
+.message_list.has_messages {
+  height: 500px;
+}
+
 
 .message_list::-webkit-scrollbar {
   width: 6px;

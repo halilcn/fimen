@@ -15,7 +15,12 @@ class MentorMenteeProgramMessage extends Model
         'from_user_id',
         'to_user_id',
         'message_type',
-        'message'
+        'message',
+        'deleted_by_users_id'
+    ];
+
+    protected $casts = [
+        'deleted_by_users_id' => 'array'
     ];
 
 }
