@@ -22,5 +22,4 @@ class MentorMenteeProgramMessage extends Model
     protected $casts = [
         'deleted_by_users_id' => 'array'
     ];
-
 }

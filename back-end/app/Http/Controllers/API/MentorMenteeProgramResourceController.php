@@ -21,7 +21,9 @@ class MentorMenteeProgramResourceController extends Controller
      */
     public function index(Request $request)
     {
-        // bad code ?
+        //TODO: Code Review
+
+        // Bad Code ?
         return MentorMenteeProgramsResource::make(
             MentorMenteeProgram::query()
                 ->where('user_id', $request->user()->id)
@@ -59,7 +61,7 @@ class MentorMenteeProgramResourceController extends Controller
 
         $this->authorize('create', [MentorMenteeProgram::class, $mentorProgram]);
 
-        //with sql ?
+        //TODO: Do this with pure sql
         abort_if(
             $mentorProgram->approvedUsers()->wherePivot('user_id', $request->input('user_id'))->exists(),
             409
@@ -80,6 +82,11 @@ class MentorMenteeProgramResourceController extends Controller
         return response(['status' => true], 201);
     }
 
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @return MentorMenteeProgramDetailResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function show(MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('show', $mentorMenteeProgram);
@@ -124,18 +131,26 @@ class MentorMenteeProgramResourceController extends Controller
     }
 
 
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroy(MentorMenteeProgram $mentorMenteeProgram)
     {
-        //mesajların silinmesi ?
         $this->authorize('delete', $mentorMenteeProgram);
 
-        $mentorMenteeProgram->notifications()->delete();
-        $mentorMenteeProgram->meetings()->delete();
+        $mentorMenteeProgram->deleteRelationships();
         $mentorMenteeProgram->delete();
 
         return response()->json(['status' => true]);
     }
 
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @return MentorMenteeProgramDetailInformationResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function getInformation(MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('show', $mentorMenteeProgram);

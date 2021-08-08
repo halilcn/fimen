@@ -13,10 +13,17 @@ use Illuminate\Http\Request;
 class MentorMenteeProgramMeetingResourceController extends Controller
 {
 
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function index(MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('show', [MentorMenteeProgramMeeting::class, $mentorMenteeProgram]);
+
         $mentorMenteeProgram->load('meetings');
+
         return MentorMenteeProgramDetailMeetingResource::collection($mentorMenteeProgram->meetings);
     }
 

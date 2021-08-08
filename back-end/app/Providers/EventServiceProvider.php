@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Events\MentorProgramSaved;
 use App\Listeners\SendMentorProgramNotification;
 use App\Models\MentorMenteeProgram;
+use App\Models\MentorMenteeProgramMessage;
+use App\Observers\MentorMenteeProgramMessageObserver;
 use App\Observers\MentorMenteeProgramObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -33,5 +35,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         MentorMenteeProgram::observe(MentorMenteeProgramObserver::class);
+        MentorMenteeProgramMessage::observe(MentorMenteeProgramMessageObserver::class);
     }
 }

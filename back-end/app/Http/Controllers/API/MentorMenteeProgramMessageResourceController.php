@@ -9,6 +9,7 @@ use App\Http\Resources\MentorMenteeProgramDetailMessageResource;
 use App\Models\MentorMenteeProgram;
 use App\Models\MentorMenteeProgramMessage;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -18,17 +19,30 @@ use function GuzzleHttp\Psr7\str;
 
 class MentorMenteeProgramMessageResourceController extends Controller
 {
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @param  Request  $request
+     * @return MentorMenteeProgramDetailMessageResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function index(MentorMenteeProgram $mentorMenteeProgram, Request $request)
     {
         $this->authorize('show', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
         $mentorMenteeProgram->load(
             [
-                //Builder
-                'messages' => function ($query) use ($request) {
-                    ////()->whereNotIn('deleted_by_users_id', $request->user()->id)->get();
-                    //->select('mentor_mentee_id,message,message_type,from_user_id,to_user_id,created_at') !!
-                    //  $query->whereNotIn('deleted_by_users_id', [$request->user()->id])->get();
+                'messages' => function (HasMany $query) use ($request) {
+                    $query->select(
+                        'mentor_mentee_id',
+                        'from_user_id',
+                        'to_user_id',
+                        'message_type',
+                        'message',
+                        'created_at'
+                    )->whereJsonDoesntContain(
+                        'deleted_by_users_id',
+                        $request->user()->id
+                    );
                 },
                 'mentor.user',
                 'mentee'
@@ -50,12 +64,17 @@ class MentorMenteeProgramMessageResourceController extends Controller
         //
     }
 
+    /**
+     * @param  MentorMenteeProgramMessageRequest  $request
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @return \Illuminate\Http\JsonResponse|object
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(MentorMenteeProgramMessageRequest $request, MentorMenteeProgram $mentorMenteeProgram)
     {
         $this->authorize('create', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
-
-        //Message Message Content
+        //Message Content
         $content = $request->input('content');
         if ($request->input('type') === 'media') {
             $content = collect();
@@ -128,12 +147,22 @@ class MentorMenteeProgramMessageResourceController extends Controller
         //
     }
 
+    /**
+     * @param  MentorMenteeProgram  $mentorMenteeProgram
+     * @param  Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function destroyAll(MentorMenteeProgram $mentorMenteeProgram, Request $request)
     {
         $this->authorize('deleteAll', [MentorMenteeProgramMessage::class, $mentorMenteeProgram]);
 
-        $messages = $mentorMenteeProgram->messages; //()->whereNotIn('deleted_by_users_id', $request->user()->id)->get();
+        $messages = $mentorMenteeProgram->messages()->whereJsonDoesntContain(
+            'deleted_by_users_id',
+            $request->user()->id
+        )->get();
 
+        //TODO: Fix the query
         //Bad Code! Too Many Queries!
         foreach ($messages as $message) {
             $deletedByUsersId = collect($message->deleted_by_users_id);

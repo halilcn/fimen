@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use voku\helper\ASCII;
 
 class MentorMenteeProgram extends Model
 {
@@ -47,6 +48,15 @@ class MentorMenteeProgram extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(MentorMenteeProgramMessage::class, 'mentor_mentee_id', 'id');
+    }
+
+    public function deleteRelationships(): void
+    {
+        $this->notifications()->delete();
+        $this->meetings()->delete();
+        $this->messages()->get()->each(function ($message) {
+            $message->delete();
+        });
     }
 
 }

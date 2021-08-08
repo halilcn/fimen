@@ -26,7 +26,7 @@ class MentorMenteeProgramDetailMessageResource extends JsonResource
                 $item->is_my_message = $request->user()->checkUserId($item->from_user_id);
                 return $item;
             })->groupBy(function ($message) {
-                return $message->created_at->isoFormat('DD MMMM Y'); //d MMMM Y
+                return $message->created_at->isoFormat('DD MMMM Y');
             }),
             'from_user_information' => new MentorMenteeProgramDetailMessageUserResource(
                 $request->user()->isProgramMentee($this->user_id)
