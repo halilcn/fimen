@@ -1,8 +1,8 @@
 <template>
   <div class="active_programs">
     <div class="infos">
-      <div class="item">
-        <div v-if="mentor_infos" class="info">
+      <div v-if="Object.keys(mentor_infos).length !== 0" class="item">
+        <div class="info">
           <div class="title">
             Aktif Mentee Sayısı
           </div>
@@ -16,6 +16,7 @@
       </div>
     </div>
     <ul class="mentor_mentee_programs_list">
+      {{programs}}
       <router-link
           tag="li"
           :to="{name:'MeActiveProgramDetail',params:{id:program.id}}"
