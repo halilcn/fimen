@@ -34,7 +34,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Policies ?
         Gate::define(
             'create-mentor-program-appeal',
             function (User $user, MentorProgram $mentorProgram) {

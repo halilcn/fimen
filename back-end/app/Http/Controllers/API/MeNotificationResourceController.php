@@ -90,6 +90,7 @@ class MeNotificationResourceController extends Controller
     public function destroyAll(Request $request)
     {
         $request->user()->notifications()->delete();
+
         return response(['status' => true]);
     }
 }

@@ -28,7 +28,7 @@ class MentorMenteeProgramResourceController extends Controller
             MentorMenteeProgram::query()
                 ->where('user_id', $request->user()->id)
                 ->when(
-                    $request->user()->mentor,
+                    $request->user()->mentor()->exists(),
                     function (Builder $query) use ($request) {
                         $query->orWhere('mentor_id', $request->user()->mentor->id);
                     }
@@ -129,7 +129,6 @@ class MentorMenteeProgramResourceController extends Controller
     {
         //
     }
-
 
     /**
      * @param  MentorMenteeProgram  $mentorMenteeProgram

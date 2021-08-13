@@ -227,7 +227,7 @@ export default {
       this.message.type = 'message';
     }
   },
-  async beforeCreate() {
+  async created() {
     await this.$store.dispatch('getMentorMenteeProgramMessages')
         .catch(() => {
           alert('Bir hata oluştu!');

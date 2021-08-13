@@ -45,6 +45,7 @@ class MentorAppealResourceController extends Controller
         $request->user()->mentorAppeal()->create(
             $validatedRequest
         );
+
         return response()->json(['status' => true], 201);
     }
 

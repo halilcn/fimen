@@ -55,7 +55,6 @@ class User extends Authenticatable
         'social_media' => 'array'
     ];
 
-    // Password Mutator
     public function setPasswordAttribute($password): void
     {
         $this->attributes['password'] = bcrypt($password);
@@ -124,7 +123,7 @@ class User extends Authenticatable
 
     public function isProgramOwner(int $mentorId): bool
     {
-        return $mentorId == $this->mentor->id;
+        return $this->mentor()->exists() && $mentorId == $this->mentor->id;
     }
 
     public function checkUserId(int $userId): bool

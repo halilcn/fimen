@@ -17,7 +17,6 @@ const guest = function (to, from, next) {
 }
 
 const routes = [
-    //Redirect
     {
         path: '/ayarlar',
         redirect: {
@@ -171,7 +170,8 @@ router.beforeEach((to, from, next) => {
             .then(() => {
                 next();
             });
-        return 0;   //Kullanıcı bilgilerini almadan next() çalışmasın diye
+
+        return 0;
     }
     next();
 })

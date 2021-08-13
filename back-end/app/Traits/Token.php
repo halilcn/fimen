@@ -17,10 +17,4 @@ trait Token
     {
         return $user->createToken('spa_token')->plainTextToken;
     }
-
-    public function deleteToken()
-    {
-    }
-
-
 }

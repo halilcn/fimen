@@ -27,7 +27,7 @@ class MentorMenteeProgramMessageRequest extends FormRequest
         $types = ['message', 'media'];
 
         return [
-            'type' => ['required', Rule::in($types),],
+            'type' => ['required', Rule::in($types)],
             'content' => ['required']
         ];
     }

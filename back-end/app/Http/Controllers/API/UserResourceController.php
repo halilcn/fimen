@@ -60,6 +60,7 @@ class UserResourceController extends Controller
         if ($user) {
             return UserResource::make($user);
         }
+
         return response(['status' => 'no content'], 204);
     }
 

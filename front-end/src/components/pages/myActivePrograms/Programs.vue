@@ -15,8 +15,7 @@
         </div>
       </div>
     </div>
-    <ul class="mentor_mentee_programs_list">
-      {{programs}}
+    <ul v-if="programs.length > 0" class="mentor_mentee_programs_list">
       <router-link
           tag="li"
           :to="{name:'MeActiveProgramDetail',params:{id:program.id}}"
@@ -64,6 +63,9 @@
         </div>
       </router-link>
     </ul>
+    <div class="no_programs" v-else>
+      Hiç akitf program yok
+    </div>
   </div>
 </template>
 
@@ -80,10 +82,10 @@ export default {
     Tooltip: () => import('@/components/pages/shared/Tooltip'),
   },
   methods: {
-    getMentorMenteePrograms() {
-      this.$store.dispatch('getMentorMenteePrograms').then(res => {
+    async getMentorMenteePrograms() {
+      await this.$store.dispatch('getMentorMenteePrograms').then(res => {
         this.programs = res.programs;
-        this.mentor_infos = res.mentor_infos;
+        this.mentor_infos = res.mentor_infos || {};
       });
     }
   },
@@ -216,5 +218,10 @@ export default {
   position: absolute;
   left: 8px;
   top: 8px;
+}
+
+.no_programs {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
 }
 </style>

@@ -40,6 +40,7 @@ class MentorProgramAppealResourceController extends Controller
     {
         $mentorProgram = MentorProgram::where('slug', $request->input('program_id'))->firstOrFail();
         $this->authorize('create-mentor-program-appeal', $mentorProgram);
+
         abort_if($mentorProgram->deadline->isPast(), 400); //400?
         $mentorProgram->usersAppeal()->attach(
             $request->user()->id,

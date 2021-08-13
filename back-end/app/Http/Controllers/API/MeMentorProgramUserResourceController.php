@@ -24,6 +24,7 @@ class MeMentorProgramUserResourceController extends Controller
         $this->authorize('view', $mentorProgram);
 
         $mentorProgram->load('approvedUsers:id');
+
         return MeMentorProgramDetailAppealedUserResource::collection(
             $this->checkSelectedMentee(
                 $mentorProgram->usersAppeal()

@@ -57,6 +57,7 @@ class MeMentorProgramResourceController extends Controller
             $mentorProgram->usersAppeal,
             $mentorProgram->approvedUsers
         );
+
         return MeMentorProgramDetailResource::make($mentorProgram);
     }
 
@@ -91,6 +92,7 @@ class MeMentorProgramResourceController extends Controller
     public function destroy(MentorProgram $mentorProgram)
     {
         $this->authorize('destroy', $mentorProgram);
+
         $mentorProgram->usersAppeal()->detach();
         $mentorProgram->approvedUsers()->detach();
         $mentorProgram->delete();

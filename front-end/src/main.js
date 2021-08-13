@@ -26,7 +26,7 @@ Vue.config.productionTip = false
 Vue.use(Vuelidate);
 
 
-//socketsocket
+//socket
 /*import Echo from 'laravel-echo'
 
 window.io = require('socket.io-client');
