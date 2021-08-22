@@ -57,7 +57,7 @@ User Profile Page
 
 ## Project Video
 Register
-![register-video](https://github.com/halilcn/mentor-project/blob/main/project-videos/register.mp4)
+![register-video](https://github.com/halilcn/mentor-project/blob/main/project-videos/register.gif)
 
 ## Authors
  - [Halil Can](https://github.com/halilcn)
