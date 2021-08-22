@@ -57,7 +57,14 @@ User Profile Page
 
 ## Project Video
 Register
-https://github.com/halilcn/mentor-project/blob/main/project-videos/register.mp4
+<h1 align="center">
+  <br>
+    <img src="https://github.com/halilcn/mentor-project/blob/main/project-videos/register.mp4" alt="logo" width="200">
+  <br>
+  VS Code - Debugger for Chrome
+  <br>
+  <br>
+</h1>
 
 ## Authors
  - [Halil Can](https://github.com/halilcn)
