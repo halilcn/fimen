@@ -34,26 +34,34 @@ fimen is the common meeting point of mentors and mentees. It is free. If you are
 
 ## Project Images
 Login Page
+
 ![login](https://github.com/halilcn/mentor-project/blob/main/project-images/giris-yap.PNG)
-<br/>
 
 
 Mentor Programs Page
+
 ![mentor-programs](https://github.com/halilcn/mentor-project/blob/main/project-images/mentor-programlari.PNG)
-<br/>
+
+
 Create Mentor Program Popup
+
 ![create-mentor-program](https://github.com/halilcn/mentor-project/blob/main/project-images/mentor-program-olusturma.PNG)
-<br/>
+
+
 Mentor Program Detail Page
+
 ![mentor-program-detail](https://github.com/halilcn/mentor-project/blob/main/project-images/mentor-program-detay.PNG)
-<br/>
+
+
 Active Mentor Programs Page
+
 ![active-mentor-programs](https://github.com/halilcn/mentor-project/blob/main/project-images/aktif-mentor-programlari.PNG)
-<br/>
+
+
 User Profile Page
+
 ![user-profile](https://github.com/halilcn/mentor-project/blob/main/project-images/kullanici-profil.PNG)
-<br/>
-<br/>
+
 
 ### [All Images](https://github.com/halilcn/mentor-project/tree/main/project-images)
 
