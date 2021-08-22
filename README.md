@@ -53,10 +53,10 @@ User Profile Page
 <br/>
 <br/>
 
-[All Images]("https://github.com/halilcn/mentor-project/tree/main/project-images")
+### [All Images](https://github.com/halilcn/mentor-project/tree/main/project-images)
 
 ## Project Video
-Register
+Register Video
 ![register-video](https://github.com/halilcn/mentor-project/blob/main/project-videos/register.gif)
 
 ## Authors
