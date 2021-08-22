@@ -88,9 +88,12 @@
               </div>
             </div>
           </router-link>
-          <div v-if="!isMentor" class="mentor_apply_button">
+          <router-link v-if="!isMentor"
+                       tag="div"
+                       :to="{name:'ApplyMentor'}"
+                       class="mentor_apply_button">
             Mentor Başvurusu
-          </div>
+          </router-link>
         </div>
         <div class="links">
           <template v-if="isMentor">
@@ -114,10 +117,12 @@
             <i class="fas fa-users"></i>
             Aktif Programlar
           </router-link>
-          <div>
+          <router-link
+              :to="{name:'NotificationsSettings'}"
+              tag="div">
             <i class="bi bi-gear-fill"></i>
             Ayarlar
-          </div>
+          </router-link>
           <div class="logout" @click="postLogout">
             <i class="bi bi-door-open-fill"></i>
             Çıkış
