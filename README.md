@@ -3,13 +3,6 @@
 ## About
 fimen is the common meeting point of mentors and mentees. It is free. If you are looking for a mentor or mentee, fimen is just for you !
 
-## Installing
-...
-## Config
-...
-## Running
-...
-
 ## Built With
 1. Back-end (API)
   - Used back-end framework - [Laravel](https://laravel.com/)
@@ -27,10 +20,6 @@ fimen is the common meeting point of mentors and mentees. It is free. If you are
   - For request - [Axios](https://www.npmjs.com/package/axios) 
   - Used for calendar - [Fullcalendar](https://fullcalendar.io/)
   - Development tool - [Clockwork](https://github.com/itsgoingd/clockwork) 
-
-## TODO
- - [x] fimen will be able to run on docker
- - [x] Socketio channels will be connected
 
 ## Project Images
 Login Page
